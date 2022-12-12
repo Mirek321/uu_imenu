@@ -30,6 +30,11 @@
         "realization": "api/controllers/IngredienceController.create",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "ingredience/get": {
+        "realization": "api/controllers/IngredienceController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }

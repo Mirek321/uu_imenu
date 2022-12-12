@@ -28,6 +28,10 @@
       "ingredience/create": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "ingredience/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }

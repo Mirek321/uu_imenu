@@ -16,6 +16,33 @@ class IngredienceAbl {
     this.dao = DaoFactory.getDao("ingredience");
   }
 
+  async get(awid, dtoIn) {
+    let uuAppErrorMap = {};
+    let validationResult = this.validator.validate("ingredienceGetDtoInType", dtoIn);
+
+    // write to uuAppErrorMap result of validation
+    uuAppErrorMap = ValidationHelper.processValidationResult(
+      dtoIn,
+      validationResult,
+      Errors.Get.InvalidDtoIn
+    );
+
+    // load joke from database by id from dtoIn
+    let ingredience = await this.dao.get(awid, dtoIn.id);
+
+    // if joke does not exist (was not found in database)
+    if (!ingredience) {
+      throw new Errors.Get.IngredienceDoesNotExist({ uuAppErrorMap }, { ingredienceId: dtoIn.id });
+    }
+
+
+    // return updated joke
+    return {
+      ...ingredience,
+      uuAppErrorMap,
+    };
+  }
+
   async create(awid, dtoIn) {
     let uuAppErrorMap = {};
     // hds 2, 2.1
