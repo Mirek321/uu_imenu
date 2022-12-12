@@ -6,6 +6,9 @@
       "schemaMap": {
         "imenuMain": {
           "realization": "dao/ImenuMainMongo"
+        },
+        "ingredience": {
+          "realization": "dao/IngredienceMongo"
         }
       }
     }

@@ -25,6 +25,11 @@
         "realization": "index.html",
         "httpMethod": "GET",
         "type": "UVE"
+      },
+      "ingredience/create": {
+        "realization": "api/controllers/IngredienceController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }
