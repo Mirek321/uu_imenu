@@ -12,6 +12,7 @@ class IngredienceAbl {
     this.validator = Validator.load();
     this.dao = DaoFactory.getDao("ingredience");
   }
+  //a
   async delete(awid, dtoIn) {
     let uuAppErrorMap = {};
     let validationResult = this.validator.validate("ingredienceDeleteDtoInType", dtoIn);
