@@ -35,6 +35,11 @@
         "realization": "api/controllers/IngredienceController.get",
         "httpMethod": "GET",
         "type": "CMD"
+      },
+      "ingredience/delete": {
+        "realization": "api/controllers/IngredienceController.delete",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

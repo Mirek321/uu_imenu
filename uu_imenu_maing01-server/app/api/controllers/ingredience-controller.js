@@ -7,6 +7,10 @@ class IngredienceController {
     return IngredienceAbl.get(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
 
+  delete(ucEnv) {
+    return IngredienceAbl.delete(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
+  }
+
   create(ucEnv) {
     return IngredienceAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
