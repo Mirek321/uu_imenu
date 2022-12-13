@@ -12,7 +12,32 @@ class IngredienceAbl {
     this.validator = Validator.load();
     this.dao = DaoFactory.getDao("ingredience");
   }
+  async delete(awid, dtoIn) {
+    let uuAppErrorMap = {};
+    let validationResult = this.validator.validate("ingredienceDeleteDtoInType", dtoIn);
 
+    // write to uuAppErrorMap result of validation
+    uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Delete.InvalidDtoIn);
+
+    // load joke from database by id from dtoIn
+    let ingredience = await this.dao.get(awid, dtoIn.id);
+
+    // if joke does not exist (was not found in database)
+    if (!ingredience) {
+      throw new Errors.Delete.IngredienceDoesNotExist({ uuAppErrorMap }, { ingredienceId: dtoIn.id });
+    }
+    try {
+      // call dao method remove to delete your joke from database
+      await this.dao.delete(awid, dtoIn.id);
+    } catch (e) {
+      // throw an error if something goes wrong during removing joke from database
+      throw new Errors.Delete.IngredienceDaoDeleteFailed({ uuAppErrorMap }, e);
+    }
+    // return updated joke
+    return {
+      uuAppErrorMap,
+    };
+  }
   async get(awid, dtoIn) {
     let uuAppErrorMap = {};
     let validationResult = this.validator.validate("ingredienceGetDtoInType", dtoIn);

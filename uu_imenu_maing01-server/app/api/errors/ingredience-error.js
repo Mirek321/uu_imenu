@@ -45,8 +45,32 @@ const Get = {
     }
   },
 };
-
+const Delete = {
+  UC_CODE: `${INGREDIENCE_ERROR_PREFIX}delete/`,
+  IngredienceDaoDeleteFailed: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}ingredienceDaoCreateFailed`;
+      this.message = "Create ingredience by imenu DAO create failed.";
+    }
+  },
+  InvalidDtoIn: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}ingredienceDaoCreateFailed`;
+      this.message = "Create ingredience by imenu DAO create failed.";
+    }
+  },
+  IngredienceDoesNotExist: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}ingredienceDaoCreateFailed`;
+      this.message = "Create ingredience by imenu DAO create failed.";
+    }
+  },
+};
 module.exports = {
+  Delete,
   Get,
-  Create
+  Create,
 };

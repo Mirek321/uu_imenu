@@ -3,6 +3,10 @@ const ingredienceCreateDtoInType = shape({
   amount: integer(400).isRequired(),
   category: string(255).isRequired(),
 });/* eslint-disable */
+
 const ingredienceGetDtoInType = shape({
+  id: id().isRequired(),
+});
+const ingredienceDeleteDtoInType = shape({
   id: id().isRequired(),
 });

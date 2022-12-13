@@ -13,6 +13,9 @@ class IngredienceMongo extends UuObjectDao {
   async get(awid, id) {
     return await super.findOne({ awid, id });
   }
+  async delete(awid, id) {
+    return await super.deleteOne({ awid, id });
+  }
 }
 
 module.exports = IngredienceMongo;
