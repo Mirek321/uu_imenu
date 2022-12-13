@@ -5,12 +5,9 @@ const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const Errors = require("../api/errors/ingredience-error.js");
 
-const WARNINGS = {
-
-};
+const WARNINGS = {};
 
 class IngredienceAbl {
-
   constructor() {
     this.validator = Validator.load();
     this.dao = DaoFactory.getDao("ingredience");
@@ -21,11 +18,7 @@ class IngredienceAbl {
     let validationResult = this.validator.validate("ingredienceGetDtoInType", dtoIn);
 
     // write to uuAppErrorMap result of validation
-    uuAppErrorMap = ValidationHelper.processValidationResult(
-      dtoIn,
-      validationResult,
-      Errors.Get.InvalidDtoIn
-    );
+    uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Get.InvalidDtoIn);
 
     // load joke from database by id from dtoIn
     let ingredience = await this.dao.get(awid, dtoIn.id);
@@ -34,7 +27,6 @@ class IngredienceAbl {
     if (!ingredience) {
       throw new Errors.Get.IngredienceDoesNotExist({ uuAppErrorMap }, { ingredienceId: dtoIn.id });
     }
-
 
     // return updated joke
     return {
@@ -56,7 +48,7 @@ class IngredienceAbl {
     );
     let ingredience;
     try {
-      ingredience = await this.dao.create(dtoIn);
+      ingredience = await this.dao.create(awid, dtoIn);
     } catch (e) {
       throw new Errors.Create.IngredienceDaoCreateFailed({ uuAppErrorMap }, e);
     }
@@ -64,11 +56,8 @@ class IngredienceAbl {
       ...ingredience,
       uuAppErrorMap,
     };
-//test
     return dtoOut;
   }
-
-
 }
 
 module.exports = new IngredienceAbl();
