@@ -69,7 +69,33 @@ const Delete = {
     }
   },
 };
+const Update = {
+  UC_CODE: `${INGREDIENCE_ERROR_PREFIX}update/`,
+  IngredienceDaoUpdateFailed: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}ingredienceDaoCreateFailed`;
+      this.message = "Create ingredience by imenu DAO create failed.";
+    }
+  },
+  InvalidDtoIn: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}ingredienceDaoCreateFailed`;
+      this.message = "Create ingredience by imenu DAO create failed.";
+    }
+  },
+  IngredienceDoesNotExist: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}ingredienceDaoCreateFailed`;
+      this.message = "Create ingredience by imenu DAO create failed.";
+    }
+  },
+};
+
 module.exports = {
+  Update,
   Delete,
   Get,
   Create,

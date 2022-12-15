@@ -36,6 +36,10 @@
       "ingredience/delete": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "ingredience/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }

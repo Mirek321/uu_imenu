@@ -10,3 +10,9 @@ const ingredienceGetDtoInType = shape({
 const ingredienceDeleteDtoInType = shape({
   id: id().isRequired(),
 });
+const ingredienceUpdateDtoInType = shape({
+  id: id().isRequired(),
+  name: string(50),
+  amount: integer(400),
+  category: string(255),
+});

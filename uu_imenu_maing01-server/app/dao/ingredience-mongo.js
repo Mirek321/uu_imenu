@@ -9,7 +9,13 @@ class IngredienceMongo extends UuObjectDao {
   async create(awid, dtoIn) {
     return await super.insertOne({ awid, ...dtoIn });
   }
-
+  async update(uuObject) {
+    let filter = {
+      awid: uuObject.awid,
+      id: uuObject.id,
+    };
+    return await super.findOneAndUpdate(filter, uuObject, "NONE");
+  }
   async get(awid, id) {
     return await super.findOne({ awid, id });
   }
