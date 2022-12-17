@@ -45,6 +45,11 @@
         "realization": "api/controllers/IngredienceController.update",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "ingredience/list": {
+        "realization": "api/controllers/IngredienceController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }

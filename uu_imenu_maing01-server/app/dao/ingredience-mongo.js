@@ -16,6 +16,9 @@ class IngredienceMongo extends UuObjectDao {
     };
     return await super.findOneAndUpdate(filter, uuObject, "NONE");
   }
+  async list(awid) {
+    return await super.find({ awid });
+  }
   async get(awid, id) {
     return await super.findOne({ awid, id });
   }

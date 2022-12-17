@@ -40,6 +40,10 @@
       "ingredience/update": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "ingredience/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }
