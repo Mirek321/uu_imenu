@@ -50,6 +50,11 @@
         "realization": "api/controllers/IngredienceController.list",
         "httpMethod": "GET",
         "type": "CMD"
+      },
+      "recipe/create": {
+        "realization": "api/controllers/RecipeController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

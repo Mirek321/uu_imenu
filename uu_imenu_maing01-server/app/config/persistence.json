@@ -9,6 +9,9 @@
         },
         "ingredience": {
           "realization": "dao/IngredienceMongo"
+        },
+        "recipe": {
+          "realization": "dao/RecipeMongo"
         }
       }
     }
