@@ -8,14 +8,14 @@ const Create = {
   RecipeDaoCreateFailed: class extends ImenuMainUseCaseError {
     constructor() {
       super(...arguments);
-      this.code = `${Create.UC_CODE}recipeDaoCreateFailed`;
+      this.code = `${Create.UC_CODE}RecipeDaoCreateFailed`;
       this.message = "Create recipe by imenu DAO create failed.";
     }
   },
   InvalidDtoIn: class extends ImenuMainUseCaseError {
     constructor() {
       super(...arguments);
-      this.code = `${Create.UC_CODE}recipeDaoCreateFailed`;
+      this.code = `${Create.UC_CODE}RecipeDaoCreateFailed`;
       this.message = "Create recipe by imenu DAO create failed.";
     }
   },
