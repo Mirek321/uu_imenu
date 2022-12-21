@@ -55,6 +55,11 @@
         "realization": "api/controllers/RecipeController.create",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "recipe/get": {
+        "realization": "api/controllers/RecipeController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }

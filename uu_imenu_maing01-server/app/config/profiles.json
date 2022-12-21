@@ -48,6 +48,10 @@
       "recipe/create": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "recipe/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }

@@ -9,6 +9,9 @@ class RecipeMongo extends UuObjectDao {
   async create(awid, dtoIn) {
     return await super.insertOne({ awid, ...dtoIn });
   }
+  async get(awid, id) {
+    return await super.findOne({ awid, id });
+  }
 }
 
 module.exports = RecipeMongo;
