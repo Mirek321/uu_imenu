@@ -13,6 +13,35 @@ class RecipeAbl {
     this.dao = DaoFactory.getDao("recipe");
   }
 
+  async update(awid, dtoIn) {
+    let uuAppErrorMap = {};
+    let validationResult = this.validator.validate("recipeUpdateDtoInType", dtoIn);
+
+    // write to uuAppErrorMap result of validation
+    uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Update.InvalidDtoIn);
+
+    // load joke from database by id from dtoIn
+    let recipe = await this.dao.get(awid, dtoIn.id);
+
+    // if joke does not exist (was not found in database)
+    if (!recipe) {
+      throw new Errors.Update.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
+    }
+    let recipeDtoOut;
+    try {
+      // call dao method remove to delete your joke from database
+      recipeDtoOut = await this.dao.update({ ...dtoIn, awid });
+    } catch (e) {
+      // throw an error if something goes wrong during removing joke from database
+      throw new Errors.Update.RecipeDaoDeleteFailed({ uuAppErrorMap }, e);
+    }
+    // return updated joke
+    return {
+      ...recipeDtoOut,
+      uuAppErrorMap,
+    };
+  }
+
   async delete(awid, dtoIn) {
     let uuAppErrorMap = {};
     let validationResult = this.validator.validate("recipeDeleteDtoInType", dtoIn);

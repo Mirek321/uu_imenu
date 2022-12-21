@@ -65,6 +65,11 @@
         "realization": "api/controllers/RecipeController.delete",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "recipe/update": {
+        "realization": "api/controllers/RecipeController.update",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

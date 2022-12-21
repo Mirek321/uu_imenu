@@ -56,6 +56,10 @@
       "recipe/delete": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "recipe/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }
