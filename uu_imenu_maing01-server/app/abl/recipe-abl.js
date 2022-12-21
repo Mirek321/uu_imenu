@@ -13,6 +13,28 @@ class RecipeAbl {
     this.dao = DaoFactory.getDao("recipe");
   }
 
+  async list(awid, dtoIn) {
+    let uuAppErrorMap = {};
+    let validationResult = this.validator.validate("recipeListDtoInType", dtoIn);
+
+    // write to uuAppErrorMap result of validation
+    uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.List.InvalidDtoIn);
+
+    // load joke from database by id from dtoIn
+    let recipe = await this.dao.list(awid);
+
+    // if joke does not exist (was not found in database)
+    if (!recipe) {
+      throw new Errors.List.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
+    }
+
+    // return updated joke
+    return {
+      ...recipe,
+      uuAppErrorMap,
+    };
+  }
+
   async update(awid, dtoIn) {
     let uuAppErrorMap = {};
     let validationResult = this.validator.validate("recipeUpdateDtoInType", dtoIn);

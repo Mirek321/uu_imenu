@@ -20,3 +20,6 @@ const recipeUpdateDtoInType = shape({
     amount: integer(400),
   }),
 });
+const recipeListDtoInType = shape({
+
+});

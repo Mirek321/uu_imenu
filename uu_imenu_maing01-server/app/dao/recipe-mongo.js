@@ -23,6 +23,9 @@ class RecipeMongo extends UuObjectDao {
     };
     return await super.findOneAndUpdate(filter, uuObject, "NONE");
   }
+  async list(awid) {
+    return await super.find({ awid });
+  }
 }
 
 module.exports = RecipeMongo;

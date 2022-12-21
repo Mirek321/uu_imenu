@@ -70,6 +70,11 @@
         "realization": "api/controllers/RecipeController.update",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "recipe/list": {
+        "realization": "api/controllers/RecipeController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }

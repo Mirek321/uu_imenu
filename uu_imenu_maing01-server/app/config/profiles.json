@@ -60,6 +60,10 @@
       "recipe/update": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "recipe/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }
