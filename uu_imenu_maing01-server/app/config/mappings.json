@@ -60,6 +60,11 @@
         "realization": "api/controllers/RecipeController.get",
         "httpMethod": "GET",
         "type": "CMD"
+      },
+      "recipe/delete": {
+        "realization": "api/controllers/RecipeController.delete",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

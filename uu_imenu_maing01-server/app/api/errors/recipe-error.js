@@ -46,7 +46,33 @@ const Get = {
   },
 };
 
+const Delete = {
+  UC_CODE: `${RECIPE_ERROR_PREFIX}delete/`,
+  RecipeDaoDeleteFailed: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+  InvalidDtoIn: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+  RecipeDoesNotExist: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+};
+
 module.exports = {
+  Delete,
   Get,
   Create,
 };

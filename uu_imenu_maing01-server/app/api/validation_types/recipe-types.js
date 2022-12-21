@@ -9,3 +9,6 @@ const recipeCreateDtoInType = shape({
 const recipeGetDtoInType = shape({
   id: id().isRequired(),
 });
+const recipeDeleteDtoInType = shape({
+  id: id().isRequired(),
+});
