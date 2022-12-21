@@ -1,6 +1,6 @@
 "use strict";
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
-//aaa
+//aaaa
 class RecipeMongo extends UuObjectDao {
   async createSchema() {
     await super.createIndex({ awid: 1 }, { unique: false });
