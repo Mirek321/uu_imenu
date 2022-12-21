@@ -1,6 +1,6 @@
 "use strict";
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
-/a
+//a
 class RecipeMongo extends UuObjectDao {
   async createSchema() {
     await super.createIndex({ awid: 1 }, { unique: false });
@@ -14,6 +14,14 @@ class RecipeMongo extends UuObjectDao {
   }
   async delete(awid, id) {
     return await super.deleteOne({ awid, id });
+  }
+
+  async update(uuObject) {
+    let filter = {
+      awid: uuObject.awid,
+      id: uuObject.id,
+    };
+    return await super.findOneAndUpdate(filter, uuObject, "NONE");
   }
 }
 
