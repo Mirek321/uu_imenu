@@ -11,6 +11,30 @@ class RecipeAbl {
   constructor() {
     this.validator = Validator.load();
     this.dao = DaoFactory.getDao("recipe");
+    this.ing = DaoFactory.getDao("ingredience");
+  }
+
+  async load(awid, dtoIn) {
+    let uuAppErrorMap = {};
+    let validationResult = this.validator.validate("recipeLoadDtoInType", dtoIn);
+
+    // write to uuAppErrorMap result of validation
+    uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Load.InvalidDtoIn);
+
+    // load joke from database by id from dtoIn
+    let recipe = await this.dao.get(awid, dtoIn.id);
+    let ing = await this.ing.get(awid, recipe.ingredience.id);
+    recipe.ingredience = ing;
+    // if joke does not exist (was not found in database)
+    if (!recipe) {
+      throw new Errors.Load.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
+    }
+
+    // return updated joke
+    return {
+      ...recipe,
+      uuAppErrorMap,
+    };
   }
 
   async list(awid, dtoIn) {

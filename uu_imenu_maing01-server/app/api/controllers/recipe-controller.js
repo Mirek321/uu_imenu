@@ -3,6 +3,10 @@ const RecipeAbl = require("../../abl/recipe-abl.js");
 
 class RecipeController {
 
+  load(ucEnv) {
+    return RecipeAbl.load(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
+  }
+
   list(ucEnv) {
     return RecipeAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }

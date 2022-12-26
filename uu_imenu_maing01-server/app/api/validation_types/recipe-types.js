@@ -23,3 +23,6 @@ const recipeUpdateDtoInType = shape({
 const recipeListDtoInType = shape({
 
 });
+const recipeLoadDtoInType = shape({
+  id: id().isRequired(),
+});

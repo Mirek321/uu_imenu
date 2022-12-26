@@ -75,6 +75,11 @@
         "realization": "api/controllers/RecipeController.list",
         "httpMethod": "GET",
         "type": "CMD"
+      },
+      "recipe/load": {
+        "realization": "api/controllers/RecipeController.load",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }

@@ -121,7 +121,33 @@ const List = {
   },
 };
 
+const Load = {
+  UC_CODE: `${RECIPE_ERROR_PREFIX}load/`,
+  RecipeDaoLoadFailed: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Load.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+  InvalidDtoIn: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Load.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+  RecipeDoesNotExist: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Load.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+};
+
 module.exports = {
+  Load,
   List,
   Update,
   Delete,
