@@ -22,7 +22,7 @@ class RecipeMongo extends UuObjectDao {
     if (isEmpty(uuObject) == false) {
       let filter = {};
       if (uuObject.category !== undefined) {
-        filter.category = uuObject.category;
+        filter.category = { $in: uuObject.category };
       }
       if (uuObject.type_recipe !== undefined) {
         filter.type_recipe = uuObject.type_recipe;
