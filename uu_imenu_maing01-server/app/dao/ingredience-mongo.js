@@ -1,5 +1,6 @@
 "use strict";
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
+const ObjectID = require("mongodb").ObjectID;
 
 class IngredienceMongo extends UuObjectDao {
   async createSchema() {
@@ -23,8 +24,10 @@ class IngredienceMongo extends UuObjectDao {
     return await super.find({ awid, id });
   }
   async load(awid, ingredienceIds) {
-    let query = { awid: awid, _id: { $in: ["639dcade9cbe9a34e066061d"] } };
-    return await super.find({ id: { $in: ["639dcae39cbe9a34e0660620"] } });
+    let query = { awid };
+    let listOfObjectIds = ingredienceIds.map((id) => ObjectID(id));
+    query.id = { $in: listOfObjectIds };
+    return await super.find(query);
   }
   async delete(awid, id) {
     return await super.deleteOne({ awid, id });
