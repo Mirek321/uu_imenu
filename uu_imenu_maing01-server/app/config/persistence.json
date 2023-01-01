@@ -12,6 +12,9 @@
         },
         "recipe": {
           "realization": "dao/RecipeMongo"
+        },
+        "generate": {
+          "realization": "dao/GenerateMongo"
         }
       }
     }

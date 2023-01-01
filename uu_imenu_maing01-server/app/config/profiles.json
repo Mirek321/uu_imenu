@@ -65,7 +65,7 @@
         "sysStateList": ["active"],
         "profileList": ["Public"]
       },
-      "recipe/load": {
+      "recipe/generate": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
       }

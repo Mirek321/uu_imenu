@@ -18,6 +18,23 @@ class RecipeMongo extends UuObjectDao {
   async delete(awid, id) {
     return await super.deleteOne({ awid, id });
   }
+  async generate(uuObject, pocet) {
+    function isEmpty(object) {
+      return Object.keys(object).length === 0;
+    }
+    if (isEmpty(uuObject) == false) {
+      let filter = {};
+      if (uuObject.category !== undefined) {
+        filter.category = { $in: uuObject.category };
+      }
+      if (uuObject.type_recipe !== undefined) {
+        filter.type_recipe = uuObject.type_recipe;
+      }
+      return await super.aggregate([{ $match: filter }, { $sample: { size: pocet } }]);
+    } else {
+      return await super.aggregate([{ $sample: { size: pocet } }]);
+    }
+  }
 
   async update(uuObject) {
     let filter = {

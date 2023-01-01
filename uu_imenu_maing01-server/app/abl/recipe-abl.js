@@ -45,6 +45,29 @@ class RecipeAbl {
     };
   }
 
+  async generate(awid, dtoIn) {
+    let uuAppErrorMap = {};
+    let validationResult = this.validator.validate("recipeGenerateDtoInType", dtoIn);
+
+    // write to uuAppErrorMap result of validation
+    uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Generate.InvalidDtoIn);
+
+    // load joke from database by id from dtoIn
+    let pocet = 1;
+    let recipe = await this.dao.generate(dtoIn, pocet);
+
+    // if joke does not exist (was not found in database)
+    if (!recipe) {
+      throw new Errors.Generate.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
+    }
+
+    // return updated joke
+    return {
+      ...recipe,
+      uuAppErrorMap,
+    };
+  }
+
   async list(awid, dtoIn) {
     let uuAppErrorMap = {};
     let validationResult = this.validator.validate("recipeListDtoInType", dtoIn);
