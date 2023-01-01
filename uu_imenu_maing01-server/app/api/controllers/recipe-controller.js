@@ -2,6 +2,9 @@
 const RecipeAbl = require("../../abl/recipe-abl.js");
 
 class RecipeController {
+  generate(ucEnv) {
+    return RecipeAbl.generate(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
+  }
 
   load(ucEnv) {
     return RecipeAbl.load(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
@@ -26,7 +29,6 @@ class RecipeController {
   create(ucEnv) {
     return RecipeAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
-
 }
 
 module.exports = new RecipeController();

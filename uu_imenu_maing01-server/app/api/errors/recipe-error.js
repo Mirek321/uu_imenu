@@ -145,8 +145,32 @@ const Load = {
     }
   },
 };
-
+const Generate = {
+  UC_CODE: `${RECIPE_ERROR_PREFIX}generate/`,
+  RecipeDaoGenerateFailed: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Generate.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+  InvalidDtoIn: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Generate.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+  RecipeDoesNotExist: class extends ImenuMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Generate.UC_CODE}recipeDaoCreateFailed`;
+      this.message = "Create recipe by imenu DAO create failed.";
+    }
+  },
+};
 module.exports = {
+  Generate,
   Load,
   List,
   Update,

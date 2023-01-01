@@ -26,3 +26,8 @@ const recipeListDtoInType = shape({
 const recipeLoadDtoInType = shape({
   id: id().isRequired(),
 });
+
+const recipeGenerateDtoInType = shape({
+category: array(),
+  type_recipe: string(255),
+});

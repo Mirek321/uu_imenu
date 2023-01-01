@@ -80,6 +80,11 @@
         "realization": "api/controllers/RecipeController.load",
         "httpMethod": "GET",
         "type": "CMD"
+      },
+      "recipe/generate": {
+        "realization": "api/controllers/RecipeController.generate",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }
