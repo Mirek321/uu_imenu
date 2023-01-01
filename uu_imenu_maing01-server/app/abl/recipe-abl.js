@@ -23,7 +23,15 @@ class RecipeAbl {
 
     // load joke from database by id from dtoIn
     let recipe = await this.dao.get(awid, dtoIn.id);
-    let ing = await this.ing.load(awid, recipe.ingredience);
+    // let amounts = recipe.ingredience.map((amount) => amount);
+    let amounts = [];
+    for (let i = 0; i < recipe.ingredience.length; i++) {
+      amounts[i] = recipe.ingredience[i].amount;
+    }
+    recipe.ingredience = await this.ing.load(awid, recipe.ingredience);
+    for (let i = 0; i < recipe.ingredience.itemList.length; i++) {
+      recipe.ingredience.itemList[i].amount_recipe = amounts[i];
+    }
 
     // if joke does not exist (was not found in database)
     if (!recipe) {
