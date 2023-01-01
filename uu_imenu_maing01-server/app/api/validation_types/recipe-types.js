@@ -5,6 +5,9 @@ const recipeCreateDtoInType = shape({
     id: string(255),
     amount: integer(250),
   })),
+  category: array(),
+  type_recipe: string(255),
+  portion: integer(255),
 });
 const recipeGetDtoInType = shape({
   id: id().isRequired(),
