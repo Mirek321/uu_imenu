@@ -4,7 +4,7 @@ const { Validator } = require("uu_appg01_server").Validation;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const Errors = require("../api/errors/recipe-error.js");
-
+const Ingredience = require("../abl/ingredience-abl.js");
 const WARNINGS = {};
 
 class RecipeAbl {
@@ -41,7 +41,38 @@ class RecipeAbl {
       uuAppErrorMap,
     };
   }
+  async comprassion(awid, recipe, porcie) {
+    let ingrediences = [];
 
+    for (let i = 0; i < recipe.ingredience.itemList.length; i++) {
+      ingrediences.push({
+        name: recipe.ingredience.itemList[i].name,
+        id: JSON.parse(JSON.stringify(recipe.ingredience.itemList[i].id)),
+        amount_need: recipe.ingredience.itemList[i].amount_recipe * porcie,
+        difference: recipe.ingredience.itemList[i].amount - recipe.ingredience.itemList[i].amount_recipe * porcie,
+      });
+
+      if (ingrediences[i].difference > 0) {
+        ingrediences[i].suit = true;
+      } else if (ingrediences[i].difference == 0) {
+        ingrediences[i].suit = true;
+      } else if (ingrediences[i].difference < 0) {
+        ingrediences[i].suit = false;
+      } else {
+        ingrediences[i].suit = "error";
+      }
+    }
+    const check = ingrediences.every(({ suit }) => suit);
+    if (check) {
+      for (let i = 0; i < ingrediences.length; i++) {
+        await Ingredience.update(awid, { id: ingrediences[i].id, amount: ingrediences[i].difference });
+      }
+    } else {
+      // pass;
+    }
+
+    return ingrediences;
+  }
   async generate(awid, dtoIn) {
     let uuAppErrorMap = {};
     let validationResult = this.validator.validate("recipeGenerateDtoInType", dtoIn);
@@ -50,14 +81,28 @@ class RecipeAbl {
     uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Generate.InvalidDtoIn);
 
     // load joke from database by id from dtoIn
-    let pocet = 1;
+    let pocet = 2;
+    let porcie = 2;
     let recipe = await this.dao.generate(dtoIn, pocet);
+    let ingrediences = [];
+    for (let i = 0; i < pocet; i++) {
+      let id = JSON.parse(JSON.stringify(recipe[i]._id));
+      let recipe_load = await this.load(awid, { id: id });
+      ingrediences.push({
+        id: id,
+        name: recipe_load.name,
+        ingredience: await this.comprassion(awid, recipe_load, porcie),
+      });
+    }
 
+    /* for (let i = 0; i < update_ingrediences.length; i++) {
+
+    }*/
     // if joke does not exist (was not found in database)
     if (!recipe) {
       throw new Errors.Generate.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
     }
-
+    //comprassion(recipe, porcie);
     // return updated joke
     return {
       ...recipe,

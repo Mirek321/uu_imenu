@@ -3,7 +3,7 @@ const recipeCreateDtoInType = shape({
   name: string(255).isRequired(),
   ingredience: array(shape({
     id: string(255),
-    amount: integer(250),
+    amount: float(250),
   })),
   category: array(),
   type_recipe: string(255),
