@@ -1,10 +1,11 @@
+/* eslint-disable */
 const ingredienceCreateDtoInType = shape({
   name: string(255).isRequired(),
-  amount: integer(400).isRequired(),
+  amount: float(400).isRequired(),
   unit: string(400).isRequired(),
   allergen: boolean().isRequired(),
   category: string(255).isRequired(),
-});/* eslint-disable */
+});
 
 const ingredienceGetDtoInType = shape({
   id: id().isRequired(),
