@@ -81,18 +81,28 @@ class RecipeAbl {
     uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Generate.InvalidDtoIn);
 
     // load joke from database by id from dtoIn
-    let pocet = 2;
+    let count_meals = [
+      { name: "polievka", count: 1 },
+      { name: "hlavné jedlo", count: 1 },
+    ];
     let porcie = 2;
-    let recipe = await this.dao.generate(dtoIn, pocet);
+    let pocet = 2;
     let ingrediences = [];
-    for (let i = 0; i < pocet; i++) {
-      let id = JSON.parse(JSON.stringify(recipe[i]._id));
-      let recipe_load = await this.load(awid, { id: id });
-      ingrediences.push({
-        id: id,
-        name: recipe_load.name,
-        ingredience: await this.comprassion(awid, recipe_load, porcie),
-      });
+    for (let j = 0; j < 2; j++) {
+      dtoIn.type_recipe = count_meals[j].name;
+      let recipe = await this.dao.generate(dtoIn, count_meals[j].count);
+      for (let i = 0; i < count_meals[j].count; i++) {
+        let id = JSON.parse(JSON.stringify(recipe[i]._id));
+        let recipe_load = await this.load(awid, { id: id });
+        ingrediences.push({
+          id: id,
+          name: recipe_load.name,
+          category: recipe_load.category,
+          type_recipe: recipe_load.type_recipe,
+          portion: recipe_load.portion,
+          ingredience: await this.comprassion(awid, recipe_load, porcie),
+        });
+      }
     }
 
     /* for (let i = 0; i < update_ingrediences.length; i++) {
