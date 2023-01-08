@@ -41,15 +41,15 @@ class RecipeAbl {
       uuAppErrorMap,
     };
   }
-  async comprassion(awid, recipe, porcie) {
+  async comprassion(awid, recipe, portion) {
     let ingrediences = [];
 
     for (let i = 0; i < recipe.ingredience.itemList.length; i++) {
       ingrediences.push({
         name: recipe.ingredience.itemList[i].name,
         id: JSON.parse(JSON.stringify(recipe.ingredience.itemList[i].id)),
-        amount_need: recipe.ingredience.itemList[i].amount_recipe * porcie,
-        difference: recipe.ingredience.itemList[i].amount - recipe.ingredience.itemList[i].amount_recipe * porcie,
+        amount_need: recipe.ingredience.itemList[i].amount_recipe * portion,
+        difference: recipe.ingredience.itemList[i].amount - recipe.ingredience.itemList[i].amount_recipe * portion,
       });
 
       if (ingrediences[i].difference > 0) {
@@ -81,22 +81,15 @@ class RecipeAbl {
     uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Generate.InvalidDtoIn);
 
     // load joke from database by id from dtoIn
-    let count_meals = [
-      { name: "polievka", count: 1 },
-      { name: "hlavné jedlo", count: 1 },
-    ];
-    let porcie = 2;
-    let pocet = 2;
     let recipes = [];
     let recipes_days = [{ monday: [], tuesday: [], wednesday: [], thursday: [], friday: [] }];
 
-    let days = ["Pondelok", "Piatok", "Utorok"];
-    for (let k = 0; k < days.length; k++) {
+    for (let k = 0; k < dtoIn.days.length; k++) {
       recipes = [];
-      for (let j = 0; j < count_meals.length; j++) {
-        dtoIn.type_recipe = count_meals[j].name;
-        let recipe = await this.dao.generate(dtoIn, count_meals[j].count);
-        for (let i = 0; i < count_meals[j].count; i++) {
+      for (let j = 0; j < dtoIn.count_meals.length; j++) {
+        dtoIn.type_recipe = dtoIn.count_meals[j].name;
+        let recipe = await this.dao.generate(dtoIn, dtoIn.count_meals[j].count);
+        for (let i = 0; i < dtoIn.count_meals[j].count; i++) {
           let id = JSON.parse(JSON.stringify(recipe[i]._id));
           let recipe_load = await this.load(awid, { id: id });
           recipes.push({
@@ -105,19 +98,19 @@ class RecipeAbl {
             category: recipe_load.category,
             type_recipe: recipe_load.type_recipe,
             portion: recipe_load.portion,
-            ingredience: await this.comprassion(awid, recipe_load, porcie),
+            ingredience: await this.comprassion(awid, recipe_load, dtoIn.portion),
           });
         }
       }
-      if (days[k] == "Pondelok") {
+      if (dtoIn.days[k] == "Pondelok") {
         recipes_days[0].monday.push(recipes);
-      } else if (days[k] == "Utorok") {
+      } else if (dtoIn.days[k] == "Utorok") {
         recipes_days[0].tuesday.push(recipes);
-      } else if (days[k] == "Streda") {
+      } else if (dtoIn.days[k] == "Streda") {
         recipes_days[0].wednesday.push(recipes);
-      } else if (days[k] == "Štvrtok") {
+      } else if (dtoIn.days[k] == "Štvrtok") {
         recipes_days[0].thursday.push(recipes);
-      } else if (days[k] == "Piatok") {
+      } else if (dtoIn.days[k] == "Piatok") {
         recipes_days[0].friday.push(recipes);
       }
     }
@@ -129,7 +122,7 @@ class RecipeAbl {
     if (!recipes_days) {
       throw new Errors.Generate.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
     }
-    //comprassion(recipe, porcie);
+    //comprassion(recipe, dtoIn.portion);
     // return updated joke
     return {
       ...recipes_days,

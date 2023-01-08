@@ -31,6 +31,11 @@ const recipeLoadDtoInType = shape({
 });
 
 const recipeGenerateDtoInType = shape({
-category: array(),
-  type_recipe: string(255),
+  portion: integer(),
+  count_meals: array(shape({
+    name: string(255),
+    count: integer(250),
+  })),
+  days: array(),
+  category: array(),
 });
