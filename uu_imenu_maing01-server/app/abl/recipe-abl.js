@@ -87,21 +87,38 @@ class RecipeAbl {
     ];
     let porcie = 2;
     let pocet = 2;
-    let ingrediences = [];
-    for (let j = 0; j < 2; j++) {
-      dtoIn.type_recipe = count_meals[j].name;
-      let recipe = await this.dao.generate(dtoIn, count_meals[j].count);
-      for (let i = 0; i < count_meals[j].count; i++) {
-        let id = JSON.parse(JSON.stringify(recipe[i]._id));
-        let recipe_load = await this.load(awid, { id: id });
-        ingrediences.push({
-          id: id,
-          name: recipe_load.name,
-          category: recipe_load.category,
-          type_recipe: recipe_load.type_recipe,
-          portion: recipe_load.portion,
-          ingredience: await this.comprassion(awid, recipe_load, porcie),
-        });
+    let recipes = [];
+    let recipes_days = [{ monday: [], tuesday: [], wednesday: [], thursday: [], friday: [] }];
+
+    let days = ["Pondelok", "Piatok", "Utorok"];
+    for (let k = 0; k < days.length; k++) {
+      recipes = [];
+      for (let j = 0; j < count_meals.length; j++) {
+        dtoIn.type_recipe = count_meals[j].name;
+        let recipe = await this.dao.generate(dtoIn, count_meals[j].count);
+        for (let i = 0; i < count_meals[j].count; i++) {
+          let id = JSON.parse(JSON.stringify(recipe[i]._id));
+          let recipe_load = await this.load(awid, { id: id });
+          recipes.push({
+            id: id,
+            name: recipe_load.name,
+            category: recipe_load.category,
+            type_recipe: recipe_load.type_recipe,
+            portion: recipe_load.portion,
+            ingredience: await this.comprassion(awid, recipe_load, porcie),
+          });
+        }
+      }
+      if (days[k] == "Pondelok") {
+        recipes_days[0].monday.push(recipes);
+      } else if (days[k] == "Utorok") {
+        recipes_days[0].tuesday.push(recipes);
+      } else if (days[k] == "Streda") {
+        recipes_days[0].wednesday.push(recipes);
+      } else if (days[k] == "Štvrtok") {
+        recipes_days[0].thursday.push(recipes);
+      } else if (days[k] == "Piatok") {
+        recipes_days[0].friday.push(recipes);
       }
     }
 
@@ -109,13 +126,13 @@ class RecipeAbl {
 
     }*/
     // if joke does not exist (was not found in database)
-    if (!recipe) {
+    if (!recipes_days) {
       throw new Errors.Generate.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
     }
     //comprassion(recipe, porcie);
     // return updated joke
     return {
-      ...recipe,
+      ...recipes_days,
       uuAppErrorMap,
     };
   }
