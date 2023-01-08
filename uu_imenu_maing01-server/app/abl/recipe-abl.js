@@ -82,7 +82,7 @@ class RecipeAbl {
 
     // load joke from database by id from dtoIn
     let recipes = [];
-    let recipes_days = [{ monday: [], tuesday: [], wednesday: [], thursday: [], friday: [] }];
+    let recipes_days = { monday: [], tuesday: [], wednesday: [], thursday: [], friday: [] };
 
     for (let k = 0; k < dtoIn.days.length; k++) {
       recipes = [];
@@ -103,15 +103,15 @@ class RecipeAbl {
         }
       }
       if (dtoIn.days[k] == "Pondelok") {
-        recipes_days[0].monday.push(recipes);
+        recipes_days.monday.push(...recipes);
       } else if (dtoIn.days[k] == "Utorok") {
-        recipes_days[0].tuesday.push(recipes);
+        recipes_days.tuesday.push(...recipes);
       } else if (dtoIn.days[k] == "Streda") {
-        recipes_days[0].wednesday.push(recipes);
+        recipes_days.wednesday.push(...recipes);
       } else if (dtoIn.days[k] == "Štvrtok") {
-        recipes_days[0].thursday.push(recipes);
+        recipes_days.thursday.push(...recipes);
       } else if (dtoIn.days[k] == "Piatok") {
-        recipes_days[0].friday.push(recipes);
+        recipes_days.friday.push(...recipes);
       }
     }
 
