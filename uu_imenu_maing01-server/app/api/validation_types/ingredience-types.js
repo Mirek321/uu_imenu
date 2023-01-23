@@ -16,7 +16,7 @@ const ingredienceDeleteDtoInType = shape({
 const ingredienceUpdateDtoInType = shape({
   id: id().isRequired(),
   name: string(255),
-  amount: integer(400),
+  amount: float(400),
   unit: string(400),
   allergen: string(100),
   category: string(255),
