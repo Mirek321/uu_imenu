@@ -25,6 +25,8 @@ const Recipe = createComponent({
 
   render(props) {
     //@@viewOn:private
+    console.log("ahoj");
+
     const { children } = props;
     //@@viewOff:private
 
@@ -32,7 +34,7 @@ const Recipe = createComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    // return <RecipesProvider />;
+    return <RecipesProvider />;
     //@@viewOff:render
   },
 });
