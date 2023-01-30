@@ -6,6 +6,7 @@ import Plus4U5App from "uu_plus4u5g02-app";
 
 import Config from "./config/config.js";
 import Home from "../routes/home.js";
+import Recipe from "../routes/recipe.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -17,13 +18,10 @@ const ROUTE_MAP = {
   "": { redirect: "home" },
   home: (props) => <Home {...props} />,
   about: (props) => <About {...props} />,
+  recipe: (props) => <Recipe {...props} />,
   "sys/uuAppWorkspace/initUve": (props) => <InitAppWorkspace {...props} />,
   controlPanel: (props) => <ControlPanel {...props} />,
-  "*": () => (
-    <Uu5Elements.Text category="story" segment="heading" type="h1">
-      Not Found
-    </Uu5Elements.Text>
-  ),
+  "*": () => <Uu5Elements.Text category="story" segment="heading" type="h1"></Uu5Elements.Text>,
 };
 //@@viewOff:constants
 
