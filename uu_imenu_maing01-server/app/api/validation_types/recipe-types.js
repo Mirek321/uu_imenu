@@ -1,13 +1,8 @@
 /* eslint-disable */
 const recipeCreateDtoInType = shape({
   name: string(255).isRequired(),
-  ingredience: array(shape({
-    id: string(255),
-    amount: float(250),
-  })),
-  category: array(),
   type_recipe: string(255),
-  portion: integer(255),
+
 });
 const recipeGetDtoInType = shape({
   id: id().isRequired(),

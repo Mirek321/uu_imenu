@@ -20,7 +20,14 @@ const Calls = {
   //   const commandUri = Calls.getCommandUri("loadDemoContent");
   //   return Calls.call("get", commandUri, dtoIn);
   // },
-
+  recipeCreate(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/create");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+  recipeList() {
+    const commandUri = Calls.getCommandUri("recipe/list");
+    return Calls.call("get", commandUri);
+  },
   loadIdentityProfiles() {
     const commandUri = Calls.getCommandUri("sys/uuAppWorkspace/initUve");
     return Calls.call("get", commandUri);
