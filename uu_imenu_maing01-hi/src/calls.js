@@ -20,9 +20,13 @@ const Calls = {
   //   const commandUri = Calls.getCommandUri("loadDemoContent");
   //   return Calls.call("get", commandUri, dtoIn);
   // },
-  recipeGenerate() {
+  recipeGet(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/get");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+  recipeGenerate(dtoInData) {
     const commandUri = Calls.getCommandUri("recipe/generate");
-    return Calls.call("get", commandUri);
+    return Calls.call("get", commandUri, dtoInData);
   },
   recipeCreate(dtoInData) {
     const commandUri = Calls.getCommandUri("recipe/create");
