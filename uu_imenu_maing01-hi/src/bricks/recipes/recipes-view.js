@@ -4,8 +4,10 @@ import Uu5Tiles from "uu5tilesg02";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import Uu5Elements from "uu5g05-elements";
 import Plus4u5Elements from "uu_plus4u5g02-elements";
+import UU5 from "uu5g04";
 import RecipesForm from "./recipes-form";
 import Config from "./config/config.js";
+import RouteBar from "../../core/route-bar";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -42,6 +44,7 @@ const RecipesView = createVisualComponent({
     const COLUMN_LIST = [
       { value: "name", header: "Názov receptu" },
       { value: "type_recipe", header: "Typ jedla" },
+      { header: "Akcie", type: "actionList" },
     ];
 
     function getActionList() {
@@ -54,9 +57,25 @@ const RecipesView = createVisualComponent({
       ];
       return actionList;
     }
+    function getTileActionList({ rowList, data }) {
+      let itemList = [
+        {
+          icon: "mdi-minus",
+          tooltip: "Odstranit recept",
+          onClick: () => removeRecipe(),
+        },
+      ];
+      return itemList;
+    }
+    function removeRecipe(data) {
+      console.log();
+    }
     function addNewRecipe() {
       setOpen(true);
       console.log("Adding new ticket");
+    }
+    function closeModal() {
+      setOpen(false);
     }
     //@@viewOff:private
 
@@ -66,19 +85,24 @@ const RecipesView = createVisualComponent({
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, RecipesView);
-    console.log(props.data.itemList[0].name);
     return currentNestingLevel ? (
       <div {...attrs}>
+        <RouteBar />
         <Plus4u5Elements.IdentificationBlock
           header={"Zoznam receptov"}
           actionList={getActionList()}
           headerSeparator={true}
           card={"full"}
         >
-          <Uu5TilesElements.Table columnList={COLUMN_LIST} data={props.data.itemList} />
+          <Uu5TilesElements.List
+            view={"grid"}
+            columnList={COLUMN_LIST}
+            data={props.data.itemList}
+            getActionList={getTileActionList}
+          />
         </Plus4u5Elements.IdentificationBlock>
-        <Uu5Elements.Modal header={"Vytvorenie novehou receptu"} ref={modalRef} open={open}>
-          <RecipesForm onSave={props.onCreate} />
+        <Uu5Elements.Modal header={"Vytvorenie novehou receptu"} open={open}>
+          <RecipesForm onSave={props.onCreate} onClose={closeModal} />
         </Uu5Elements.Modal>
       </div>
     ) : null;

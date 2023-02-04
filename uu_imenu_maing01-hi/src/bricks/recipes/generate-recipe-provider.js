@@ -1,9 +1,11 @@
 //@@viewOn:imports
 import { createComponent, useDataObject } from "uu5g05";
 import UU5 from "uu5g04";
-import Config from "../config/config.js";
+import Config from "./config/config.js";
 import Calls from "../../calls";
-import RecipesView from "../recipes/recipes-view.js";
+import RecipesView from "./recipes-view";
+import generateRecipeView, { GenerateRecipeView } from "./generate-recipe-view";
+
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -12,9 +14,9 @@ import RecipesView from "../recipes/recipes-view.js";
 //@@viewOn:helpers
 //@@viewOff:helpers
 
-const RecipesProvider = createComponent({
+const GenerateRecipeProvider = createComponent({
   //@@viewOn:statics
-  uu5Tag: Config.TAG + "RecipesProvider",
+  uu5Tag: Config.TAG + "GenerateRecipeProvider",
   //@@viewOff:statics
 
   //@@viewOn:propTypes
@@ -28,22 +30,18 @@ const RecipesProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
-
-    function recipeList() {
-      return Calls.recipeList();
-    }
-    function recipeCreate(data) {
-      console.log(data);
-      return Calls.recipeCreate(data);
+    function recipeGenerate() {
+      console.log("generuje");
+      return Calls.recipeGenerate();
     }
     //@@viewOff:private
 
-    //@@viewOn:hooks
-    const callResult = useDataObject({ handlerMap: { load: recipeList, create: recipeCreate } });
-    //@@viewOff:hooks
-
     //@@viewOn:interface
     //@@viewOff:interface
+
+    //@@viewOn:hooks
+    const callResult = useDataObject({ handlerMap: { generate: recipeGenerate } });
+    //@@viewOff:hooks
 
     //@@viewOn:render
     const { state, data, handlerMap, errorData } = callResult;
@@ -53,7 +51,7 @@ const RecipesProvider = createComponent({
         return "Loading";
       case "ready":
       case "readyNoData":
-        return <RecipesView data={data} onCreate={handlerMap.create} />;
+        return <GenerateRecipeView data={data} />;
     }
     console.log(callResult);
     return children ?? null;
@@ -62,6 +60,6 @@ const RecipesProvider = createComponent({
 });
 
 //@@viewOn:exports
-export { RecipesProvider };
-export default RecipesProvider;
+export { GenerateRecipeProvider };
+export default GenerateRecipeProvider;
 //@@viewOff:exports
