@@ -39,7 +39,7 @@ const GenerateRecipeProvider = createComponent({
         portion: 2,
         count_meals: [
           { name: "polievka", count: 1 },
-          { name: "hlavné jedlo", count: 0 },
+          { name: "hlavné jedlo", count: 1 },
         ],
         days: ["Pondelok", "Utorok", "Štvrtok", "Piatok"],
       };

@@ -92,6 +92,7 @@ class RecipeAbl {
         for (let i = 0; i < dtoIn.count_meals[j].count; i++) {
           let id = JSON.parse(JSON.stringify(recipe[i]._id));
           let recipe_load = await this.load(awid, { id: id });
+
           recipes.push({
             id: id,
             name: recipe_load.name,
