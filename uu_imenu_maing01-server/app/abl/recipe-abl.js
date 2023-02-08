@@ -98,8 +98,6 @@ class RecipeAbl {
             name: recipe_load.name,
             category: recipe_load.category,
             type_recipe: recipe_load.type_recipe,
-            portion: recipe_load.portion,
-            ingredience: await this.comprassion(awid, recipe_load, dtoIn.portion),
           });
         }
       }

@@ -1,6 +1,7 @@
 /* eslint-disable */
 const recipeCreateDtoInType = shape({
   name: string(255).isRequired(),
+  description: string(500),
   ingredience: array(shape({
     id: string(255),
     amount: float(250),

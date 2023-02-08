@@ -20,6 +20,10 @@ const Calls = {
   //   const commandUri = Calls.getCommandUri("loadDemoContent");
   //   return Calls.call("get", commandUri, dtoIn);
   // },
+  recipeLoad(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/load");
+    return Calls.call("get", commandUri, dtoInData);
+  },
   recipeGet(dtoInData) {
     const commandUri = Calls.getCommandUri("recipe/get");
     return Calls.call("get", commandUri, dtoInData);
