@@ -130,12 +130,6 @@ const GenerateRecipeView = createVisualComponent({
         <RouteBar />
         <Uu5Elements.Button onClick={props.onGenerate}>Generuj</Uu5Elements.Button>
         <Uu5Elements.Grid templateColumns="repeat(5, 1fr)">{gridContent}</Uu5Elements.Grid>
-        <UU5.Imaging.Image
-          width="50%"
-          src={
-            "https://img.aktuality.sk/foto/Zml0LWluLzE2MDB4MC9pbWc=/9GkfsLqZvKfNJFPE5TMx.jpg?st=93fmd2inThreiuOTUdDL8T6LWQPvTsbLK36uyltq1Kg&ts=1675311512&e=0"
-          }
-        />
       </div>
     ) : null;
     //@@viewOff:render

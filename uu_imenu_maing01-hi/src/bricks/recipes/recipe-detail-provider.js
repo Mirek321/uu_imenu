@@ -32,9 +32,13 @@ const RecipeDetailProvider = createComponent({
     function recipeLoad() {
       return Calls.recipeLoad({ id: route.params.id });
     }
+    function recipesUpdate(data) {
+      console.log(data);
+      return Calls.recipeUpdate();
+    }
     //@@viewOff:private
     //@@viewOn:hooks
-    const callResult = useDataObject({ handlerMap: { load: recipeLoad } });
+    const callResult = useDataObject({ handlerMap: { load: recipeLoad, update: recipesUpdate } });
     //@@viewOff:hooks
 
     //@@viewOn:interface
@@ -50,7 +54,7 @@ const RecipeDetailProvider = createComponent({
         return "Loading";
       case "ready":
       case "readyNoData":
-        return <RecipeDetailView data={data} />;
+        return <RecipeDetailView data={data} onUpdate={handlerMap.update} />;
     }
     return children ?? null;
     //@@viewOff:render
