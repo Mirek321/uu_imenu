@@ -85,6 +85,11 @@
         "realization": "api/controllers/RecipeController.generate",
         "httpMethod": "GET",
         "type": "CMD"
+      },
+      "ingredience/updateMany": {
+        "realization": "api/controllers/IngredienceController.updateMany",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

@@ -13,6 +13,13 @@ class IngredienceAbl {
     this.dao = DaoFactory.getDao("ingredience");
   }
 
+  async updateMany(awid, ingredience) {
+    for (let i = 0; i < ingredience.length; i++) {
+      let data = { id: ingredience[i].id, amount: ingredience[i].difference };
+      await this.dao.update({ ...data, awid });
+    }
+  }
+
   async list(awid, dtoIn) {
     let uuAppErrorMap = {};
     let validationResult = this.validator.validate("ingredienceListDtoInType", dtoIn);

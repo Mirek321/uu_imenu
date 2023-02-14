@@ -3,6 +3,10 @@ const IngredienceAbl = require("../../abl/ingredience-abl.js");
 
 class IngredienceController {
 
+  updateMany(ucEnv) {
+    return IngredienceAbl.updateMany(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
+  }
+
   list(ucEnv) {
     return IngredienceAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }

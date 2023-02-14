@@ -119,7 +119,13 @@ const List = {
   },
 };
 
+const UpdateMany = {
+  UC_CODE: `${INGREDIENCE_ERROR_PREFIX}updateMany/`,
+  
+};
+
 module.exports = {
+  UpdateMany,
   List,
   Update,
   Delete,

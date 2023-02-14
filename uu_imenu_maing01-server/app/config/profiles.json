@@ -72,6 +72,10 @@
       "recipe/generate": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "ingredience/updateMany": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }
