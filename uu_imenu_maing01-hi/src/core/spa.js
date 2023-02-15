@@ -8,6 +8,7 @@ import Config from "./config/config.js";
 import Home from "../routes/home.js";
 import Recipe from "../routes/recipe.js";
 import RecipeDetail from "../routes/recipe-detail";
+import RecipesDetail from "../routes/recipes-detail";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -21,6 +22,7 @@ const ROUTE_MAP = {
   about: (props) => <About {...props} />,
   recipe: (props) => <Recipe {...props} />,
   recipedetail: (props) => <RecipeDetail {...props} />,
+  recipesdetail: (props) => <RecipesDetail {...props} />,
   "sys/uuAppWorkspace/initUve": (props) => <InitAppWorkspace {...props} />,
   controlPanel: (props) => <ControlPanel {...props} />,
   "*": () => <Uu5Elements.Text category="story" segment="heading" type="h1"></Uu5Elements.Text>,

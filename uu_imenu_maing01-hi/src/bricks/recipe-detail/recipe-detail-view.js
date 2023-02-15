@@ -3,7 +3,8 @@ import { createVisualComponent, Utils, Content, useState, useRef, useRoute } fro
 import Uu5Elements from "uu5g05-elements";
 import UU5 from "uu5g04";
 import Uu5Imaging from "uu5imagingg01";
-import Config from "./config/config.js";
+import Uu5Forms from "uu5g05-forms";
+import Config from "../recipes/config/config.js";
 import RouteBar from "../../core/route-bar";
 
 //@@viewOff:imports
@@ -40,26 +41,40 @@ const RecipeDetailView = createVisualComponent({
     const [route, setRoute] = useRoute();
     const [gridContent, setGridContent] = useState([gridContent1]);
     let process = [];
+    let ingrediences = [];
+    const [message, setMessage] = useState("");
+    const [ingredience, setIngredience] = useState([]);
+
+    const [updated, setUpdated] = useState(message);
 
     const { children } = props;
     const modalRef = useRef();
-    const test = {};
+    const handleChange = (event) => {
+      setMessage(event.target.value);
+    };
+    const handleClick = () => {
+      // 👇 "message" stores input field value
+      setUpdated(message);
+    };
     function comprassion(portion) {
       if (portion > 0) {
         let recipe;
         recipe = props.data;
         // eslint-disable-next-line uu5/hooks-rules
         setGridContent([]);
-        let ingrediences = [];
+        ingrediences = [];
 
         for (let i = 0; i < recipe.ingredience.itemList.length; i++) {
           ingrediences.push({
             name: recipe.ingredience.itemList[i].name,
             id: JSON.parse(JSON.stringify(recipe.ingredience.itemList[i].id)),
-            amount_need: recipe.ingredience.itemList[i].amount_recipe * portion,
-            amount: recipe.ingredience.itemList[i].amount_recipe,
+            amount_need: parseFloat((recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)),
+            amount_recipe: recipe.ingredience.itemList[i].amount_recipe,
+            amount_stock: recipe.ingredience.itemList[i].amount,
             unit: recipe.ingredience.itemList[i].unit,
-            difference: recipe.ingredience.itemList[i].amount - recipe.ingredience.itemList[i].amount_recipe * portion,
+            difference:
+              recipe.ingredience.itemList[i].amount -
+              parseFloat((recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)),
           });
 
           if (ingrediences[i].difference > 0) {
@@ -67,13 +82,21 @@ const RecipeDetailView = createVisualComponent({
             setGridContent((gridContet) => [
               ...gridContet,
               <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
-                {ingrediences[i].name}
-                <Uu5Elements.Text className={Config.Css.css({ marginLeft: "65%" })}>
-                  {ingrediences[i].amount_need}{" "}
-                </Uu5Elements.Text>
-                {ingrediences[i].unit}
+                <div style={{ textAlign: "left" }}>
+                  <strong style={{ margin: 0 }}>{ingrediences[i].name}</strong>
+                </div>
+
+                <div style={{ textAlign: "right", paddingBottom: "10px" }}>
+                  {ingrediences[i].amount_need}
+                  {" z "}
+                  {ingrediences[i].amount_stock}
+                  {"  "}
+                  {ingrediences[i].unit}
+                  {"  "}
+                  <Uu5Elements.Icon icon="fa-check" />
+                </div>
+
                 {"  "}
-                <Uu5Elements.Icon icon="fa-check" margin={{ left: 4 }} />
               </Uu5Elements.Box>,
             ]);
             // gridContent.push(
@@ -87,8 +110,19 @@ const RecipeDetailView = createVisualComponent({
             setGridContent((gridContet) => [
               ...gridContet,
               <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
-                {ingrediences[i].amount}
-                <Uu5Elements.Icon icon="fa-check" margin={{ left: 4 }} />
+                <div style={{ textAlign: "left" }}>
+                  <strong>{ingrediences[i].name}</strong>
+                </div>
+
+                <div style={{ textAlign: "right" }}>
+                  {ingrediences[i].amount_need}
+                  {" z "}
+                  {ingrediences[i].amount_stock}
+                  {"  "}
+                  {ingrediences[i].unit}
+                  {"  "}
+                  <Uu5Elements.Icon icon="fa-check" />
+                </div>
               </Uu5Elements.Box>,
             ]);
             // gridContent.push(
@@ -102,9 +136,20 @@ const RecipeDetailView = createVisualComponent({
             setGridContent((gridContet) => [
               ...gridContet,
               <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
-                {ingrediences[i].amount}
+                <div style={{ textAlign: "left" }}>
+                  {" "}
+                  <strong style={{ margin: 0, paddingBottom: "10px" }}>{ingrediences[i].name}</strong>
+                </div>
 
-                <Uu5Elements.Icon icon="mdi-close-circle" margin={{ left: 4 }} />
+                <div style={{ textAlign: "right" }}>
+                  {ingrediences[i].amount_need}
+                  {" z "}
+                  {ingrediences[i].amount_stock}
+                  {"  "}
+                  {ingrediences[i].unit}
+                  {"  "}
+                  <Uu5Elements.Icon icon="mdi-close-circle" />
+                </div>
               </Uu5Elements.Box>,
             ]);
             // gridContent.push(
@@ -122,9 +167,19 @@ const RecipeDetailView = createVisualComponent({
         // } else {
         //   // pass;
         // }
+        setIngredience(ingrediences);
+
         return gridContent;
+
         // return ingrediences;
       }
+    }
+
+    function onUpdate() {
+      props.onUpdate(ingredience);
+
+      window.location.reload(false);
+      // setRoute("home");
     }
     //@@viewOff:private
 
@@ -136,14 +191,20 @@ const RecipeDetailView = createVisualComponent({
     props.data.ingredience.itemList.forEach((element) =>
       gridContent1.push(
         <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
-          {element.name}
+          <strong>{element.name}</strong>
+
+          <div style={{ textAlign: "right", paddingBottom: "10px" }}>
+            {element.amount_recipe} {element.unit}
+          </div>
         </Uu5Elements.Box>
       )
     );
-    props.data.process.forEach((element) =>
+    props.data.process.forEach((element, index) =>
       process.push(
         <Uu5Elements.Box width="50%" height="100%" className={Config.Css.css({ padding: 16 })}>
-          {element}
+          <Uu5Elements.InfoItem iconText={index + 1} />
+
+          <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
         </Uu5Elements.Box>
       )
     );
@@ -154,18 +215,34 @@ const RecipeDetailView = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <RouteBar />
-        <h1>{props.data.name}</h1>
-        <p>{props.data.description}</p>
-        <UU5.Imaging.Image width="50%" src={props.data.link_photo} />
-        <h2>Ingrediencie:</h2>
-        <p>Počet porcií:</p>
+        <div>
+          <Uu5Elements.Grid rowGap={16} columnGap={32}>
+            <h1>{props.data.name}</h1>
+            <p>{props.data.description}</p>
 
-        <Uu5Elements.Input type={"number"} onChange={(e) => comprassion(e.data.value)} />
+            <UU5.Imaging.Image width="500px" src={props.data.link_photo} />
+            <h2>Ingrediencie:</h2>
 
-        <Uu5Elements.Grid>{gridContent}</Uu5Elements.Grid>
-        <Uu5Elements.Button onClick={onUpdate(gridContent)}>Potvrdiť</Uu5Elements.Button>
-        <h2>Postup:</h2>
-        <Uu5Elements.Grid>{process}</Uu5Elements.Grid>
+            <Uu5Forms.Form.Provider onSubmit={onUpdate}>
+              <Uu5Forms.Form.View>
+                <Uu5Forms.FormNumber
+                  className={Config.Css.css({ width: "10%", paddingBottom: 16 })}
+                  label="Počet porcií:"
+                  type={"number"}
+                  id="message"
+                  name="message"
+                  onChange={(e) => comprassion(e.data.value)}
+                />
+                <Uu5Elements.Grid>{gridContent}</Uu5Elements.Grid>
+                <Uu5Forms.SubmitButton className={Config.Css.css({ width: "10%" })}> Potvrdiť</Uu5Forms.SubmitButton>
+              </Uu5Forms.Form.View>
+            </Uu5Forms.Form.Provider>
+
+            {/*<Uu5Elements.Button onClick={onUpdate}>Potvrdiť</Uu5Elements.Button>*/}
+            <h2>Postup:</h2>
+            {process}
+          </Uu5Elements.Grid>
+        </div>
       </div>
     ) : null;
     //@@viewOff:render

@@ -10,7 +10,7 @@ import RouteBar from "../core/route-bar.js";
 import Calls from "../calls";
 import RecipesView from "../bricks/recipes/recipes-view";
 import RecipesProvider from "../bricks/recipes/recipes-provider";
-import GenerateRecipeProvider from "../bricks/recipes/generate-recipe-provider";
+import GenerateRecipeProvider from "../bricks/recipe-generate/generate-recipe-provider";
 import importLsi from "../lsi/import-lsi.js";
 //@@viewOff:imports
 

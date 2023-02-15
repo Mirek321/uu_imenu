@@ -1,10 +1,8 @@
 //@@viewOn:imports
 import { createComponent, useRoute } from "uu5g05";
 import Config from "./config/config.js";
-import generateRecipeView from "../bricks/recipe-generate/generate-recipe-view";
-import RecipesProvider from "../bricks/recipes/recipes-provider";
+import RecipesDetailProvider from "../bricks/recipes/recipes-detail-provider";
 import RecipeDetailProvider from "../bricks/recipe-detail/recipe-detail-provider";
-
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -13,9 +11,9 @@ import RecipeDetailProvider from "../bricks/recipe-detail/recipe-detail-provider
 //@@viewOn:helpers
 //@@viewOff:helpers
 
-const RecipeDetail = createComponent({
+const RecipesDetail = createComponent({
   //@@viewOn:statics
-  uu5Tag: Config.TAG + "RecipeDetail",
+  uu5Tag: Config.TAG + "RecipesDetail",
   //@@viewOff:statics
 
   //@@viewOn:propTypes
@@ -33,17 +31,16 @@ const RecipeDetail = createComponent({
     //@@viewOff:private
 
     //@@viewOn:interface
-
+    return <RecipesDetailProvider />;
     //@@viewOff:interface
 
     //@@viewOn:render
-    return <RecipeDetailProvider />;
     return children ?? null;
     //@@viewOff:render
   },
 });
 
 //@@viewOn:exports
-export { RecipeDetail };
-export default RecipeDetail;
+export { RecipesDetail };
+export default RecipesDetail;
 //@@viewOff:exports

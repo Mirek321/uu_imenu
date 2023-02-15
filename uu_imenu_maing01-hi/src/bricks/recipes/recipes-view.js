@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, useRef } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useRef, useRoute } from "uu5g05";
 import Uu5Tiles from "uu5tilesg02";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import Uu5Elements from "uu5g05-elements";
@@ -43,6 +43,7 @@ const RecipesView = createVisualComponent({
     const { data } = props;
     let [open, setOpen] = useState(false);
     const modalRef = useRef();
+    const [route, setRoute] = useRoute();
 
     const COLUMN_LIST = [
       { value: "name", header: "Názov receptu" },
@@ -86,11 +87,14 @@ const RecipesView = createVisualComponent({
       console.log("test");
 
       return (
-        <Uu5Elements.Grid.Item>
-          <Uu5Elements.Box>
+        <Uu5Elements.Grid.Item className={Config.Css.css({ padding: 8 })}>
+          <Uu5Elements.Box
+            className={Config.Css.css({ padding: 16 })}
+            onClick={() => setRoute("recipesdetail", { id: data.id })}
+          >
             <UU5.Imaging.Image src={data.link_photo} />
-            <h3>{data.name}</h3>
-            <p>{data.type_recipe}</p>
+            <p style={{ textAlign: "center", margin: 0, padding: 10 }}>{data.type_recipe}</p>
+            <h3 style={{ textAlign: "center", margin: 0, padding: 5 }}>{data.name}</h3>
           </Uu5Elements.Box>
         </Uu5Elements.Grid.Item>
       );
@@ -106,25 +110,27 @@ const RecipesView = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <RouteBar />
-        <Uu5TilesElements.Grid data={props.data.itemList} tileMaxWidth={480} tileMinWidth={310}>
-          {grid}
-        </Uu5TilesElements.Grid>
-        {/*<Plus4u5Elements.IdentificationBlock*/}
-        {/*  header={"Zoznam receptov"}*/}
-        {/*  actionList={getActionList()}*/}
-        {/*  headerSeparator={true}*/}
-        {/*  card={"full"}*/}
-        {/*>*/}
-        {/*  <Uu5TilesElements.List*/}
-        {/*    view={"grid"}*/}
-        {/*    columnList={COLUMN_LIST}*/}
-        {/*    data={props.data.itemList}*/}
-        {/*    getActionList={getTileActionList}*/}
-        {/*  ></Uu5TilesElements.List>*/}
-        {/*</Plus4u5Elements.IdentificationBlock>*/}
-        <Uu5Elements.Modal header={"Vytvorenie novehou receptu"} open={open}>
-          <RecipesForm onSave={props.onCreate} onClose={closeModal} />
-        </Uu5Elements.Modal>
+        <div className={Config.Css.css({ padding: 20 })}>
+          <Uu5TilesElements.Grid data={props.data.itemList} tileMaxWidth={480} tileMinWidth={310}>
+            {grid}
+          </Uu5TilesElements.Grid>
+          {/*<Plus4u5Elements.IdentificationBlock*/}
+          {/*  header={"Zoznam receptov"}*/}
+          {/*  actionList={getActionList()}*/}
+          {/*  headerSeparator={true}*/}
+          {/*  card={"full"}*/}
+          {/*>*/}
+          {/*  <Uu5TilesElements.List*/}
+          {/*    view={"grid"}*/}
+          {/*    columnList={COLUMN_LIST}*/}
+          {/*    data={props.data.itemList}*/}
+          {/*    getActionList={getTileActionList}*/}
+          {/*  ></Uu5TilesElements.List>*/}
+          {/*</Plus4u5Elements.IdentificationBlock>*/}
+          <Uu5Elements.Modal header={"Vytvorenie novehou receptu"} open={open}>
+            <RecipesForm onSave={props.onCreate} onClose={closeModal} />
+          </Uu5Elements.Modal>
+        </div>
       </div>
     ) : null;
     //@@viewOff:render

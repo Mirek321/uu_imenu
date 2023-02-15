@@ -3,7 +3,7 @@ import { createComponent, useDataObject } from "uu5g05";
 import UU5 from "uu5g04";
 import Config from "../config/config.js";
 import Calls from "../../calls";
-import RecipesView from "./recipes-view";
+import RecipesView from "../recipes/recipes-view";
 import GenerateRecipeView from "./generate-recipe-view";
 
 //@@viewOff:imports
@@ -36,7 +36,6 @@ const GenerateRecipeProvider = createComponent({
     }
     function recipeGenerate() {
       const filter = {
-        portion: 2,
         count_meals: [
           { name: "polievka", count: 1 },
           { name: "hlavné jedlo", count: 0 },

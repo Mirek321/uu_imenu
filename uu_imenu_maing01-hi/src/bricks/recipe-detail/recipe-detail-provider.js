@@ -1,6 +1,6 @@
 //@@viewOn:imports
 import { createComponent, useDataObject, useRoute } from "uu5g05";
-import Config from "./config/config.js";
+import Config from "../recipes/config/config.js";
 import Calls from "../../calls";
 import RecipeDetailView from "./recipe-detail-view";
 
@@ -32,10 +32,10 @@ const RecipeDetailProvider = createComponent({
     function recipeLoad() {
       return Calls.recipeLoad({ id: route.params.id });
     }
-    function recipesUpdate(data) {
-      console.log(data);
-      return Calls.recipeUpdate();
+    function recipesUpdate(ingredience) {
+      return Calls.ingredienceUpdateMany(ingredience);
     }
+
     //@@viewOff:private
     //@@viewOn:hooks
     const callResult = useDataObject({ handlerMap: { load: recipeLoad, update: recipesUpdate } });
@@ -54,7 +54,7 @@ const RecipeDetailProvider = createComponent({
         return "Loading";
       case "ready":
       case "readyNoData":
-        return <RecipeDetailView data={data} onUpdate={handlerMap.update} />;
+        return <RecipeDetailView data={data} onLoad={handlerMap.load} onUpdate={handlerMap.update} />;
     }
     return children ?? null;
     //@@viewOff:render
