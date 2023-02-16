@@ -41,7 +41,7 @@ const RecipesDetailView = createVisualComponent({
     const [route, setRoute] = useRoute();
     props.data.ingredience.itemList.forEach((element) =>
       gridContent1.push(
-        <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
+        <Uu5Elements.Box size="m" aspectRatio="30x2" className={Config.Css.css({ padding: 16 })}>
           <strong>{element.name}</strong>
 
           <div style={{ textAlign: "right", paddingBottom: "10px" }}>
@@ -52,11 +52,13 @@ const RecipesDetailView = createVisualComponent({
     );
     props.data.process.forEach((element, index) =>
       process.push(
-        <Uu5Elements.Box width="50%" height="100%" className={Config.Css.css({ padding: 16 })}>
-          <Uu5Elements.InfoItem iconText={index + 1} />
+        <Uu5Elements.Grid.Item alignSelf="center" justifySelf="center">
+          <Uu5Elements.Box width="70%" height="100%" className={Config.Css.css({ padding: 16 })}>
+            <Uu5Elements.InfoItem iconText={index + 1} />
 
-          <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
-        </Uu5Elements.Box>
+            <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
+          </Uu5Elements.Box>
+        </Uu5Elements.Grid.Item>
       )
     );
     //@@viewOff:private
@@ -73,17 +75,23 @@ const RecipesDetailView = createVisualComponent({
         {" "}
         <RouteBar />
         <div>
-          <Uu5Elements.Grid rowGap={16} columnGap={32}>
-            <h1>{props.data.name}</h1>
-            <p>{props.data.description}</p>
+          <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+            <Uu5Elements.Grid.Item colSpan={10} alignSelf="center">
+              <h1 style={{ textAlign: "center" }}>{props.data.name}</h1>
+            </Uu5Elements.Grid.Item>
+            <Uu5Elements.Grid.Item rowSpan={5} justifySelf="center">
+              <h2>Popis:</h2>
+              <p style={{ fontSize: "medium" }}>{props.data.description}</p>
 
-            <UU5.Imaging.Image width="500px" src={props.data.link_photo} />
-            <h2>Ingrediencie:</h2>
-            <Uu5Elements.Grid>{gridContent1}</Uu5Elements.Grid>
-
+              <UU5.Imaging.Image width="500px" src={props.data.link_photo} />
+              <h2>Ingrediencie:</h2>
+              <Uu5Elements.Grid>{gridContent1}</Uu5Elements.Grid>
+            </Uu5Elements.Grid.Item>
             {/*<Uu5Elements.Button onClick={onUpdate}>Potvrdiť</Uu5Elements.Button>*/}
-            <h2>Postup:</h2>
-            {process}
+            <Uu5Elements.Grid.Item rowSpan={5} justifySelf="center">
+              <h2>Postup:</h2>
+              <Uu5Elements.Grid display="inline"> {process}</Uu5Elements.Grid>
+            </Uu5Elements.Grid.Item>
           </Uu5Elements.Grid>
         </div>
       </div>

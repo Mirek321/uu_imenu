@@ -41,7 +41,6 @@ const GenerateRecipeView = createVisualComponent({
     let gridContent = [];
     let soup = [];
     let main_meal = [];
-    let test = [];
 
     const [route, setRoute] = useRoute();
     const [showBanner, setShowBanner] = useState(false);
@@ -50,6 +49,7 @@ const GenerateRecipeView = createVisualComponent({
     const [days, setDays] = useState([]);
     const [main_meal_filter, setMain_meal_filter] = useState("");
     let [open, setOpen] = useState(false);
+    const test = useRef();
 
     let g = [];
 
@@ -128,7 +128,7 @@ const GenerateRecipeView = createVisualComponent({
       // };
 
       props.onGenerate();
-      console.log(props.data);
+      console.log(test.current);
 
       window.localStorage.setItem("MY_IMENU_APP", JSON.stringify(props.data));
     }
@@ -209,14 +209,15 @@ const GenerateRecipeView = createVisualComponent({
               }
             />
           </UU5.Bricks.Accordion>
+          <div ref={test}>
+            <Uu5Elements.Grid templateColumns="repeat(5, 1fr)">{gridContent} </Uu5Elements.Grid>
+          </div>
 
-          <Uu5Elements.Grid templateColumns="repeat(5, 1fr)">{gridContent}</Uu5Elements.Grid>
+          {/*<Uu5Elements.Modal header={"Filtrovanie generovania"} open={open}>*/}
+          {/*  <GenerateRecipeForm onSave={props.onGenerate} onClose={closeModal}></GenerateRecipeForm>*/}
+          {/*</Uu5Elements.Modal>*/}
+          {g}
         </div>
-
-        {/*<Uu5Elements.Modal header={"Filtrovanie generovania"} open={open}>*/}
-        {/*  <GenerateRecipeForm onSave={props.onGenerate} onClose={closeModal}></GenerateRecipeForm>*/}
-        {/*</Uu5Elements.Modal>*/}
-        {g}
       </div>
     ) : null;
     //@@viewOff:render

@@ -9,6 +9,7 @@ import Home from "../routes/home.js";
 import Recipe from "../routes/recipe.js";
 import RecipeDetail from "../routes/recipe-detail";
 import RecipesDetail from "../routes/recipes-detail";
+import Ingredience from "../routes/ingredience";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -21,6 +22,7 @@ const ROUTE_MAP = {
   home: (props) => <Home {...props} />,
   about: (props) => <About {...props} />,
   recipe: (props) => <Recipe {...props} />,
+  ingredience: (props) => <Ingredience {...props} />,
   recipedetail: (props) => <RecipeDetail {...props} />,
   recipesdetail: (props) => <RecipesDetail {...props} />,
   "sys/uuAppWorkspace/initUve": (props) => <InitAppWorkspace {...props} />,
