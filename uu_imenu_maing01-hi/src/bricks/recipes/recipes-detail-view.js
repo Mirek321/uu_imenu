@@ -41,7 +41,7 @@ const RecipesDetailView = createVisualComponent({
     const [route, setRoute] = useRoute();
     props.data.ingredience.itemList.forEach((element) =>
       gridContent1.push(
-        <Uu5Elements.Box size="m" aspectRatio="30x2" className={Config.Css.css({ padding: 16 })}>
+        <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
           <strong>{element.name}</strong>
 
           <div style={{ textAlign: "right", paddingBottom: "10px" }}>
@@ -52,13 +52,11 @@ const RecipesDetailView = createVisualComponent({
     );
     props.data.process.forEach((element, index) =>
       process.push(
-        <Uu5Elements.Grid.Item alignSelf="center" justifySelf="center">
-          <Uu5Elements.Box width="70%" height="100%" className={Config.Css.css({ padding: 16 })}>
-            <Uu5Elements.InfoItem iconText={index + 1} />
+        <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
+          <Uu5Elements.InfoItem iconText={index + 1} />
 
-            <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
-          </Uu5Elements.Box>
-        </Uu5Elements.Grid.Item>
+          <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
+        </Uu5Elements.Box>
       )
     );
     //@@viewOff:private
@@ -75,11 +73,15 @@ const RecipesDetailView = createVisualComponent({
         {" "}
         <RouteBar />
         <div>
-          <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+          <Uu5Elements.Grid
+            templateColumns="repeat(2, 1fr)"
+            columnGap={"0"}
+            className={Config.Css.css({ paddingBottom: "5%" })}
+          >
             <Uu5Elements.Grid.Item colSpan={10} alignSelf="center">
               <h1 style={{ textAlign: "center" }}>{props.data.name}</h1>
             </Uu5Elements.Grid.Item>
-            <Uu5Elements.Grid.Item rowSpan={5} justifySelf="center">
+            <Uu5Elements.Grid.Item className={Config.Css.css({ marginLeft: "20%" })}>
               <h2>Popis:</h2>
               <p style={{ fontSize: "medium" }}>{props.data.description}</p>
 
@@ -88,7 +90,7 @@ const RecipesDetailView = createVisualComponent({
               <Uu5Elements.Grid>{gridContent1}</Uu5Elements.Grid>
             </Uu5Elements.Grid.Item>
             {/*<Uu5Elements.Button onClick={onUpdate}>Potvrdiť</Uu5Elements.Button>*/}
-            <Uu5Elements.Grid.Item rowSpan={5} justifySelf="center">
+            <Uu5Elements.Grid.Item className={Config.Css.css({ width: "70%", marginLeft: "10%" })}>
               <h2>Postup:</h2>
               <Uu5Elements.Grid display="inline"> {process}</Uu5Elements.Grid>
             </Uu5Elements.Grid.Item>

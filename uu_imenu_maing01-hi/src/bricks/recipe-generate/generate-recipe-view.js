@@ -166,44 +166,59 @@ const GenerateRecipeView = createVisualComponent({
               content={
                 <Uu5Forms.Form.Provider onSubmit={onGenerate}>
                   <Uu5Forms.Form.View>
-                    <Uu5Forms.FormNumber
-                      className={Config.Css.css({ width: "20%" })}
-                      label="Počet polievok v menu:"
-                      value={soup_filter}
-                      name={"soup"}
-                      type={"number"}
-                      onChange={(value) => setSoupFilter(value.data.value)}
-                    />
+                    <Uu5Elements.Grid templateColumns="repeat(2, 1fr)" columnGap={"0"}>
+                      <Uu5Elements.Grid.Item justifySelf="end" className={Config.Css.css({ paddingRight: 15 })}>
+                        <Uu5Forms.FormNumber
+                          className={Config.Css.css({ width: "100%" })}
+                          label="Počet polievok v menu:"
+                          value={soup_filter}
+                          name={"soup"}
+                          type={"number"}
+                          onChange={(value) => setSoupFilter(value.data.value)}
+                        />
 
-                    <Uu5Forms.FormNumber
-                      className={Config.Css.css({ width: "20%" })}
-                      label="Počet hlavných jedál v menu:"
-                      value={main_meal_filter}
-                      name={"main_meal"}
-                      type={"number"}
-                      onChange={(value) => setMain_meal_filter(value.data.value)}
-                    />
-
-                    <Uu5Forms.FormCheckboxes
-                      label="Dni v ktorych sa varí:"
-                      className={Config.Css.css({ width: "20%" })}
-                      itemList={[
-                        { label: "Pondelok", value: "Pondelok" },
-                        { label: "Utorok", value: "Utorok" },
-                        { label: "Streda", value: "Streda" },
-                        { label: "Śtvrtok", value: "Štvrtok" },
-                        { label: "Piatok", value: "Piatok" },
-                      ]}
-                      onChange={(e) => {
-                        setDays(e.data.value);
-                      }}
-                    ></Uu5Forms.FormCheckboxes>
-
-                    {/*<Uu5Elements.Button onClick={onGenerate}>/Uu5Elements.Button>*/}
-                    <Uu5Forms.SubmitButton className={Config.Css.css({ width: "20%" })}>
-                      {" "}
-                      Generuj{" "}
-                    </Uu5Forms.SubmitButton>
+                        <Uu5Forms.FormNumber
+                          className={Config.Css.css({ width: "100%" })}
+                          label="Počet hlavných jedál v menu:"
+                          value={main_meal_filter}
+                          name={"main_meal"}
+                          type={"number"}
+                          onChange={(value) => setMain_meal_filter(value.data.value)}
+                        />
+                        <Uu5Forms.FormSwitchSelect
+                          name="Obsah mäsa"
+                          label="Obsah mäsa"
+                          itemList={[
+                            { children: "Mäsité", value: "mäsité" },
+                            { children: "Bezmäsité", value: "bezmäsité" },
+                          ]}
+                          onChange={(value) => console.log(value.data.value)}
+                        />
+                      </Uu5Elements.Grid.Item>
+                      <Uu5Elements.Grid.Item justifySelf="start" className={Config.Css.css({ paddingLeft: 15 })}>
+                        <Uu5Forms.FormCheckboxes
+                          label="Dni v ktorych sa varí:"
+                          className={Config.Css.css({ width: "100%" })}
+                          itemList={[
+                            { label: "Pondelok", value: "Pondelok" },
+                            { label: "Utorok", value: "Utorok" },
+                            { label: "Streda", value: "Streda" },
+                            { label: "Śtvrtok", value: "Štvrtok" },
+                            { label: "Piatok", value: "Piatok" },
+                          ]}
+                          onChange={(e) => {
+                            setDays(e.data.value);
+                          }}
+                        ></Uu5Forms.FormCheckboxes>
+                      </Uu5Elements.Grid.Item>
+                      <Uu5Elements.Grid.Item justifySelf="center" colSpan={10}>
+                        {/*<Uu5Elements.Button onClick={onGenerate}>/Uu5Elements.Button>*/}
+                        <Uu5Forms.SubmitButton className={Config.Css.css({ width: "100%" })}>
+                          {" "}
+                          Generuj{" "}
+                        </Uu5Forms.SubmitButton>
+                      </Uu5Elements.Grid.Item>
+                    </Uu5Elements.Grid>
                   </Uu5Forms.Form.View>
                 </Uu5Forms.Form.Provider>
               }

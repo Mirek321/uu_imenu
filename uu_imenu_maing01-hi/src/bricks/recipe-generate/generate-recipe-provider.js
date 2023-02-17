@@ -41,6 +41,7 @@ const GenerateRecipeProvider = createComponent({
           { name: "hlavné jedlo", count: 0 },
         ],
         days: ["Pondelok", "Utorok", "Štvrtok", "Piatok"],
+        category: ["bezmäsité"],
       };
       return Calls.recipeGenerate(filter);
     }

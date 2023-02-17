@@ -81,7 +81,7 @@ const RecipeDetailView = createVisualComponent({
             ingrediences[i].suit = true;
             setGridContent((gridContet) => [
               ...gridContet,
-              <Uu5Elements.Box size="m" aspectRatio="30x2" className={Config.Css.css({ padding: 16 })}>
+              <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
                 <div style={{ textAlign: "left" }}>
                   <strong style={{ margin: 0 }}>{ingrediences[i].name}</strong>
                 </div>
@@ -109,7 +109,7 @@ const RecipeDetailView = createVisualComponent({
             ingrediences[i].suit = true;
             setGridContent((gridContet) => [
               ...gridContet,
-              <Uu5Elements.Box size="m" aspectRatio="30x2" className={Config.Css.css({ padding: 16 })}>
+              <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
                 <div style={{ textAlign: "left" }}>
                   <strong>{ingrediences[i].name}</strong>
                 </div>
@@ -135,7 +135,7 @@ const RecipeDetailView = createVisualComponent({
             ingrediences[i].suit = false;
             setGridContent((gridContet) => [
               ...gridContet,
-              <Uu5Elements.Box size="m" aspectRatio="30x2" className={Config.Css.css({ padding: 16 })}>
+              <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
                 <div style={{ textAlign: "left" }}>
                   {" "}
                   <strong style={{ margin: 0, paddingBottom: "10px" }}>{ingrediences[i].name}</strong>
@@ -190,7 +190,7 @@ const RecipeDetailView = createVisualComponent({
 
     props.data.ingredience.itemList.forEach((element) =>
       gridContent1.push(
-        <Uu5Elements.Box size="m" aspectRatio="30x2" className={Config.Css.css({ padding: 16 })}>
+        <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
           <strong>{element.name}</strong>
 
           <div style={{ textAlign: "right", paddingBottom: "10px" }}>
@@ -201,13 +201,11 @@ const RecipeDetailView = createVisualComponent({
     );
     props.data.process.forEach((element, index) =>
       process.push(
-        <Uu5Elements.Grid.Item alignSelf="center" justifySelf="center">
-          <Uu5Elements.Box width="70%" height="100%" className={Config.Css.css({ padding: 16 })}>
-            <Uu5Elements.InfoItem iconText={index + 1} />
+        <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
+          <Uu5Elements.InfoItem iconText={index + 1} />
 
-            <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
-          </Uu5Elements.Box>
-        </Uu5Elements.Grid.Item>
+          <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
+        </Uu5Elements.Box>
       )
     );
 
@@ -218,11 +216,15 @@ const RecipeDetailView = createVisualComponent({
       <div {...attrs}>
         <RouteBar />
         <div>
-          <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+          <Uu5Elements.Grid
+            templateColumns="repeat(2, 1fr)"
+            columnGap={"0"}
+            className={Config.Css.css({ paddingBottom: "5%" })}
+          >
             <Uu5Elements.Grid.Item colSpan={10} alignSelf="center">
               <h1 style={{ textAlign: "center" }}>{props.data.name}</h1>
             </Uu5Elements.Grid.Item>
-            <Uu5Elements.Grid.Item rowSpan={5} justifySelf="center">
+            <Uu5Elements.Grid.Item className={Config.Css.css({ marginLeft: "20%" })}>
               <h2>Popis:</h2>
               <p style={{ fontSize: "medium" }}>{props.data.description}</p>
               <UU5.Imaging.Image width="500px" src={props.data.link_photo} />
@@ -231,23 +233,24 @@ const RecipeDetailView = createVisualComponent({
               <Uu5Forms.Form.Provider onSubmit={onUpdate}>
                 <Uu5Forms.Form.View>
                   <Uu5Forms.FormNumber
-                    className={Config.Css.css({ width: "40%", paddingBottom: 16 })}
+                    className={Config.Css.css({ width: "20%", paddingBottom: 16 })}
                     label="Počet porcií:"
                     type={"number"}
                     id="message"
                     name="message"
                     onChange={(e) => comprassion(e.data.value)}
+                    required
                   />
                   <Uu5Elements.Grid display="inline">{gridContent}</Uu5Elements.Grid>
                   <br></br>
                   <br></br>
-                  <Uu5Forms.SubmitButton className={Config.Css.css({ width: "40%" })}> Potvrdiť</Uu5Forms.SubmitButton>
+                  <Uu5Forms.SubmitButton className={Config.Css.css({ width: "20%" })}> Potvrdiť</Uu5Forms.SubmitButton>
                 </Uu5Forms.Form.View>
               </Uu5Forms.Form.Provider>
             </Uu5Elements.Grid.Item>
 
             {/*<Uu5Elements.Button onClick={onUpdate}>Potvrdiť</Uu5Elements.Button>*/}
-            <Uu5Elements.Grid.Item rowSpan={5} justifySelf="center">
+            <Uu5Elements.Grid.Item className={Config.Css.css({ width: "70%", marginLeft: "10%" })}>
               <h2>Postup:</h2>
               <div></div>
               <Uu5Elements.Grid display="inline"> {process}</Uu5Elements.Grid>

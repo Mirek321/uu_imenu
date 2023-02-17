@@ -45,7 +45,7 @@ const IngredienceView = createVisualComponent({
       { value: "name", header: "Názov ingrediencie" },
       { value: "amount", header: "Množstvo na sklade" },
       { value: "unit", header: "Jednotka" },
-      { value: "allergen", header: "Alergén" },
+
       { header: "Akcie", type: "actionList" },
     ];
 
