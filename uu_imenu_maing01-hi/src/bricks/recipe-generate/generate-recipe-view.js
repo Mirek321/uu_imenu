@@ -47,6 +47,7 @@ const GenerateRecipeView = createVisualComponent({
     const [gridConte, setGridConte] = useState([]);
     const [soup_filter, setSoupFilter] = useState("");
     const [days, setDays] = useState([]);
+    const [category, setCategory] = useState([]);
     const [main_meal_filter, setMain_meal_filter] = useState("");
     let [open, setOpen] = useState(false);
     const test = useRef();
@@ -119,19 +120,22 @@ const GenerateRecipeView = createVisualComponent({
     const { children } = props;
 
     function onGenerate() {
-      // let filter = {
-      //   count_meals: [
-      //     { name: "polievka", count: soup_filter },
-      //     { name: "hlavné jedlo", count: main_meal_filter },
-      //   ],
-      //   days: days,
-      // };
-
-      props.onGenerate();
-      console.log(test.current);
-
+      let filter = {
+        count_meals: [
+          { name: "polievka", count: soup_filter },
+          { name: "hlavné jedlo", count: main_meal_filter },
+        ],
+        days: days,
+        category: [category],
+      };
+      console.log(filter);
+      props.onGenerate(filter);
+      console.log(props.data);
+    }
+    if (props.data) {
       window.localStorage.setItem("MY_IMENU_APP", JSON.stringify(props.data));
     }
+
     if (JSON.parse(window.localStorage.getItem("MY_IMENU_APP"))) {
       let data = JSON.parse(window.localStorage.getItem("MY_IMENU_APP"));
       for (const [day, recipes] of Object.entries(data)) {
@@ -192,7 +196,7 @@ const GenerateRecipeView = createVisualComponent({
                             { children: "Mäsité", value: "mäsité" },
                             { children: "Bezmäsité", value: "bezmäsité" },
                           ]}
-                          onChange={(value) => console.log(value.data.value)}
+                          onChange={(value) => setCategory(value.data.value)}
                         />
                       </Uu5Elements.Grid.Item>
                       <Uu5Elements.Grid.Item justifySelf="start" className={Config.Css.css({ paddingLeft: 15 })}>

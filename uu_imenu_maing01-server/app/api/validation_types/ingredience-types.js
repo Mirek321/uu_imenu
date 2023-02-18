@@ -3,7 +3,7 @@ const ingredienceCreateDtoInType = shape({
   name: string(255).isRequired(),
   amount: float(400).isRequired(),
   unit: string(400).isRequired(),
-  allergen: boolean().isRequired(),
+  allergen: string(255).isRequired(),
   category: string(255).isRequired(),
 });
 

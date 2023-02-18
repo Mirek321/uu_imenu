@@ -20,6 +20,18 @@ const Calls = {
   //   const commandUri = Calls.getCommandUri("loadDemoContent");
   //   return Calls.call("get", commandUri, dtoIn);
   // },
+  recipeDelete(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/delete");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+  ingredienceCreate(dtoInData) {
+    const commandUri = Calls.getCommandUri("ingredience/create");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+  ingredienceDelete(dtoInData) {
+    const commandUri = Calls.getCommandUri("ingredience/delete");
+    return Calls.call("post", commandUri, dtoInData);
+  },
   ingredienceList() {
     const commandUri = Calls.getCommandUri("ingredience/list");
     return Calls.call("get", commandUri);

@@ -4,11 +4,14 @@ import Uu5Tiles from "uu5tilesg02";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import Uu5Elements from "uu5g05-elements";
 import Plus4u5Elements from "uu_plus4u5g02-elements";
+import Uu5TilesControls from "uu5tilesg02-controls";
 import UU5 from "uu5g04";
 import Uu5Imaging from "uu5imagingg01";
 import Config from "./config/config.js";
-
+import IngredienceFormCreate from "./ingredience-form-create";
+import IngredienceFormUpdate from "./ingredience-form-update";
 import RouteBar from "../../core/route-bar";
+
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -40,12 +43,15 @@ const IngredienceView = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    let [openCreate, setOpenCreate] = useState(false);
+    let [openUpdate, setOpenUpdate] = useState(false);
+    let [data1, setData1] = useState();
     const modalRef = useRef();
     const COLUMN_LIST = [
-      { value: "name", header: "Názov ingrediencie" },
-      { value: "amount", header: "Množstvo na sklade" },
-      { value: "unit", header: "Jednotka" },
-
+      { value: "name", label: "Názov ingrediencie:" },
+      { value: "amount", label: "Množstvo na sklade" },
+      { value: "unit", label: "Jednotka" },
+      { value: "allergen", label: "Alergén" },
       { header: "Akcie", type: "actionList" },
     ];
 
@@ -53,8 +59,8 @@ const IngredienceView = createVisualComponent({
       let actionList = [
         {
           icon: "mdi-plus",
-          tooltip: "Pridat novy ticket",
-          onClick: () => addNewTicket(),
+          tooltip: "Pridanie ingrediencie",
+          onClick: () => addNewIngredience(),
         },
       ];
       return actionList;
@@ -63,12 +69,33 @@ const IngredienceView = createVisualComponent({
     function getTileActionList({ rowList, data }) {
       let itemList = [
         {
-          icon: "mdi-minus",
-          tooltip: "Odobrat ticket",
-          onClick: () => removeTicket(),
+          icon: "mdi-pencil",
+          tooltip: "Upraviť ingredienciu",
+          onClick: () => updateIngredience(data),
+        },
+        {
+          icon: "mdi-delete",
+          tooltip: "Odstrániť ingredienciu",
+          onClick: () => removeIngredience(data),
         },
       ];
       return itemList;
+    }
+    function removeIngredience(data) {
+      props.onDelete(data);
+      window.location.reload(false);
+    }
+    function addNewIngredience() {
+      setOpenCreate(true);
+    }
+    function updateIngredience(data) {
+      console.log(data);
+      setData1(data);
+      setOpenUpdate(true);
+    }
+    function closeModal() {
+      setOpenCreate(false);
+      setOpenUpdate(false);
     }
     //@@viewOff:private
 
@@ -82,19 +109,24 @@ const IngredienceView = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <RouteBar />
-        <Plus4u5Elements.IdentificationBlock
-          header={"Ingrediencie na sklade"}
-          actionList={getActionList()}
-          headerSeparator={true}
-          card={"full"}
-        >
-          <Uu5TilesElements.List
-            getActionList={getTileActionList}
-            view={"grid"}
-            columnList={COLUMN_LIST}
-            data={props.data.itemList}
-          />
-        </Plus4u5Elements.IdentificationBlock>
+        <Uu5Tiles.ControllerProvider serieList={COLUMN_LIST} data={props.data.itemList}>
+          <Uu5Elements.Block actionList={[{ component: <Uu5TilesControls.SearchButton /> }]}>
+            <Plus4u5Elements.IdentificationBlock
+              header={"Ingrediencie na sklade"}
+              actionList={getActionList()}
+              headerSeparator={true}
+              card={"full"}
+            >
+              <Uu5TilesElements.List getActionList={getTileActionList} view={"grid"} />
+            </Plus4u5Elements.IdentificationBlock>
+          </Uu5Elements.Block>
+        </Uu5Tiles.ControllerProvider>
+        <Uu5Elements.Modal header={"Pridanie ingrediencie"} open={openCreate}>
+          <IngredienceFormCreate onSave={props.onCreate} onClose={closeModal} />
+        </Uu5Elements.Modal>
+        <Uu5Elements.Modal header={"Upravenie ingrediencie"} open={openUpdate}>
+          <IngredienceFormUpdate data={data1} onUpdate={props.onUpdate} onClose={closeModal} />
+        </Uu5Elements.Modal>
       </div>
     ) : null;
     //@@viewOff:render

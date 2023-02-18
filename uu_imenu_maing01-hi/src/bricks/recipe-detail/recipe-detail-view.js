@@ -72,9 +72,10 @@ const RecipeDetailView = createVisualComponent({
             amount_recipe: recipe.ingredience.itemList[i].amount_recipe,
             amount_stock: recipe.ingredience.itemList[i].amount,
             unit: recipe.ingredience.itemList[i].unit,
-            difference:
+            difference: parseFloat(
               recipe.ingredience.itemList[i].amount -
-              parseFloat((recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)),
+                parseFloat((recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)).toFixed(2)
+            ),
           });
 
           if (ingrediences[i].difference > 0) {
@@ -105,7 +106,8 @@ const RecipeDetailView = createVisualComponent({
             //     <Uu5Elements.Icon icon="fa-check" margin={{ left: 4 }} />
             //   </Uu5Elements.Box>
             //);
-          } else if (ingrediences[i].difference == 0) {
+          }
+          if (ingrediences[i].difference == 0) {
             ingrediences[i].suit = true;
             setGridContent((gridContet) => [
               ...gridContet,
@@ -131,7 +133,8 @@ const RecipeDetailView = createVisualComponent({
             //     <Uu5Elements.Icon icon="fa-check" margin={{ left: 4 }} />
             //   </Uu5Elements.Box>
             // );
-          } else if (ingrediences[i].difference < 0) {
+          }
+          if (ingrediences[i].difference < 0) {
             ingrediences[i].suit = false;
             setGridContent((gridContet) => [
               ...gridContet,
@@ -187,7 +190,7 @@ const RecipeDetailView = createVisualComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-
+    console.log(props.data.ingredience.itemList);
     props.data.ingredience.itemList.forEach((element) =>
       gridContent1.push(
         <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
@@ -224,7 +227,7 @@ const RecipeDetailView = createVisualComponent({
             <Uu5Elements.Grid.Item colSpan={10} alignSelf="center">
               <h1 style={{ textAlign: "center" }}>{props.data.name}</h1>
             </Uu5Elements.Grid.Item>
-            <Uu5Elements.Grid.Item className={Config.Css.css({ marginLeft: "20%" })}>
+            <Uu5Elements.Grid.Item className={Config.Css.css({ marginLeft: "20%", width: "80%" })}>
               <h2>Popis:</h2>
               <p style={{ fontSize: "medium" }}>{props.data.description}</p>
               <UU5.Imaging.Image width="500px" src={props.data.link_photo} />

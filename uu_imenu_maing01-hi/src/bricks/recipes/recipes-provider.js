@@ -36,10 +36,13 @@ const RecipesProvider = createComponent({
       console.log(data);
       return Calls.recipeCreate(data);
     }
+    function recipeDelete(data) {
+      return Calls.recipeDelete({ id: data.id });
+    }
     //@@viewOff:private
 
     //@@viewOn:hooks
-    const callResult = useDataObject({ handlerMap: { load: recipeList, create: recipeCreate } });
+    const callResult = useDataObject({ handlerMap: { load: recipeList, create: recipeCreate, delete: recipeDelete } });
     //@@viewOff:hooks
 
     //@@viewOn:interface
@@ -53,7 +56,7 @@ const RecipesProvider = createComponent({
         return "Loading";
       case "ready":
       case "readyNoData":
-        return <RecipesView data={data} onCreate={handlerMap.create} />;
+        return <RecipesView data={data} onCreate={handlerMap.create} onDelete={handlerMap.delete} />;
     }
     console.log(callResult);
     return children ?? null;

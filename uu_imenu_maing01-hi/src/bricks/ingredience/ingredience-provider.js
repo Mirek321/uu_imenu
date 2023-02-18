@@ -31,9 +31,42 @@ const IngredienceProvider = createComponent({
     function ingredienceList() {
       return Calls.ingredienceList();
     }
+    function ingredienceCreate(data) {
+      const filter = {
+        name: data.ing_name,
+        amount: data.ing_amount,
+        unit: data.ing_unit,
+        allergen: data.ing_allergen,
+        category: "",
+      };
+
+      return Calls.ingredienceCreate(filter);
+    }
+    function ingredienceUpdate(data) {
+      const filter = {
+        id: data.id,
+        name: data.ing_name,
+        amount: data.ing_amount,
+        unit: data.ing_unit,
+        allergen: data.ing_allergen,
+        category: "",
+      };
+      console.log(filter);
+      return Calls.ingredienceUpdate(filter);
+    }
+    function ingredienceDelete(data) {
+      return Calls.ingredienceDelete({ id: data.id });
+    }
     //@@viewOff:private
     //@@viewOn:hooks
-    const callResult = useDataObject({ handlerMap: { load: ingredienceList } });
+    const callResult = useDataObject({
+      handlerMap: {
+        load: ingredienceList,
+        delete: ingredienceDelete,
+        create: ingredienceCreate,
+        update: ingredienceUpdate,
+      },
+    });
     //@@viewOff:hooks
 
     //@@viewOn:interface
@@ -47,7 +80,14 @@ const IngredienceProvider = createComponent({
         return "Loading";
       case "ready":
       case "readyNoData":
-        return <IngredienceView data={data} />;
+        return (
+          <IngredienceView
+            data={data}
+            onDelete={handlerMap.delete}
+            onCreate={handlerMap.create}
+            onUpdate={handlerMap.update}
+          />
+        );
     }
     console.log(callResult);
     return children ?? null;

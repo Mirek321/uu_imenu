@@ -34,17 +34,18 @@ const GenerateRecipeProvider = createComponent({
       console.log("List");
       return Calls.recipeList();
     }
-    function recipeGenerate() {
-      const filter = {
-        count_meals: [
-          { name: "polievka", count: 1 },
-          { name: "hlavné jedlo", count: 0 },
-        ],
-        days: ["Pondelok", "Utorok", "Štvrtok", "Piatok"],
-        category: ["bezmäsité"],
-      };
+    function recipeGenerate(filter) {
+      // const filter = {
+      //   count_meals: [
+      //     { name: "polievka", count: 0 },
+      //     { name: "hlavné jedlo", count: 1 },
+      //   ],
+      //   days: ["Pondelok", "Utorok", "Štvrtok", "Piatok"],
+      //   category: ["mäsité"],
+      // };
       return Calls.recipeGenerate(filter);
     }
+
     //@@viewOff:private
 
     //@@viewOn:interface
