@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, useDataObject } from "uu5g05";
+import { createComponent, useDataObject, useDataList, useEffect } from "uu5g05";
 import UU5 from "uu5g04";
 import Config from "../config/config.js";
 import Calls from "../../calls";
@@ -32,6 +32,9 @@ const RecipesProvider = createComponent({
     function recipeList() {
       return Calls.recipeList();
     }
+    function ingredienceList() {
+      return Calls.ingredienceList();
+    }
     function recipeCreate(data) {
       console.log(data);
       return Calls.recipeCreate(data);
@@ -42,21 +45,36 @@ const RecipesProvider = createComponent({
     //@@viewOff:private
 
     //@@viewOn:hooks
-    const callResult = useDataObject({ handlerMap: { load: recipeList, create: recipeCreate, delete: recipeDelete } });
+    const callResult = useDataObject({
+      handlerMap: { load: recipeList, create: recipeCreate, delete: recipeDelete, ingredienceList: ingredienceList },
+    });
+    const callIngredience = useDataList({
+      handlerMap: { ingredienceList: ingredienceList },
+    });
     //@@viewOff:hooks
 
     //@@viewOn:interface
     //@@viewOff:interface
 
     //@@viewOn:render
+
     const { state, data, handlerMap, errorData } = callResult;
+
     switch (state) {
       case "pendingNoData":
       case "pending":
         return "Loading";
       case "ready":
       case "readyNoData":
-        return <RecipesView data={data} onCreate={handlerMap.create} onDelete={handlerMap.delete} />;
+        return (
+          <RecipesView
+            data={data}
+            onCreate={handlerMap.create}
+            onDelete={handlerMap.delete}
+            onIngredienceList={ingredienceList}
+            ingredienceData={callIngredience.data}
+          />
+        );
     }
     console.log(callResult);
     return children ?? null;

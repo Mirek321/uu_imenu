@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, useRef, useRoute } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useRef, useRoute, useEffect } from "uu5g05";
 import Uu5Tiles from "uu5tilesg02";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import Uu5Elements from "uu5g05-elements";
@@ -50,7 +50,9 @@ const RecipesView = createVisualComponent({
       setOpenCreate(false);
       setOpenUpdate(false);
     }
-
+    let ingredience = {};
+    useEffect(() => {}, []);
+    console.log(props.ingredienceData);
     const COLUMN_LIST = [
       { value: "name", header: "Názov receptu" },
       { value: "type_recipe", header: "Typ jedla" },
@@ -112,7 +114,7 @@ const RecipesView = createVisualComponent({
         <div className={Config.Css.css({ padding: 20 })}>
           <Uu5Elements.Grid>
             <Uu5Elements.Grid.Item justifySelf="end">
-              <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať recept"} onClick={() => setOpenCreate(true)} />
+              <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať recept"} />
             </Uu5Elements.Grid.Item>
           </Uu5Elements.Grid>
           <Uu5Tiles.ControllerProvider data={props.data.itemList}>

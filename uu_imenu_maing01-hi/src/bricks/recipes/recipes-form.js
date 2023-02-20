@@ -35,6 +35,21 @@ const RecipesForm = createVisualComponent({
     const { children } = props;
     const [name, setName] = useState("");
     const [type_recipe, setType_recipe] = useState("");
+    const [content_meal, setContentMeal] = useState("");
+    const [description, setDescription] = useState("");
+    const [recipe_process, setRecipeProcess] = useState();
+    const [ingredience, setIngredience] = useState({ id: "", amount: 0 });
+    const [allValues, setAllValues] = useState({
+      mobile: "",
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+    const changeHandler = (e) => {
+      setAllValues({ ...allValues, [e.target.name]: e.target.value });
+    };
+
     function onSubmit() {
       let data = {
         name,
@@ -42,6 +57,7 @@ const RecipesForm = createVisualComponent({
       };
       props.onSave(data);
     }
+
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -55,34 +71,62 @@ const RecipesForm = createVisualComponent({
       <div {...attrs}>
         <Uu5Forms.Form.Provider onSubmit={onSubmit}>
           <Uu5Forms.Form.View>
-            <div
-              className={Config.Css.css({
-                display: "grid",
-                rowGap: 8,
-                columnGap: 32,
-                gridAutoFlow: "column",
-                gridTemplateRows: "repeat(4, auto)",
-                gridTemplateColumns: "1fr 1fr",
-                marginBottom: 8,
-              })}
-            >
-              {"Nazov receptu"}
-              <Uu5Forms.Text.Input
-                value={name}
-                name={"name"}
-                type={"string"}
-                onChange={(value) => setName(value.data.value)}
-              />
-              {"Typ jedla"}
-              <Uu5Forms.Text.Input
-                value={type_recipe}
-                name={"type_recipe"}
-                type={"string"}
-                onChange={(value) => setType_recipe(value.data.value)}
-              />
-              <Uu5Forms.CancelButton onClick={props.onClose} />
-              <Uu5Forms.SubmitButton> Vytvorit recept </Uu5Forms.SubmitButton>
-            </div>
+            {"Nazov receptu"}
+            <Uu5Forms.Text.Input
+              value={name}
+              name={"name"}
+              type={"string"}
+              onChange={(value) => setName(value.data.value)}
+            />
+            {"Typ jedla"}
+            <Uu5Forms.SwitchSelect.Input
+              itemList={[
+                { children: "Hlavné jedlo", value: "hlavné jedlo" },
+                { children: "Polievka", value: "polievka" },
+              ]}
+              onChange={(value) => setType_recipe(value.data.value)}
+            />
+            {"Obsah mäsa"}
+            <Uu5Forms.SwitchSelect.Input
+              itemList={[
+                { children: "Mäsité", value: "mäsité" },
+                { children: "Bezmäsité", value: "bezmäsité" },
+              ]}
+              onChange={(value) => setContentMeal(value.data.value)}
+            />
+            {"Popis"}
+            <Uu5Forms.TextArea.Input
+              value={description}
+              name={"description"}
+              type={"string"}
+              onChange={(value) => setDescription(value.data.value)}
+            />
+            {"Postup"}
+            <Uu5Forms.TextArea.Input
+              value={recipe_process}
+              name={"process"}
+              type={"string"}
+              onChange={(value) => setRecipeProcess(value.data.value)}
+            />
+            <h4>Ingredience</h4>
+            <Uu5Forms.Select.Input
+              itemList={[
+                { value: "created" },
+                { value: "initial" },
+                { value: "active" },
+                { value: "final" },
+                { value: "alternative" },
+                { value: "problem" },
+                { value: "passive" },
+                { value: "failed" },
+                { value: "cancelled" },
+              ]}
+              value="initial"
+              onChange={changeHandler}
+              // TODO save value to state
+            />
+            <Uu5Forms.CancelButton onClick={props.onClose} />
+            <Uu5Forms.SubmitButton> Vytvorit recept </Uu5Forms.SubmitButton>
           </Uu5Forms.Form.View>
         </Uu5Forms.Form.Provider>
       </div>

@@ -109,6 +109,7 @@ const IngredienceView = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <RouteBar />
+
         <Uu5Tiles.ControllerProvider serieList={COLUMN_LIST} data={props.data.itemList}>
           <Uu5Elements.Block actionList={[{ component: <Uu5TilesControls.SearchButton /> }]}>
             <Plus4u5Elements.IdentificationBlock

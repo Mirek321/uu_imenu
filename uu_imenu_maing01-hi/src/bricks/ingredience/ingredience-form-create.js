@@ -1,7 +1,15 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, useState } from "uu5g05";
 import Uu5Forms from "uu5g05-forms";
+import Uu5Tiles from "uu5tilesg02";
+import Uu5TilesElements from "uu5tilesg02-elements";
+import Uu5Elements from "uu5g05-elements";
+import Plus4u5Elements from "uu_plus4u5g02-elements";
+import Uu5TilesControls from "uu5tilesg02-controls";
+import UU5 from "uu5g04";
+import Uu5Imaging from "uu5imagingg01";
 import Config from "./config/config.js";
+import RouteBar from "../../core/route-bar";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -61,17 +69,7 @@ const IngredienceFormCreate = createVisualComponent({
       <div {...attrs}>
         <Uu5Forms.Form.Provider onSubmit={onSubmit}>
           <Uu5Forms.Form.View>
-            <div
-              className={Config.Css.css({
-                display: "grid",
-                rowGap: 8,
-                columnGap: 32,
-                gridAutoFlow: "column",
-                gridTemplateRows: "repeat(4, auto)",
-                gridTemplateColumns: "1fr 1fr",
-                marginBottom: 8,
-              })}
-            >
+            <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
               <Uu5Forms.FormText
                 className={Config.Css.css({ width: "100%" })}
                 label="Názov ingrediencie:"
@@ -105,9 +103,11 @@ const IngredienceFormCreate = createVisualComponent({
                 ]}
                 onChange={(value) => setAlergen(value.data.value)}
               />
+
               <Uu5Forms.CancelButton onClick={props.onClose} />
-              <Uu5Forms.SubmitButton>Pridať ingredienciu </Uu5Forms.SubmitButton>
-            </div>
+
+              <Uu5Forms.SubmitButton>Pridať ingredienciu</Uu5Forms.SubmitButton>
+            </Uu5Elements.Grid>
           </Uu5Forms.Form.View>
         </Uu5Forms.Form.Provider>
       </div>
