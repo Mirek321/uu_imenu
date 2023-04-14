@@ -93,7 +93,7 @@ const IngredienceFormUpdate = createVisualComponent({
                 <Uu5Forms.Text.Input
                   className={Config.Css.css({ width: "100%" })}
                   label="Jednotka:"
-                  value={"kg"}
+                  value={ing_unit}
                   name={"ing_unit"}
                   type={"text"}
                   onChange={(value) => setIngUnit(value.data.value)}

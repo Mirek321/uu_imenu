@@ -64,6 +64,9 @@ const RecipesView = createVisualComponent({
       window.location.reload(false);
       props.onDelete(data);
     }
+    function addNewRecipe() {
+      setOpenCreate(true);
+    }
     const grid = (props) => {
       let data = props.data;
 
@@ -114,7 +117,7 @@ const RecipesView = createVisualComponent({
         <div className={Config.Css.css({ padding: 20 })}>
           <Uu5Elements.Grid>
             <Uu5Elements.Grid.Item justifySelf="end">
-              <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať recept"} />
+              <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať recept"} onClick={addNewRecipe} />
             </Uu5Elements.Grid.Item>
           </Uu5Elements.Grid>
           <Uu5Tiles.ControllerProvider data={props.data.itemList}>
@@ -122,19 +125,6 @@ const RecipesView = createVisualComponent({
               {grid}
             </Uu5TilesElements.Grid>
           </Uu5Tiles.ControllerProvider>
-          {/*<Plus4u5Elements.IdentificationBlock*/}
-          {/*  header={"Zoznam receptov"}*/}
-          {/*  actionList={getActionList()}*/}
-          {/*  headerSeparator={true}*/}
-          {/*  card={"full"}*/}
-          {/*>*/}
-          {/*  <Uu5TilesElements.List*/}
-          {/*    view={"grid"}*/}
-          {/*    columnList={COLUMN_LIST}*/}
-          {/*    data={props.data.itemList}*/}
-          {/*    getActionList={getTileActionList}*/}
-          {/*  ></Uu5TilesElements.List>*/}
-          {/*</Plus4u5Elements.IdentificationBlock>*/}
           <Uu5Elements.Modal header={"Vytvorenie novehou receptu"} open={openCreate}>
             <RecipesForm onSave={props.onCreate} onClose={closeModal} />
           </Uu5Elements.Modal>
