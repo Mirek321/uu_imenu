@@ -42,11 +42,21 @@ const RecipesProvider = createComponent({
     function recipeDelete(data) {
       return Calls.recipeDelete({ id: data.id });
     }
+    function recipeUpdate(data) {
+      console.log(data);
+      return Calls.recipeUpdate(data);
+    }
     //@@viewOff:private
 
     //@@viewOn:hooks
     const callResult = useDataObject({
-      handlerMap: { load: recipeList, create: recipeCreate, delete: recipeDelete, ingredienceList: ingredienceList },
+      handlerMap: {
+        load: recipeList,
+        create: recipeCreate,
+        delete: recipeDelete,
+        update: recipeUpdate,
+        ingredienceList: ingredienceList,
+      },
     });
     const callIngredience = useDataList({
       handlerMap: { ingredienceList: ingredienceList },
@@ -71,6 +81,7 @@ const RecipesProvider = createComponent({
             data={data}
             onCreate={handlerMap.create}
             onDelete={handlerMap.delete}
+            onUpdate={handlerMap.update}
             onIngredienceList={ingredienceList}
             ingredienceData={callIngredience.data}
           />

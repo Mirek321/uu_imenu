@@ -64,6 +64,7 @@ const RecipesForm = createVisualComponent({
         link_photo: link,
       };
       props.onSave(data);
+      window.location.reload(false);
     }
 
     //@@viewOff:private

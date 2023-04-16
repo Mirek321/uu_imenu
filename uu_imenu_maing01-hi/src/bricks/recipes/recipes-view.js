@@ -10,6 +10,7 @@ import Uu5Imaging from "uu5imagingg01";
 import RecipesForm from "./recipes-form";
 import Config from "./config/config.js";
 import RouteBar from "../../core/route-bar";
+import RecipeUpdateForm from "./recipe-update-form";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -46,6 +47,7 @@ const RecipesView = createVisualComponent({
     const [route, setRoute] = useRoute();
     let [openCreate, setOpenCreate] = useState(false);
     let [openUpdate, setOpenUpdate] = useState(false);
+    let [data1, setData1] = useState();
     function closeModal() {
       setOpenCreate(false);
       setOpenUpdate(false);
@@ -59,7 +61,11 @@ const RecipesView = createVisualComponent({
       { value: "link_photo", header: "Obrazok", type: "image" },
       { header: "Akcie", type: "actionList" },
     ];
-    function onUpdate(item) {}
+    function updateRecipe(data) {
+      console.log(data);
+      setData1(data);
+      setOpenUpdate(true);
+    }
     function removeRecipe(data) {
       window.location.reload(false);
       props.onDelete(data);
@@ -93,7 +99,7 @@ const RecipesView = createVisualComponent({
                 </Uu5Elements.Button>
               </Uu5Elements.Grid.Item>
               <Uu5Elements.Grid.Item justifySelf="center">
-                <Uu5Elements.Button colorScheme="cyan" significance="highlighted">
+                <Uu5Elements.Button colorScheme="cyan" significance="highlighted" onClick={() => updateRecipe(data)}>
                   Upraviť recept
                 </Uu5Elements.Button>
               </Uu5Elements.Grid.Item>
@@ -125,8 +131,11 @@ const RecipesView = createVisualComponent({
               {grid}
             </Uu5TilesElements.Grid>
           </Uu5Tiles.ControllerProvider>
-          <Uu5Elements.Modal header={"Vytvorenie novehou receptu"} open={openCreate}>
+          <Uu5Elements.Modal header={"Vytvorenie nového receptu"} open={openCreate}>
             <RecipesForm onSave={props.onCreate} onClose={closeModal} />
+          </Uu5Elements.Modal>
+          <Uu5Elements.Modal header={"Upravenie receptu"} open={openUpdate}>
+            <RecipeUpdateForm data={data1} onUpdate={props.onUpdate} onClose={closeModal} />
           </Uu5Elements.Modal>
         </div>
       </div>
