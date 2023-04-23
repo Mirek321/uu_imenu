@@ -104,9 +104,8 @@ const IngredienceFormCreate = createVisualComponent({
                 onChange={(value) => setAlergen(value.data.value)}
               />
 
-              <Uu5Forms.CancelButton onClick={props.onClose} />
-
-              <Uu5Forms.SubmitButton>Pridať ingredienciu</Uu5Forms.SubmitButton>
+              <Uu5Forms.SubmitButton> Vytvoriť ingredienciu </Uu5Forms.SubmitButton>
+              <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
             </Uu5Elements.Grid>
           </Uu5Forms.Form.View>
         </Uu5Forms.Form.Provider>

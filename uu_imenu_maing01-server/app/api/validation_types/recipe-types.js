@@ -26,6 +26,12 @@ const recipeUpdateDtoInType = shape({
     id:id(),
     amount: integer(400),
   }),
+  link_photo: string(255),
+  type_recipe: string(255),
+  process: array(),
+  description: string(500),
+  category: array(),
+
 });
 const recipeListDtoInType = shape({
 

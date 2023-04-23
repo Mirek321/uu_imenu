@@ -39,10 +39,21 @@ const RecipeUpdateForm = createVisualComponent({
     const [type_recipe, setType_recipe] = useState(props.data.type_recipe);
     const [content_meal, setContentMeal] = useState(props.data.category[0]);
     const [description, setDescription] = useState(props.data.description);
-    const [recipe_process, setRecipeProcess] = useState(props.data.process);
-    const [ingredience, setIngredience] = useState(props.data.ingredience[0].id);
+    const [recipe_process, setRecipeProcess] = useState();
+    const [ingredience1, setIngredience1] = useState(props.data.ingredience[0].id);
+    const [ingredience2, setIngredience2] = useState(props.data.ingredience[1].id);
+    const [ingredience3, setIngredience3] = useState(props.data.ingredience[2].id);
+    const [ingredience4, setIngredience4] = useState(props.data.ingredience[3].id);
+    const [ingredience5, setIngredience5] = useState(props.data.ingredience[4].id);
+
     const [count_steps, setCountSteps] = useState();
-    const [ing_amount, setIngAmount] = useState(props.data.ingredience[0].amount);
+
+    const [ing_amount1, setIngAmount1] = useState(props.data.ingredience[0].amount);
+    const [ing_amount2, setIngAmount2] = useState(props.data.ingredience[1].amount);
+    const [ing_amount3, setIngAmount3] = useState(props.data.ingredience[2].amount);
+    const [ing_amount4, setIngAmount4] = useState(props.data.ingredience[3].amount);
+    const [ing_amount5, setIngAmount5] = useState(props.data.ingredience[4].amount);
+
     const [allValues, setAllValues] = useState({
       mobile: "",
       username: "",
@@ -50,21 +61,32 @@ const RecipeUpdateForm = createVisualComponent({
       password: "",
       confirmPassword: "",
     });
-
+    if (!recipe_process) {
+      let procces = Array.from(props.data.process, (x) => x + ";");
+      setRecipeProcess(procces);
+    }
+    let itemList = [
+      { value: "63ee8da49683bf3a1cac9771", children: "Bravčové karé" },
+      { value: "63ee8dc69683bf3a1cac9774", children: "Ryžové víno" },
+      { value: "63ee8de09683bf3a1cac9777", children: "Sójová omáčka" },
+      { value: "63f0ae00bd31c23490911d75", children: "Hladká múka" },
+    ];
     function onSubmit() {
+      let r_process = recipe_process.split(";");
+
       let data = {
         id: props.data.id,
         name,
         category: [content_meal],
         type_recipe,
         description,
-        process: [recipe_process],
+        process: r_process,
         ingredience: [{ id: ingredience, amount: ing_amount }],
         link_photo: link,
       };
-
+      console.log(data);
       props.onUpdate(data);
-      // window.location.reload(false);
+      window.location.reload(false);
     }
     //@@viewOff:private
 
@@ -124,45 +146,92 @@ const RecipeUpdateForm = createVisualComponent({
               onChange={(value) => setContentMeal(value.data.value)}
             />
             <h4>Ingredience</h4>
-            <Uu5Forms.TextSelect.Input
+            <Uu5Forms.TextSelect
               label="Ingrediencia 1:"
-              value={ingredience}
-              onChange={(value) => setIngredience(value.data.value)}
-              itemList={[
-                { value: "63ee8da49683bf3a1cac9771", children: "Bravčové karé" },
-                { value: "63ee8dc69683bf3a1cac9774", children: "Ryžové víno" },
-                { value: "63ee8de09683bf3a1cac9777", children: "Sójová omáčka" },
-                { value: "63f0ae00bd31c23490911d75", children: "Hladká múka" },
-              ]}
+              itemList={itemList}
+              value={ingredience1}
+              onChange={(value) => setIngredience1(value.data.value)}
               // TODO save value to state
             />
             <Uu5Forms.Number
               className={Config.Css.css({ width: "100%" })}
               label="Množstvo ingrediencie 1 :"
-              value={ing_amount}
+              value={ing_amount1}
               name={"ing_amount"}
               type={"number"}
-              onChange={(value) => setIngAmount(value.data.value)}
+              onChange={(value) => setIngAmount1(value.data.value)}
             />
-            <h4>Postup</h4>
+            <Uu5Forms.TextSelect
+              label="Ingrediencia 2:"
+              itemList={itemList}
+              value={ingredience2}
+              onChange={(value) => setIngredience2(value.data.value)}
+              // TODO save value to state
+            />
             <Uu5Forms.Number
               className={Config.Css.css({ width: "100%" })}
-              label="Počet krokov"
-              value={count_steps}
-              name={"count_steps"}
+              label="Množstvo ingrediencie 2 :"
+              value={ing_amount2}
+              name={"ing_amount"}
               type={"number"}
-              onChange={(value) => setCountSteps(value.data.value)}
+              onChange={(value) => setIngAmount2(value.data.value)}
             />
+            <Uu5Forms.TextSelect
+              label="Ingrediencia 3:"
+              itemList={itemList}
+              value={ingredience3}
+              onChange={(value) => setIngredience3(value.data.value)}
+              // TODO save value to state
+            />
+            <Uu5Forms.Number
+              className={Config.Css.css({ width: "100%" })}
+              label="Množstvo ingrediencie 3 :"
+              value={ing_amount3}
+              name={"ing_amount"}
+              type={"number"}
+              onChange={(value) => setIngAmount3(value.data.value)}
+            />
+            <Uu5Forms.TextSelect
+              label="Ingrediencia 4:"
+              itemList={itemList}
+              value={ingredience4}
+              onChange={(value) => setIngredience4(value.data.value)}
+              // TODO save value to state
+            />
+            <Uu5Forms.Number
+              className={Config.Css.css({ width: "100%" })}
+              label="Množstvo ingrediencie 4 :"
+              value={ing_amount4}
+              name={"ing_amount"}
+              type={"number"}
+              onChange={(value) => setIngAmount4(value.data.value)}
+            />
+            <Uu5Forms.TextSelect
+              label="Ingrediencia 5:"
+              itemList={itemList}
+              value={ingredience5}
+              onChange={(value) => setIngredience5(value.data.value)}
+              // TODO save value to state
+            />
+            <Uu5Forms.Number
+              className={Config.Css.css({ width: "100%" })}
+              label="Množstvo ingrediencie 5 :"
+              value={ing_amount5}
+              name={"ing_amount"}
+              type={"number"}
+              onChange={(value) => setIngAmount5(value.data.value)}
+            />
+            <h4>Postup</h4>
             <Uu5Forms.TextArea
-              label={"Krok 1: "}
+              label={"Jednotlivé kroky: "}
               value={recipe_process}
               name={"process"}
               type={"string"}
               onChange={(value) => setRecipeProcess(value.data.value)}
             />
             <br /> <br />
-            <Uu5Forms.CancelButton onClick={props.onClose} />
             <Uu5Forms.SubmitButton> Upraviť recept </Uu5Forms.SubmitButton>
+            <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
           </Uu5Forms.Form.View>
         </Uu5Forms.Form.Provider>
       </div>

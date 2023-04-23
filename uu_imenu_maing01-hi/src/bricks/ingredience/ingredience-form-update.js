@@ -113,8 +113,8 @@ const IngredienceFormUpdate = createVisualComponent({
                 />
               </Uu5Elements.Grid.Item>
 
-              <Uu5Forms.CancelButton onClick={props.onClose} />
-              <Uu5Forms.SubmitButton>Upraviť ingredienciu </Uu5Forms.SubmitButton>
+              <Uu5Forms.SubmitButton> Upraviť ingredienciu </Uu5Forms.SubmitButton>
+              <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
             </Uu5Elements.Grid>
           </Uu5Forms.Form.View>
         </Uu5Forms.Form.Provider>
