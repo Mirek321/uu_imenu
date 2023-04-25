@@ -39,7 +39,7 @@ const RecipeUpdateForm = createVisualComponent({
     const [type_recipe, setType_recipe] = useState(props.data.type_recipe);
     const [content_meal, setContentMeal] = useState(props.data.category[0]);
     const [description, setDescription] = useState(props.data.description);
-    const [recipe_process, setRecipeProcess] = useState();
+    const [recipe_process, setRecipeProcess] = useState("");
     const [ingredience1, setIngredience1] = useState(props.data.ingredience[0].id);
     const [ingredience2, setIngredience2] = useState(props.data.ingredience[1].id);
     const [ingredience3, setIngredience3] = useState(props.data.ingredience[2].id);
@@ -62,14 +62,25 @@ const RecipeUpdateForm = createVisualComponent({
       confirmPassword: "",
     });
     if (!recipe_process) {
-      let procces = Array.from(props.data.process, (x) => x + ";");
-      setRecipeProcess(procces);
+      let process_data = props.data.process;
+      const modifiedArray = process_data.map((value, index) => {
+        if (index === process_data.length - 1) {
+          return value;
+        }
+        return value + ";";
+      });
+
+      const result = modifiedArray.join("");
+
+      setRecipeProcess(result);
     }
+
     let itemList = [
       { value: "63ee8da49683bf3a1cac9771", children: "Bravčové karé" },
       { value: "63ee8dc69683bf3a1cac9774", children: "Ryžové víno" },
       { value: "63ee8de09683bf3a1cac9777", children: "Sójová omáčka" },
       { value: "63f0ae00bd31c23490911d75", children: "Hladká múka" },
+      { value: "63ee8e159683bf3a1cac977d", children: "Čínske korenie piatich chutí" },
     ];
     function onSubmit() {
       let r_process = recipe_process.split(";");
@@ -81,7 +92,13 @@ const RecipeUpdateForm = createVisualComponent({
         type_recipe,
         description,
         process: r_process,
-        ingredience: [{ id: ingredience, amount: ing_amount }],
+        ingredience: [
+          { id: ingredience1, amount: ing_amount1 },
+          { id: ingredience2, amount: ing_amount2 },
+          { id: ingredience3, amount: ing_amount3 },
+          { id: ingredience4, amount: ing_amount4 },
+          { id: ingredience5, amount: ing_amount5 },
+        ],
         link_photo: link,
       };
       console.log(data);

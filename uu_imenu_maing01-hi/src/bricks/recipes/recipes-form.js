@@ -67,6 +67,7 @@ const RecipesForm = createVisualComponent({
       { value: "63ee8dc69683bf3a1cac9774", children: "Ryžové víno" },
       { value: "63ee8de09683bf3a1cac9777", children: "Sójová omáčka" },
       { value: "63f0ae00bd31c23490911d75", children: "Hladká múka" },
+      { value: "63ee8e159683bf3a1cac977d", children: "Čínske korenie piatich chutí" },
     ];
     function onSubmit() {
       let r_process = recipe_process.split(";");
