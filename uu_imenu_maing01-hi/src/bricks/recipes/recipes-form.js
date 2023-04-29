@@ -1,7 +1,8 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useEffect } from "uu5g05";
 import Uu5Forms from "uu5g05-forms";
 import UU5 from "uu5g04";
+import Uu5Elements from "uu5g05-elements";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -39,7 +40,7 @@ const RecipesForm = createVisualComponent({
     const [type_recipe, setType_recipe] = useState("");
     const [content_meal, setContentMeal] = useState("");
     const [description, setDescription] = useState("");
-    const [recipe_process, setRecipeProcess] = useState();
+    const [recipe_process, setRecipeProcess] = useState([""]);
     const [ingredience1, setIngredience1] = useState("");
     const [ingredience2, setIngredience2] = useState("");
     const [ingredience3, setIngredience3] = useState("");
@@ -51,17 +52,27 @@ const RecipesForm = createVisualComponent({
     const [ing_amount3, setIngAmount3] = useState();
     const [ing_amount4, setIngAmount4] = useState();
     const [ing_amount5, setIngAmount5] = useState();
-    const [allValues, setAllValues] = useState({
-      mobile: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+
+    const [process_textArea, setProcessTextArea] = useState([]);
+    const [state, setState] = useState(["value1", "value2", "value3"]);
+    const handleInputChange = (event, index) => {
+      const newArray = [...recipe_process];
+      newArray[index] = event.target.value;
+      setRecipeProcess(newArray);
+    };
+    const handleAddValue = () => {
+      setRecipeProcess([...recipe_process, ""]);
+    };
+    const handleDelete = (index) => {
+      const newArray = [...recipe_process];
+      newArray.splice(index, 1);
+      setRecipeProcess(newArray);
+    };
     console.log(recipe_process);
     const changeHandler = (e) => {
       setAllValues({ ...allValues, [e.target.name]: e.target.value });
     };
+
     let itemList = [
       { value: "63ee8da49683bf3a1cac9771", children: "Bravčové karé" },
       { value: "63ee8dc69683bf3a1cac9774", children: "Ryžové víno" },
@@ -70,13 +81,12 @@ const RecipesForm = createVisualComponent({
       { value: "63ee8e159683bf3a1cac977d", children: "Čínske korenie piatich chutí" },
     ];
     function onSubmit() {
-      let r_process = recipe_process.split(";");
       let data = {
         name,
         category: [content_meal],
         type_recipe,
         description,
-        process: r_process,
+        process: recipe_process,
         ingredience: [
           { id: ingredience1, amount: ing_amount1 },
           { id: ingredience2, amount: ing_amount2 },
@@ -219,21 +229,19 @@ const RecipesForm = createVisualComponent({
               onChange={(value) => setIngAmount5(value.data.value)}
             />
             <h4>Postup</h4>
-            <Uu5Forms.Number
-              className={Config.Css.css({ width: "100%" })}
-              label="Počet krokov"
-              value={count_steps}
-              name={"count_steps"}
-              type={"number"}
-              onChange={(value) => setCountSteps(value.data.value)}
-            />
-            <Uu5Forms.TextArea
-              label={"Jednotlivé kroky: "}
-              value={recipe_process}
-              name={"process"}
-              type={"string"}
-              onChange={(value) => setRecipeProcess(value.data.value)}
-            />
+            {recipe_process.map((value, index) => (
+              <div key={index}>
+                <Uu5Forms.TextArea
+                  label={"Krok " + (index + 1).toString() + ": "}
+                  value={value}
+                  name={"process"}
+                  type={"text"}
+                  onChange={(event) => handleInputChange(event, index)}
+                />
+                <Uu5Elements.Button icon="mdi-delete" tooltip={"Odstraniť krok"} onClick={() => handleDelete(index)} />
+              </div>
+            ))}
+            <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať krok"} onClick={handleAddValue} />
             <br /> <br />
             <Uu5Forms.SubmitButton> Vytvoriť recept </Uu5Forms.SubmitButton>
             <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>

@@ -54,7 +54,7 @@ const IngredienceView = createVisualComponent({
       { value: "allergen", label: "Alergén" },
       { header: "Akcie", type: "actionList" },
     ];
-    console.log(props.onLoadRecipe());
+
     function getActionList() {
       let actionList = [
         {

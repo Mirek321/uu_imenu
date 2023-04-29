@@ -2,6 +2,10 @@
 import { createVisualComponent, Utils, Content, useState } from "uu5g05";
 import Uu5Forms from "uu5g05-forms";
 import UU5 from "uu5g04";
+import Uu5Elements from "uu5g05-elements";
+import Uu5TilesControls from "uu5tilesg02-controls";
+import Plus4u5Elements from "uu_plus4u5g02-elements";
+import Uu5TilesElements from "uu5tilesg02-elements";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -39,7 +43,7 @@ const RecipeUpdateForm = createVisualComponent({
     const [type_recipe, setType_recipe] = useState(props.data.data.type_recipe);
     const [content_meal, setContentMeal] = useState(props.data.data.category[0]);
     const [description, setDescription] = useState(props.data.data.description);
-    const [recipe_process, setRecipeProcess] = useState("");
+    const [recipe_process, setRecipeProcess] = useState(props.data.data.process);
     const [ingredience1, setIngredience1] = useState(props.data.data.ingredience[0].id);
     const [ingredience2, setIngredience2] = useState(props.data.data.ingredience[1].id);
     const [ingredience3, setIngredience3] = useState(props.data.data.ingredience[2].id);
@@ -53,7 +57,7 @@ const RecipeUpdateForm = createVisualComponent({
     const [ing_amount3, setIngAmount3] = useState(props.data.data.ingredience[2].amount);
     const [ing_amount4, setIngAmount4] = useState(props.data.data.ingredience[3].amount);
     const [ing_amount5, setIngAmount5] = useState(props.data.data.ingredience[4].amount);
-
+    const [process_textArea, setProcessTextArea] = useState([]);
     const [allValues, setAllValues] = useState({
       mobile: "",
       username: "",
@@ -61,19 +65,6 @@ const RecipeUpdateForm = createVisualComponent({
       password: "",
       confirmPassword: "",
     });
-    if (!recipe_process) {
-      let process_data = props.data.data.process;
-      const modifiedArray = process_data.map((value, index) => {
-        if (index === process_data.length - 1) {
-          return value;
-        }
-        return value + ";";
-      });
-
-      const result = modifiedArray.join("");
-
-      setRecipeProcess(result);
-    }
 
     let itemList = [
       { value: "63ee8da49683bf3a1cac9771", children: "Bravčové karé" },
@@ -82,16 +73,28 @@ const RecipeUpdateForm = createVisualComponent({
       { value: "63f0ae00bd31c23490911d75", children: "Hladká múka" },
       { value: "63ee8e159683bf3a1cac977d", children: "Čínske korenie piatich chutí" },
     ];
+    console.log(recipe_process);
+    const handleInputChange = (event, index) => {
+      const newArray = [...recipe_process];
+      newArray[index] = event.target.value;
+      setRecipeProcess(newArray);
+    };
+    const handleDelete = (index) => {
+      const newArray = [...recipe_process];
+      newArray.splice(index, 1);
+      setRecipeProcess(newArray);
+    };
+    const handleAddValue = () => {
+      setRecipeProcess([...recipe_process, ""]);
+    };
     function onSubmit() {
-      let r_process = recipe_process.split(";");
-
       let data = {
         id: props.data.data.id,
         name,
         category: [content_meal],
         type_recipe,
         description,
-        process: r_process,
+        process: recipe_process,
         ingredience: [
           { id: ingredience1, amount: ing_amount1 },
           { id: ingredience2, amount: ing_amount2 },
@@ -238,13 +241,25 @@ const RecipeUpdateForm = createVisualComponent({
               onChange={(value) => setIngAmount5(value.data.value)}
             />
             <h4>Postup</h4>
-            <Uu5Forms.TextArea
-              label={"Jednotlivé kroky: "}
-              value={recipe_process}
-              name={"process"}
-              type={"string"}
-              onChange={(value) => setRecipeProcess(value.data.value)}
-            />
+            <div>
+              {recipe_process.map((value, index) => (
+                <div key={index}>
+                  <Uu5Forms.TextArea
+                    label={"Krok " + (index + 1).toString() + ": "}
+                    value={value}
+                    name={"process"}
+                    type={"text"}
+                    onChange={(event) => handleInputChange(event, index)}
+                  />
+                  <Uu5Elements.Button
+                    icon="mdi-delete"
+                    tooltip={"Odstraniť krok"}
+                    onClick={() => handleDelete(index)}
+                  />
+                </div>
+              ))}
+              <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať krok"} onClick={handleAddValue} />
+            </div>
             <br /> <br />
             <Uu5Forms.SubmitButton> Upraviť recept </Uu5Forms.SubmitButton>
             <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
