@@ -34,25 +34,25 @@ const RecipeUpdateForm = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
-    const [name, setName] = useState(props.data.name);
-    const [link, setLink] = useState(props.data.link_photo);
-    const [type_recipe, setType_recipe] = useState(props.data.type_recipe);
-    const [content_meal, setContentMeal] = useState(props.data.category[0]);
-    const [description, setDescription] = useState(props.data.description);
+    const [name, setName] = useState(props.data.data.name);
+    const [link, setLink] = useState(props.data.data.link_photo);
+    const [type_recipe, setType_recipe] = useState(props.data.data.type_recipe);
+    const [content_meal, setContentMeal] = useState(props.data.data.category[0]);
+    const [description, setDescription] = useState(props.data.data.description);
     const [recipe_process, setRecipeProcess] = useState("");
-    const [ingredience1, setIngredience1] = useState(props.data.ingredience[0].id);
-    const [ingredience2, setIngredience2] = useState(props.data.ingredience[1].id);
-    const [ingredience3, setIngredience3] = useState(props.data.ingredience[2].id);
-    const [ingredience4, setIngredience4] = useState(props.data.ingredience[3].id);
-    const [ingredience5, setIngredience5] = useState(props.data.ingredience[4].id);
+    const [ingredience1, setIngredience1] = useState(props.data.data.ingredience[0].id);
+    const [ingredience2, setIngredience2] = useState(props.data.data.ingredience[1].id);
+    const [ingredience3, setIngredience3] = useState(props.data.data.ingredience[2].id);
+    const [ingredience4, setIngredience4] = useState(props.data.data.ingredience[3].id);
+    const [ingredience5, setIngredience5] = useState(props.data.data.ingredience[4].id);
 
     const [count_steps, setCountSteps] = useState();
 
-    const [ing_amount1, setIngAmount1] = useState(props.data.ingredience[0].amount);
-    const [ing_amount2, setIngAmount2] = useState(props.data.ingredience[1].amount);
-    const [ing_amount3, setIngAmount3] = useState(props.data.ingredience[2].amount);
-    const [ing_amount4, setIngAmount4] = useState(props.data.ingredience[3].amount);
-    const [ing_amount5, setIngAmount5] = useState(props.data.ingredience[4].amount);
+    const [ing_amount1, setIngAmount1] = useState(props.data.data.ingredience[0].amount);
+    const [ing_amount2, setIngAmount2] = useState(props.data.data.ingredience[1].amount);
+    const [ing_amount3, setIngAmount3] = useState(props.data.data.ingredience[2].amount);
+    const [ing_amount4, setIngAmount4] = useState(props.data.data.ingredience[3].amount);
+    const [ing_amount5, setIngAmount5] = useState(props.data.data.ingredience[4].amount);
 
     const [allValues, setAllValues] = useState({
       mobile: "",
@@ -62,7 +62,7 @@ const RecipeUpdateForm = createVisualComponent({
       confirmPassword: "",
     });
     if (!recipe_process) {
-      let process_data = props.data.process;
+      let process_data = props.data.data.process;
       const modifiedArray = process_data.map((value, index) => {
         if (index === process_data.length - 1) {
           return value;
@@ -86,7 +86,7 @@ const RecipeUpdateForm = createVisualComponent({
       let r_process = recipe_process.split(";");
 
       let data = {
-        id: props.data.id,
+        id: props.data.data.id,
         name,
         category: [content_meal],
         type_recipe,
@@ -103,7 +103,6 @@ const RecipeUpdateForm = createVisualComponent({
       };
       console.log(data);
       props.onUpdate(data);
-      window.location.reload(false);
     }
     //@@viewOff:private
 

@@ -39,18 +39,24 @@ const IngredienceFormUpdate = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
-    const { children } = props;
-    const [ing_name, setIngName] = useState(props.data.name);
-    const [ing_amount, setIngAmount] = useState(props.data.amount);
-    const [ing_unit, setIngUnit] = useState(props.data.unit);
-    const [ing_allergen, setAlergen] = useState(props.data.allergen);
+    const { data1 } = props;
+    const [ing_name, setIngName] = useState(props.data.data.name);
+    const [ing_amount, setIngAmount] = useState(props.data.data.amount);
+    const [ing_unit, setIngUnit] = useState(props.data.data.unit);
+    const [ing_allergen, setAlergen] = useState(props.data.data.allergen);
     let item = { name: props.data?.name ?? "" };
-    console.log(props.data);
 
     function onSubmit() {
-      let data = { id: props.data.id, ing_name, ing_amount, ing_unit, ing_allergen };
-      props.onUpdate(data);
-      window.location.reload(false);
+      let data = { id: props.data.data.id, ing_name, ing_amount, ing_unit, ing_allergen };
+      const filter = {
+        id: data.id,
+        name: data.ing_name,
+        amount: data.ing_amount,
+        unit: data.ing_unit,
+        allergen: data.ing_allergen,
+        category: "",
+      };
+      props.onUpdate(filter);
     }
     //@@viewOff:private
 

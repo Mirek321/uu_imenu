@@ -53,8 +53,14 @@ const IngredienceFormCreate = createVisualComponent({
         ing_unit,
         ing_allergen,
       };
-      props.onSave(data);
-      window.location.reload(false);
+      const filter = {
+        name: data.ing_name,
+        amount: data.ing_amount,
+        unit: data.ing_unit,
+        allergen: data.ing_allergen,
+        category: "",
+      };
+      props.onSave(filter);
     }
     //@@viewOff:private
 

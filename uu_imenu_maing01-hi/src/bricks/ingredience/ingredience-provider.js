@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, useDataObject } from "uu5g05";
+import { createComponent, useDataList } from "uu5g05";
 import Config from "./config/config.js";
 import RecipesView from "../recipes/recipes-view";
 import Calls from "../../calls";
@@ -28,64 +28,44 @@ const IngredienceProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
-    function ingredienceList() {
-      return Calls.ingredienceList();
-    }
-    function ingredienceCreate(data) {
-      const filter = {
-        name: data.ing_name,
-        amount: data.ing_amount,
-        unit: data.ing_unit,
-        allergen: data.ing_allergen,
-        category: "",
-      };
 
-      return Calls.ingredienceCreate(filter);
-    }
-    function ingredienceUpdate(data) {
-      const filter = {
-        id: data.id,
-        name: data.ing_name,
-        amount: data.ing_amount,
-        unit: data.ing_unit,
-        allergen: data.ing_allergen,
-        category: "",
-      };
-      console.log(filter);
-      return Calls.ingredienceUpdate(filter);
-    }
-    function ingredienceDelete(data) {
-      return Calls.ingredienceDelete({ id: data.id });
-    }
     //@@viewOff:private
     //@@viewOn:hooks
-    const callResult = useDataObject({
+    const callResult = useDataList({
       handlerMap: {
-        load: ingredienceList,
-        delete: ingredienceDelete,
-        create: ingredienceCreate,
-        update: ingredienceUpdate,
+        load: Calls.ingredienceList,
+        createIngrediencie: Calls.ingredienceCreate,
+        updateIngredience: Calls.ingredienceUpdate,
+        deleteIngredience: Calls.ingredienceDelete,
       },
     });
+    // const callResult = useDataObject({
+    //   handlerMap: {
+    //     load: ingredienceList,
+    //     delete: ingredienceDelete,
+    //     create: ingredienceCreate,
+    //     update: ingredienceUpdate,
+    //   },
+    // });
     //@@viewOff:hooks
 
     //@@viewOn:interface
     //@@viewOff:interface
 
     //@@viewOn:render
-    const { state, data, handlerMap, errorData } = callResult;
+    const { state, data, handlerMap } = callResult;
     switch (state) {
       case "pendingNoData":
       case "pending":
         return "Loading";
-      case "ready":
       case "readyNoData":
+      case "ready":
         return (
           <IngredienceView
             data={data}
-            onDelete={handlerMap.delete}
-            onCreate={handlerMap.create}
-            onUpdate={handlerMap.update}
+            onDelete={handlerMap.deleteIngredience}
+            onCreate={handlerMap.createIngrediencie}
+            onUpdate={handlerMap.updateIngredience}
           />
         );
     }

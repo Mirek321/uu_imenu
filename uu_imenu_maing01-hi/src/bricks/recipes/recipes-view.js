@@ -67,8 +67,7 @@ const RecipesView = createVisualComponent({
       setOpenUpdate(true);
     }
     function removeRecipe(data) {
-      window.location.reload(false);
-      props.onDelete(data);
+      props.onDelete({ id: data.data.id });
     }
     function addNewRecipe() {
       setOpenCreate(true);
@@ -79,13 +78,13 @@ const RecipesView = createVisualComponent({
       return (
         <Uu5Elements.Grid.Item className={Config.Css.css({ padding: 8 })}>
           <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
-            <UU5.Imaging.Image src={data.link_photo} />
-            <p style={{ textAlign: "center", margin: 0, padding: 10 }}>{data.type_recipe}</p>
+            <UU5.Imaging.Image src={data.data.link_photo} />
+            <p style={{ textAlign: "center", margin: 0, padding: 10 }}>{data.data.type_recipe}</p>
             <h3
               style={{ textAlign: "center", margin: 0, paddingBottom: 20 }}
-              onClick={() => setRoute("recipesdetail", { id: data.id })}
+              onClick={() => setRoute("recipesdetail", { id: data.data.id })}
             >
-              {data.name}
+              {data.data.name}
             </h3>
             <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
               <Uu5Elements.Grid.Item justifySelf="center">
@@ -126,7 +125,7 @@ const RecipesView = createVisualComponent({
               <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať recept"} onClick={addNewRecipe} />
             </Uu5Elements.Grid.Item>
           </Uu5Elements.Grid>
-          <Uu5Tiles.ControllerProvider data={props.data.itemList}>
+          <Uu5Tiles.ControllerProvider data={props.data}>
             <Uu5TilesElements.Grid tileMaxWidth={480} tileMinWidth={310}>
               {grid}
             </Uu5TilesElements.Grid>

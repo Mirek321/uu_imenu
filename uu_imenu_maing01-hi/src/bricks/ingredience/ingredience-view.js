@@ -54,7 +54,7 @@ const IngredienceView = createVisualComponent({
       { value: "allergen", label: "Alergén" },
       { header: "Akcie", type: "actionList" },
     ];
-
+    console.log(props.onLoadRecipe());
     function getActionList() {
       let actionList = [
         {
@@ -82,14 +82,12 @@ const IngredienceView = createVisualComponent({
       return itemList;
     }
     function removeIngredience(data) {
-      props.onDelete(data);
-      window.location.reload(false);
+      props.onDelete({ id: data.data.id });
     }
     function addNewIngredience() {
       setOpenCreate(true);
     }
     function updateIngredience(data) {
-      console.log(data);
       setData1(data);
       setOpenUpdate(true);
     }
@@ -110,7 +108,7 @@ const IngredienceView = createVisualComponent({
       <div {...attrs}>
         <RouteBar />
 
-        <Uu5Tiles.ControllerProvider serieList={COLUMN_LIST} data={props.data.itemList}>
+        <Uu5Tiles.ControllerProvider serieList={COLUMN_LIST} data={props.data}>
           <Uu5Elements.Block actionList={[{ component: <Uu5TilesControls.SearchButton /> }]}>
             <Plus4u5Elements.IdentificationBlock
               header={"Ingrediencie na sklade"}

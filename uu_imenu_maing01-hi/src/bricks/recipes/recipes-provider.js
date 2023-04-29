@@ -48,18 +48,24 @@ const RecipesProvider = createComponent({
     }
     //@@viewOff:private
 
-    //@@viewOn:hooks
-    const callResult = useDataObject({
+    // //@@viewOn:hooks
+    // const callResult = useDataList({
+    //   handlerMap: {
+    //     load: recipeList,
+    //     create: recipeCreate,
+    //     delete: recipeDelete,
+    //     update: recipeUpdate,
+    //     ingredienceList: ingredienceList,
+    //   },
+    // });
+    const callResult = useDataList({
       handlerMap: {
-        load: recipeList,
-        create: recipeCreate,
-        delete: recipeDelete,
-        update: recipeUpdate,
+        load: Calls.recipeList,
+        create: Calls.recipeCreate,
+        delete: Calls.recipeDelete,
+        update: Calls.recipeUpdate,
         ingredienceList: ingredienceList,
       },
-    });
-    const callIngredience = useDataList({
-      handlerMap: { ingredienceList: ingredienceList },
     });
     //@@viewOff:hooks
 
@@ -74,8 +80,9 @@ const RecipesProvider = createComponent({
       case "pendingNoData":
       case "pending":
         return "Loading";
-      case "ready":
+
       case "readyNoData":
+      case "ready":
         return (
           <RecipesView
             data={data}
@@ -83,7 +90,6 @@ const RecipesProvider = createComponent({
             onDelete={handlerMap.delete}
             onUpdate={handlerMap.update}
             onIngredienceList={ingredienceList}
-            ingredienceData={callIngredience.data}
           />
         );
     }
