@@ -41,36 +41,48 @@ const RecipesForm = createVisualComponent({
     const [content_meal, setContentMeal] = useState("");
     const [description, setDescription] = useState("");
     const [recipe_process, setRecipeProcess] = useState([""]);
-    const [ingredience, setIngredience] = useState("");
+    const [ingredience, setIngredience] = useState([""]);
     const [ingredience2, setIngredience2] = useState("");
     const [ingredience3, setIngredience3] = useState("");
     const [ingredience4, setIngredience4] = useState("");
     const [ingredience5, setIngredience5] = useState("");
     const [count_steps, setCountSteps] = useState();
-    const [ing_amount, setIngAmount] = useState([""]);
+    const [ing_amount, setIngAmount] = useState([0]);
     const [ing_amount2, setIngAmount2] = useState();
     const [ing_amount3, setIngAmount3] = useState();
     const [ing_amount4, setIngAmount4] = useState();
     const [ing_amount5, setIngAmount5] = useState();
     console.log(props.data.itemList);
     const [process_textArea, setProcessTextArea] = useState([]);
-    const [state, setState] = useState(["value1", "value2", "value3"]);
-    const handleInputChange = (event, index) => {
-      const newArray = [...recipe_process];
-      newArray[index] = event.target.value;
-      setRecipeProcess(newArray);
-    };
-    const handleInputChangeIng = (event, index) => {
-      const newArray = [...ingredience];
-      newArray[index] = event.target.value;
-      setIngredience(newArray);
+    const handleAddValueIng = () => {
+      setIngredience([...ingredience, " "]);
+      setIngAmount([...ing_amount, 0]);
     };
     const handleAddValue = () => {
       setRecipeProcess([...recipe_process, ""]);
     };
-    const handleAddValueIng = () => {
-      setIngredience([...ingredience, ""]);
-      setIngAmount([...ing_amount, ""]);
+    const handleInputChangeIng = (event, index) => {
+      const newArray = [...ingredience];
+      newArray[index] = event.data.value;
+      setIngredience(newArray);
+    };
+    const handleDeleteIng = (index) => {
+      let newArray = [...ingredience];
+      newArray.splice(index, 1);
+      setIngredience(newArray);
+      newArray = [...ing_amount];
+      newArray.splice(index, 1);
+      setIngAmount(newArray);
+    };
+    const handleInputChangeAmount = (event, index) => {
+      const newArray = [...ing_amount];
+      newArray[index] = event.data.value;
+      setIngAmount(newArray);
+    };
+    const handleInputChange = (event, index) => {
+      const newArray = [...recipe_process];
+      newArray[index] = event.target.value;
+      setRecipeProcess(newArray);
     };
     const handleDelete = (index) => {
       const newArray = [...recipe_process];
@@ -85,24 +97,23 @@ const RecipesForm = createVisualComponent({
     let itemList = [];
     console.log(itemList);
     if (itemList.length == 0) {
-      for (let i = 0; i < props.data.itemList.length; i++) {
+      itemList.push({ value: "", children: "" });
+      for (let i = 0; i < props.data.itemList.length + 0; i++) {
         itemList.push({ value: props.data.itemList[i].id, children: props.data.itemList[i].name });
       }
     }
     function onSubmit() {
+      let ingredience_f = [];
+      for (let i = 0; i < ingredience.length; i++) {
+        ingredience_f.push({ id: ingredience[i], amount: ing_amount[i] });
+      }
       let data = {
         name,
         category: [content_meal],
         type_recipe,
         description,
         process: recipe_process,
-        ingredience: [
-          { id: ingredience, amount: ing_amount },
-          { id: ingredience2, amount: ing_amount2 },
-          { id: ingredience3, amount: ing_amount3 },
-          { id: ingredience4, amount: ing_amount4 },
-          { id: ingredience5, amount: ing_amount5 },
-        ],
+        ingredience: ingredience_f,
         link_photo: link,
       };
       props.onSave(data);
@@ -162,25 +173,31 @@ const RecipesForm = createVisualComponent({
               onChange={(value) => setContentMeal(value.data.value)}
             />
             <h4>Ingredience</h4>
-            {/*{ingredience.map((value, index) => (*/}
-            {/*  <div key={index}>*/}
-            {/*    <Uu5Forms.TextSelect*/}
-            {/*      label={"Ingrediencia " + (index + 1).toString() + ": "}*/}
-            {/*      itemList={itemList}*/}
-            {/*      value={value}*/}
-            {/*      onChange={(event) => handleInputChangeIng(event, index)}*/}
-            {/*      // TODO save value to state*/}
-            {/*    />*/}
-            {/*  </div>*/}
-            {/*))}*/}
-            <Uu5Forms.TextSelect
-              label="Ingrediencia 1:"
-              itemList={itemList}
-              value={ingredience}
-              onChange={(value) => setIngredience(value.data.value)}
-              // TODO save value to state
-            />
-            <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať ingredienciu"} onClick={handleAddValueIng} />
+            {ingredience.map((value, index) => (
+              <div key={index}>
+                <Uu5Forms.TextSelect
+                  label={"Ingrediencia " + (index + 1).toString() + ": "}
+                  itemList={itemList}
+                  value={value}
+                  onChange={(event) => handleInputChangeIng(event, index)}
+                  // TODO save value to state
+                />
+                <Uu5Forms.Number
+                  className={Config.Css.css({ width: "100%" })}
+                  label={"Množstvo ingrediencie " + (index + 1).toString() + ": "}
+                  value={ing_amount[index]}
+                  name={"ing_amount"}
+                  type={"number"}
+                  onChange={(event) => handleInputChangeAmount(event, index)}
+                />
+                <Uu5Elements.Button
+                  icon="mdi-delete"
+                  tooltip={"Odstraniť ingredienciu"}
+                  onClick={() => handleDeleteIng(index)}
+                />
+              </div>
+            ))}
+            <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať krok"} onClick={handleAddValueIng} />
             <h4>Postup</h4>
             {recipe_process.map((value, index) => (
               <div key={index}>
