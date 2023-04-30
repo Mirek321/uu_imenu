@@ -52,6 +52,7 @@ const RecipesView = createVisualComponent({
       setOpenCreate(false);
       setOpenUpdate(false);
     }
+
     let ingredience = {};
     useEffect(() => {}, []);
     console.log(props.ingredienceData);
@@ -131,10 +132,15 @@ const RecipesView = createVisualComponent({
             </Uu5TilesElements.Grid>
           </Uu5Tiles.ControllerProvider>
           <Uu5Elements.Modal header={"Vytvorenie nového receptu"} open={openCreate}>
-            <RecipesForm onSave={props.onCreate} onClose={closeModal} />
+            <RecipesForm data={props.getIngredience} onSave={props.onCreate} onClose={closeModal} />
           </Uu5Elements.Modal>
           <Uu5Elements.Modal header={"Upravenie receptu"} open={openUpdate}>
-            <RecipeUpdateForm data={data1} onUpdate={props.onUpdate} onClose={closeModal} />
+            <RecipeUpdateForm
+              onLoadIngredience={props.getIngredience}
+              data={data1}
+              onUpdate={props.onUpdate}
+              onClose={closeModal}
+            />
           </Uu5Elements.Modal>
         </div>
       </div>

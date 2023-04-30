@@ -58,13 +58,17 @@ const RecipesProvider = createComponent({
     //     ingredienceList: ingredienceList,
     //   },
     // });
+    const callResultIngredience = useDataObject({
+      handlerMap: {
+        load: Calls.ingredienceList,
+      },
+    });
     const callResult = useDataList({
       handlerMap: {
         load: Calls.recipeList,
         create: Calls.recipeCreate,
         delete: Calls.recipeDelete,
         update: Calls.recipeUpdate,
-        ingredienceList: ingredienceList,
       },
     });
     //@@viewOff:hooks
@@ -86,10 +90,10 @@ const RecipesProvider = createComponent({
         return (
           <RecipesView
             data={data}
+            getIngredience={callResultIngredience.data}
             onCreate={handlerMap.create}
             onDelete={handlerMap.delete}
             onUpdate={handlerMap.update}
-            onIngredienceList={ingredienceList}
           />
         );
     }

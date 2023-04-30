@@ -65,14 +65,16 @@ const RecipeUpdateForm = createVisualComponent({
       password: "",
       confirmPassword: "",
     });
-
-    let itemList = [
-      { value: "63ee8da49683bf3a1cac9771", children: "Bravčové karé" },
-      { value: "63ee8dc69683bf3a1cac9774", children: "Ryžové víno" },
-      { value: "63ee8de09683bf3a1cac9777", children: "Sójová omáčka" },
-      { value: "63f0ae00bd31c23490911d75", children: "Hladká múka" },
-      { value: "63ee8e159683bf3a1cac977d", children: "Čínske korenie piatich chutí" },
-    ];
+    console.log(props.onLoadIngredience.itemList);
+    let itemList = [];
+    if (itemList.length == 0) {
+      for (let i = 0; i < props.onLoadIngredience.itemList.length; i++) {
+        itemList.push({
+          value: props.onLoadIngredience.itemList[i].id,
+          children: props.onLoadIngredience.itemList[i].name,
+        });
+      }
+    }
     console.log(recipe_process);
     const handleInputChange = (event, index) => {
       const newArray = [...recipe_process];
