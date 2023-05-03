@@ -22,6 +22,7 @@ const recipeDeleteDtoInType = shape({
 const recipeUpdateDtoInType = shape({
   id: id().isRequired(),
   name: string(255).isRequired(),
+  portion: integer(255),
   description: string(500),
   process: array(),
   ingredience: array(shape({

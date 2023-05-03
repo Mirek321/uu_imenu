@@ -47,6 +47,7 @@ const RecipesForm = createVisualComponent({
     const [ingredience4, setIngredience4] = useState("");
     const [ingredience5, setIngredience5] = useState("");
     const [count_steps, setCountSteps] = useState();
+    const [portion, setPortion] = useState();
     const [ing_amount, setIngAmount] = useState([0]);
     const [ing_amount2, setIngAmount2] = useState();
     const [ing_amount3, setIngAmount3] = useState();
@@ -115,6 +116,7 @@ const RecipesForm = createVisualComponent({
         process: recipe_process,
         ingredience: ingredience_f,
         link_photo: link,
+        portion: portion,
       };
       props.onSave(data);
     }
@@ -171,6 +173,14 @@ const RecipesForm = createVisualComponent({
                 { children: "Bezmäsité", value: "bezmäsité" },
               ]}
               onChange={(value) => setContentMeal(value.data.value)}
+            />
+            <Uu5Forms.Number
+              className={Config.Css.css({ width: "100%" })}
+              label={"Porcie: "}
+              value={portion}
+              name={"portion"}
+              type={"number"}
+              onChange={(value) => setPortion(value.data.value)}
             />
             <h4>Ingredience</h4>
             {ingredience.map((value, index) => (

@@ -245,6 +245,9 @@ class RecipeAbl {
     //a
     let recipe;
     try {
+      for (let i = 0; i < dtoIn.ingredience.length; i++) {
+        dtoIn.ingredience[i].amount = (dtoIn.ingredience[i].amount / dtoIn.portion).toFixed(2);
+      }
       recipe = await this.dao.create(awid, dtoIn);
     } catch (e) {
       throw new Errors.Create.RecipeDaoCreateFailed({ uuAppErrorMap }, e);
