@@ -112,6 +112,10 @@ const RecipeUpdateForm = createVisualComponent({
       setIngAmount(newArray);
     };
     function onSubmit() {
+      let ingredience_f = [];
+      for (let i = 0; i < ingredience.length; i++) {
+        ingredience_f.push({ id: ingredience[i], amount: ing_amount[i] });
+      }
       let data = {
         id: props.data.data.id,
         name,
@@ -119,7 +123,7 @@ const RecipeUpdateForm = createVisualComponent({
         type_recipe,
         description,
         process: recipe_process,
-        ingredience: ingredience,
+        ingredience: ingredience_f,
         link_photo: link,
         portion: portion,
       };
@@ -277,7 +281,7 @@ const RecipeUpdateForm = createVisualComponent({
             <br /> <br />
             <Uu5Elements.Grid justifyItems={"center"} templateColumns="repeat(1, 1fr)">
               <Uu5Elements.Grid.Item>
-                <Uu5Forms.SubmitButton>Vytvoriť recept </Uu5Forms.SubmitButton>
+                <Uu5Forms.SubmitButton>Upraviť recept </Uu5Forms.SubmitButton>
                 <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
               </Uu5Elements.Grid.Item>
             </Uu5Elements.Grid>

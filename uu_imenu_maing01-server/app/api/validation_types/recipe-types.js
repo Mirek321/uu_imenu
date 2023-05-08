@@ -31,7 +31,6 @@ const recipeUpdateDtoInType = shape({
   })),
   category: array(),
   type_recipe: string(255),
-  portion: integer(255),
   link_photo: string(255)
 
 
