@@ -190,7 +190,7 @@ const RecipeDetailView = createVisualComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    console.log(props.data.ingredience.itemList);
+
     props.data.ingredience.itemList.forEach((element) =>
       gridContent1.push(
         <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>

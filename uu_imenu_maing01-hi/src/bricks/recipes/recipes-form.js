@@ -193,7 +193,7 @@ const RecipesForm = createVisualComponent({
                 />
               </Uu5Elements.Grid.Item>
               <Uu5Elements.Grid.Item>
-                <h4>Ingredience</h4>
+                <h4>Ingrediencie</h4>
                 {ingredience.map((value, index) => (
                   <div key={index}>
                     <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">

@@ -139,7 +139,7 @@ const RecipesView = createVisualComponent({
           >
             <RecipesForm data={props.getIngredience} onSave={props.onCreate} onClose={closeModal} />
           </Uu5Elements.Modal>
-          <Uu5Elements.Modal header={"Upravenie receptu"} open={openUpdate}>
+          <Uu5Elements.Modal width={"full"} header={"Upravenie receptu"} open={openUpdate}>
             <RecipeUpdateForm
               onLoadIngredience={props.getIngredience}
               data={data1}

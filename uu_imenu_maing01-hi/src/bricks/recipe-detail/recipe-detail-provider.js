@@ -52,8 +52,9 @@ const RecipeDetailProvider = createComponent({
       case "pendingNoData":
       case "pending":
         return "Loading";
-      case "ready":
+
       case "readyNoData":
+      case "ready":
         return <RecipeDetailView data={data} onLoad={handlerMap.load} onUpdate={handlerMap.update} />;
     }
     return children ?? null;

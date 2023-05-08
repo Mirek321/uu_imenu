@@ -170,6 +170,9 @@ class RecipeAbl {
     let recipeDtoOut;
     try {
       // call dao method remove to delete your joke from database
+      for (let i = 0; i < dtoIn.ingredience.length; i++) {
+        dtoIn.ingredience[i].amount = (dtoIn.ingredience[i].amount / dtoIn.portion).toFixed(2);
+      }
       recipeDtoOut = await this.dao.update({ ...dtoIn, awid });
     } catch (e) {
       // throw an error if something goes wrong during removing joke from database
