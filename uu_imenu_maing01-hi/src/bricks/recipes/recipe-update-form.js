@@ -75,23 +75,7 @@ const RecipeUpdateForm = createVisualComponent({
         });
       }
     }
-    // useEffect(() => {
-    //   const ingredientIds = ;
-    //   setIngredience(ingredientIds);
-    //
-    //   //   setIngAmount(props.data.ingredience.map((ingredience) => ingredience.amount));
-    // }, [props.data]);
-    // // useEffect(
-    //   () => {
-    //     // effect code
-    //     const ingredientIds =;
-    //     setIngredience(ingredientIds);
-    //     const ingredientAmounts = ;
-    //     setIngAmount(ingredientAmounts);
-    //   },
-    //   [ingredience],
-    //   [ing_amount]
-    // );
+
     useEffect(() => {
       setIngredience(props.data.data.ingredience.map((ingredience) => ingredience.id));
       setIngAmount(props.data.data.ingredience.map((ingredience) => ingredience.amount));
@@ -137,6 +121,7 @@ const RecipeUpdateForm = createVisualComponent({
         process: recipe_process,
         ingredience: ingredience,
         link_photo: link,
+        portion: portion,
       };
 
       props.onUpdate(data);
