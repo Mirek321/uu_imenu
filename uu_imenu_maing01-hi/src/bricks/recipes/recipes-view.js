@@ -131,7 +131,12 @@ const RecipesView = createVisualComponent({
               {grid}
             </Uu5TilesElements.Grid>
           </Uu5Tiles.ControllerProvider>
-          <Uu5Elements.Modal header={"Vytvorenie nového receptu"} open={openCreate}>
+          <Uu5Elements.Modal
+            width={"full"}
+            header={"Vytvorenie nového receptu"}
+            open={openCreate}
+            closeOnButtonClick={true}
+          >
             <RecipesForm data={props.getIngredience} onSave={props.onCreate} onClose={closeModal} />
           </Uu5Elements.Modal>
           <Uu5Elements.Modal header={"Upravenie receptu"} open={openUpdate}>

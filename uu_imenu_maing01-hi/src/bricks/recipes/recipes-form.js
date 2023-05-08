@@ -134,97 +134,145 @@ const RecipesForm = createVisualComponent({
       <div {...attrs}>
         <Uu5Forms.Form.Provider onSubmit={onSubmit}>
           <Uu5Forms.Form.View>
-            <UU5.Imaging.Image className={Config.Css.css({ width: "70%", marginLeft: "10%" })} src={link} />
-            <Uu5Forms.Text
-              label={"Nazov receptu"}
-              value={name}
-              name={"name"}
-              type={"string"}
-              onChange={(value) => setName(value.data.value)}
-            />
-            <Uu5Forms.TextArea
-              label={"Popis: "}
-              value={description}
-              name={"description"}
-              type={"string"}
-              onChange={(value) => setDescription(value.data.value)}
-            />
-            <Uu5Forms.Text
-              label={"Link k obrazku"}
-              value={link}
-              name={"link"}
-              type={"string"}
-              onChange={(value) => setLink(value.data.value)}
-            />
-            <Uu5Forms.SwitchSelect.Input
-              label={"Typ jedla"}
-              value={type_recipe}
-              itemList={[
-                { children: "Hlavné jedlo", value: "hlavné jedlo" },
-                { children: "Polievka", value: "polievka" },
-              ]}
-              onChange={(value) => setType_recipe(value.data.value)}
-            />
-            <Uu5Forms.SwitchSelect.Input
-              label={"Obsah mäsa"}
-              value={content_meal}
-              itemList={[
-                { children: "Mäsité", value: "mäsité" },
-                { children: "Bezmäsité", value: "bezmäsité" },
-              ]}
-              onChange={(value) => setContentMeal(value.data.value)}
-            />
-            <Uu5Forms.Number
-              className={Config.Css.css({ width: "100%" })}
-              label={"Porcie: "}
-              value={portion}
-              name={"portion"}
-              type={"number"}
-              onChange={(value) => setPortion(value.data.value)}
-            />
-            <h4>Ingredience</h4>
-            {ingredience.map((value, index) => (
-              <div key={index}>
-                <Uu5Forms.TextSelect
-                  label={"Ingrediencia " + (index + 1).toString() + ": "}
-                  itemList={itemList}
-                  value={value}
-                  onChange={(event) => handleInputChangeIng(event, index)}
-                  // TODO save value to state
+            <Uu5Elements.Grid templateColumns="repeat(3, 1fr)">
+              <Uu5Elements.Grid.Item>
+                <UU5.Imaging.Image className={Config.Css.css({ width: "70%", marginLeft: "10%" })} src={link} />
+                <Uu5Forms.Text
+                  label={"Nazov receptu"}
+                  value={name}
+                  name={"name"}
+                  type={"string"}
+                  onChange={(value) => setName(value.data.value)}
                 />
+                <Uu5Forms.TextArea
+                  label={"Popis: "}
+                  value={description}
+                  name={"description"}
+                  type={"string"}
+                  onChange={(value) => setDescription(value.data.value)}
+                />
+                <Uu5Forms.Text
+                  label={"Link k obrazku"}
+                  value={link}
+                  name={"link"}
+                  type={"string"}
+                  onChange={(value) => setLink(value.data.value)}
+                />
+                <br />
+                <Uu5Elements.Grid templateColumns="repeat(2 1fr)">
+                  <Uu5Elements.Grid.Item justifySelf={"center"}>
+                    <Uu5Forms.SwitchSelect.Input
+                      label={"Typ jedla"}
+                      value={type_recipe}
+                      itemList={[
+                        { children: "Hlavné jedlo", value: "hlavné jedlo" },
+                        { children: "Polievka", value: "polievka" },
+                      ]}
+                      onChange={(value) => setType_recipe(value.data.value)}
+                    />
+                  </Uu5Elements.Grid.Item>
+                  <Uu5Elements.Grid.Item justifySelf={"center"}>
+                    <Uu5Forms.SwitchSelect.Input
+                      label={"Obsah mäsa"}
+                      value={content_meal}
+                      itemList={[
+                        { children: "Mäsité", value: "mäsité" },
+                        { children: "Bezmäsité", value: "bezmäsité" },
+                      ]}
+                      onChange={(value) => setContentMeal(value.data.value)}
+                    />
+                  </Uu5Elements.Grid.Item>
+                </Uu5Elements.Grid>
                 <Uu5Forms.Number
                   className={Config.Css.css({ width: "100%" })}
-                  label={"Množstvo ingrediencie " + (index + 1).toString() + ": "}
-                  value={ing_amount[index]}
-                  name={"ing_amount"}
+                  label={"Porcie: "}
+                  value={portion}
+                  name={"portion"}
                   type={"number"}
-                  onChange={(event) => handleInputChangeAmount(event, index)}
+                  onChange={(value) => setPortion(value.data.value)}
                 />
-                <Uu5Elements.Button
-                  icon="mdi-delete"
-                  tooltip={"Odstraniť ingredienciu"}
-                  onClick={() => handleDeleteIng(index)}
-                />
-              </div>
-            ))}
-            <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať krok"} onClick={handleAddValueIng} />
-            <h4>Postup</h4>
-            {recipe_process.map((value, index) => (
-              <div key={index}>
-                <Uu5Forms.TextArea
-                  label={"Krok " + (index + 1).toString() + ": "}
-                  value={value}
-                  name={"process"}
-                  type={"text"}
-                  onChange={(event) => handleInputChange(event, index)}
-                />
-                <Uu5Elements.Button icon="mdi-delete" tooltip={"Odstraniť krok"} onClick={() => handleDelete(index)} />
-              </div>
-            ))}
-            <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať krok"} onClick={handleAddValue} />
-            <br /> <br />
-            <Uu5Forms.SubmitButton> Vytvoriť recept </Uu5Forms.SubmitButton>
-            <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
+              </Uu5Elements.Grid.Item>
+              <Uu5Elements.Grid.Item>
+                <h4>Ingredience</h4>
+                {ingredience.map((value, index) => (
+                  <div key={index}>
+                    <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+                      <Uu5Elements.Grid.Item justifySelf={"start"}>
+                        <Uu5Forms.TextSelect
+                          label={"Ingrediencia " + (index + 1).toString() + ": "}
+                          itemList={itemList}
+                          value={value}
+                          onChange={(event) => handleInputChangeIng(event, index)}
+                          className={Config.Css.css({ width: "210%" })}
+
+                          // TODO save value to state
+                        />
+
+                        <Uu5Forms.Number
+                          label={"Množstvo ingrediencie " + (index + 1).toString() + ": "}
+                          value={ing_amount[index]}
+                          name={"ing_amount"}
+                          type={"number"}
+                          onChange={(event) => handleInputChangeAmount(event, index)}
+                          className={Config.Css.css({ width: "210%" })}
+                        />
+                      </Uu5Elements.Grid.Item>
+                      <Uu5Elements.Grid.Item justifySelf="end" className={Config.Css.css({ paddingTop: "25%" })}>
+                        <Uu5Elements.Button
+                          icon="mdi-delete"
+                          tooltip={"Odstraniť ingredienciu"}
+                          onClick={() => handleDeleteIng(index)}
+                        />
+                      </Uu5Elements.Grid.Item>
+                    </Uu5Elements.Grid>
+                  </div>
+                ))}
+                <Uu5Elements.Grid templateColumns="repeat(1, 1fr)">
+                  <br />
+                  <Uu5Elements.Grid.Item justifySelf="center">
+                    <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať ingredienciu"} onClick={handleAddValueIng} />
+                  </Uu5Elements.Grid.Item>
+                </Uu5Elements.Grid>
+              </Uu5Elements.Grid.Item>
+              <Uu5Elements.Grid.Item>
+                <h4>Postup</h4>
+                {recipe_process.map((value, index) => (
+                  <div key={index}>
+                    <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+                      <Uu5Forms.TextArea
+                        label={"Krok " + (index + 1).toString() + ": "}
+                        value={value}
+                        name={"process"}
+                        type={"text"}
+                        onChange={(event) => handleInputChange(event, index)}
+                        className={Config.Css.css({ width: "185%" })}
+                      />
+
+                      <Uu5Elements.Grid.Item justifySelf={"end"} className={Config.Css.css({ paddingTop: "25%" })}>
+                        <Uu5Elements.Button
+                          icon="mdi-delete"
+                          tooltip={"Odstraniť krok"}
+                          onClick={() => handleDelete(index)}
+                        />
+                      </Uu5Elements.Grid.Item>
+                    </Uu5Elements.Grid>
+                  </div>
+                ))}
+                <Uu5Elements.Grid templateColumns="repeat(1, 1fr)">
+                  <br />
+                  <Uu5Elements.Grid.Item justifySelf="center">
+                    <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať krok"} onClick={handleAddValue} />
+                  </Uu5Elements.Grid.Item>
+                </Uu5Elements.Grid>
+              </Uu5Elements.Grid.Item>
+              <br /> <br />
+            </Uu5Elements.Grid>
+            <Uu5Elements.Grid justifyItems={"center"} templateColumns="repeat(1, 1fr)">
+              <Uu5Elements.Grid.Item>
+                <Uu5Forms.SubmitButton>Vytvoriť recept </Uu5Forms.SubmitButton>
+                <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
+              </Uu5Elements.Grid.Item>
+            </Uu5Elements.Grid>
           </Uu5Forms.Form.View>
         </Uu5Forms.Form.Provider>
       </div>
