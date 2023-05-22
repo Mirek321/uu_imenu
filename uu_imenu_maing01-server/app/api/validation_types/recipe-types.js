@@ -11,7 +11,7 @@ const recipeCreateDtoInType = shape({
   type_recipe: string(255),
   portion: integer(255),
   link_photo: string(255)
-
+/**/
 });
 const recipeGetDtoInType = shape({
   id: id().isRequired(),
