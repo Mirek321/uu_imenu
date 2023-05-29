@@ -1,6 +1,6 @@
 //@@viewOn:imports
 import { createComponent, useDataList } from "uu5g05";
-import Config from "./config/config.js";
+import Config from "../config/config.js";
 import RecipesView from "../recipes/recipes-view";
 import Calls from "../../calls";
 import IngredienceView from "./ingredience-view";

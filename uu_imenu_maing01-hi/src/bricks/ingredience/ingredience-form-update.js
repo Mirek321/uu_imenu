@@ -8,7 +8,7 @@ import Plus4u5Elements from "uu_plus4u5g02-elements";
 import UU5 from "uu5g04";
 import Uu5TilesControls from "uu5tilesg02-controls";
 import Uu5Imaging from "uu5imagingg01";
-import Config from "./config/config.js";
+import Config from "../config/config.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
