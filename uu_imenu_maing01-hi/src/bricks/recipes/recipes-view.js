@@ -80,7 +80,14 @@ const RecipesView = createVisualComponent({
         <Uu5Elements.Grid.Item className={Config.Css.css({ padding: 8 })}>
           <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
             <UU5.Imaging.Image src={data.data.link_photo} />
-            <p style={{ textAlign: "center", margin: 0, padding: 10 }}>{data.data.type_recipe}</p>
+            <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+              <Uu5Elements.Grid.Item justifySelf="right">
+            <p style={{ margin: 0, padding: 10 }}>{data.data.type_recipe}</p>
+              </Uu5Elements.Grid.Item>
+              <Uu5Elements.Grid.Item justifySelf="left">
+                <p style={{ margin: 0, padding: 10 }}>{data.data.category[0]}</p>
+              </Uu5Elements.Grid.Item>
+            </Uu5Elements.Grid>
             <h3
               style={{ textAlign: "center", margin: 0, paddingBottom: 20 }}
               onClick={() => setRoute("recipesdetail", { id: data.data.id })}

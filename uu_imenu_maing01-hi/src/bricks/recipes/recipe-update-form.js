@@ -222,8 +222,9 @@ const RecipeUpdateForm = createVisualComponent({
                 <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
 
 
-                  <Uu5Elements.Grid.Item justifySelf={"start"}>
+                  <Uu5Elements.Grid.Item justifySelf={"start"}  >
                 {ingredience.map((value, index) => (
+                  <div>
                         <Uu5Forms.TextSelect
                           label={"Ingrediencia " + (index + 1).toString() + ": "}
                           itemList={ingredienceList}
@@ -232,11 +233,18 @@ const RecipeUpdateForm = createVisualComponent({
                           // className={Config.Css.css({ width: "50%" })}
                         />
 
+                  <Uu5Elements.Button
+                  icon="mdi-delete"
+                  tooltip={"Odstraniť krok"}
+                    onClick={() => handleDeleteIng(index)}
+                  className={Config.Css.css({marginLeft: "40%", marginTop: "5%"})} />
+                  </div>
                 ))}
                   </Uu5Elements.Grid.Item>
 
                   <Uu5Elements.Grid.Item justifySelf={"center"}>
                 {ingAmount.map((value,index) => (
+                  <div>
                   <Uu5Forms.Number
                     label={"Množstvo ingrediencie " + (index + 1).toString() + ": "}
                    value={value}
@@ -245,6 +253,12 @@ const RecipeUpdateForm = createVisualComponent({
                    onChange={(event) => handleInputChangeAmount(event.target.value, index)}
                    // className={Config.Css.css({ width: "50%" })}
                       />
+                  <Uu5Elements.Button
+                  icon="mdi-delete"
+                  tooltip={"Odstraniť krok"}
+                    onClick={() => handleDeleteIng(index)}
+                    className={Config.Css.css({marginLeft: "40%", marginTop: "7%"})} />
+                  </div>
               ))}
                   </Uu5Elements.Grid.Item>
 

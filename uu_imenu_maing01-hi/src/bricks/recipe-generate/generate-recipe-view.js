@@ -120,14 +120,21 @@ const GenerateRecipeView = createVisualComponent({
     const { children } = props;
 
     function onGenerate() {
+      console.log(days);
       let filter = {
         count_meals: [
           { name: "polievka", count: soup_filter },
           { name: "hlavné jedlo", count: main_meal_filter },
         ],
-        days: days,
-        category: [category],
+        days: ["Pondelok","Utorok","Streda","Štvrtok","Piatok"],
+
       };
+      if(category !== undefined){
+        filter.category = [category];
+      }
+      if(days.length > 0){
+        filter.days = days;
+      }
       console.log(filter);
       props.onGenerate(filter);
       console.log(props.data);
@@ -179,6 +186,7 @@ const GenerateRecipeView = createVisualComponent({
                           name={"soup"}
                           type={"number"}
                           onChange={(value) => setSoupFilter(value.data.value)}
+                          required
                         />
 
                         <Uu5Forms.FormNumber
@@ -188,6 +196,7 @@ const GenerateRecipeView = createVisualComponent({
                           name={"main_meal"}
                           type={"number"}
                           onChange={(value) => setMain_meal_filter(value.data.value)}
+                          required
                         />
                         <Uu5Forms.FormSwitchSelect
                           name="Obsah mäsa"
@@ -195,8 +204,10 @@ const GenerateRecipeView = createVisualComponent({
                           itemList={[
                             { children: "Mäsité", value: "mäsité" },
                             { children: "Bezmäsité", value: "bezmäsité" },
+                            // { children: "Mäsité / Bezmäsité", value: "" },
                           ]}
                           onChange={(value) => setCategory(value.data.value)}
+
                         />
                       </Uu5Elements.Grid.Item>
                       <Uu5Elements.Grid.Item justifySelf="start" className={Config.Css.css({ paddingLeft: 15 })}>

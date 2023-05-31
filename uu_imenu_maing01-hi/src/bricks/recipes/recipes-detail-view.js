@@ -45,7 +45,7 @@ const RecipesDetailView = createVisualComponent({
           <strong>{element.name}</strong>
 
           <div style={{ textAlign: "right", paddingBottom: "10px" }}>
-            {element.amount_recipe} {element.unit}
+            {Math.trunc(element.amount_recipe*props.data.portion)} {element.unit}
           </div>
         </Uu5Elements.Box>
       )
@@ -86,6 +86,7 @@ const RecipesDetailView = createVisualComponent({
               <p style={{ fontSize: "medium" }}>{props.data.description}</p>
 
               <UU5.Imaging.Image width="500px" src={props.data.link_photo} />
+              <h3>Porcie:</h3>{props.data.portion}
               <h2>Ingrediencie:</h2>
               <Uu5Elements.Grid>{gridContent1}</Uu5Elements.Grid>
             </Uu5Elements.Grid.Item>
