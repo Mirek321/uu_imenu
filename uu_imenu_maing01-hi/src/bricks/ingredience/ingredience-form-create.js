@@ -83,6 +83,7 @@ const IngredienceFormCreate = createVisualComponent({
                 name={"ing_name"}
                 type={"text"}
                 onChange={(value) => setIngName(value.data.value)}
+                required
               />
 
               <Uu5Forms.FormNumber
@@ -92,6 +93,7 @@ const IngredienceFormCreate = createVisualComponent({
                 name={"ing_amount"}
                 type={"number"}
                 onChange={(value) => setIngAmount(value.data.value)}
+                required
               />
               <Uu5Forms.FormText
                 className={Config.Css.css({ width: "100%" })}
@@ -100,6 +102,7 @@ const IngredienceFormCreate = createVisualComponent({
                 name={"ing_unit"}
                 type={"text"}
                 onChange={(value) => setIngUnit(value.data.value)}
+                required
               />
               <Uu5Forms.FormSwitchSelect
                 label="Alergén"

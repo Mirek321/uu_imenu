@@ -73,42 +73,45 @@ const IngredienceFormUpdate = createVisualComponent({
           <Uu5Forms.Form.View>
             <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
               <Uu5Elements.Grid.Item>
-                {"Názov ingrediencie:"}
-                <Uu5Forms.Text.Input
+
+                <Uu5Forms.Text
                   className={Config.Css.css({ width: "100%" })}
                   label="Názov ingrediencie:"
                   value={ing_name}
                   name={"ing_name"}
                   type={"text"}
                   onChange={(value) => setIngName(value.data.value)}
+                  required
                 />
               </Uu5Elements.Grid.Item>
               <Uu5Elements.Grid.Item>
-                {"Množstvo ingrediencií:"}
-                <Uu5Forms.Number.Input
+
+                <Uu5Forms.Number
                   className={Config.Css.css({ width: "100%" })}
                   label="Množstvo ingrediencií:"
                   value={ing_amount}
                   name={"ing_amount"}
                   type={"number"}
                   onChange={(value) => setIngAmount(value.data.value)}
+                  required
                 />
               </Uu5Elements.Grid.Item>
               <Uu5Elements.Grid.Item>
-                {"Jednotka:"}
-                <Uu5Forms.Text.Input
+
+                <Uu5Forms.Text
                   className={Config.Css.css({ width: "100%" })}
                   label="Jednotka:"
                   value={ing_unit}
                   name={"ing_unit"}
                   type={"text"}
                   onChange={(value) => setIngUnit(value.data.value)}
+                  required
                 />
               </Uu5Elements.Grid.Item>
               <Uu5Elements.Grid.Item>
-                {"Alergén"}
-                <br></br>
-                <Uu5Forms.SwitchSelect.Input
+
+
+                <Uu5Forms.SwitchSelect
                   value={ing_allergen}
                   label="Alergén"
                   itemList={[
@@ -116,6 +119,7 @@ const IngredienceFormUpdate = createVisualComponent({
                     { children: "Nie", value: "Nie" },
                   ]}
                   onChange={(value) => setAlergen(value.data.value)}
+
                 />
               </Uu5Elements.Grid.Item>
 

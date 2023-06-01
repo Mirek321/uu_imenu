@@ -10,6 +10,7 @@ import Uu5Imaging from "uu5imagingg01";
 import Config from "../config/config.js";
 import IngredienceFormCreate from "./ingredience-form-create";
 import IngredienceFormUpdate from "./ingredience-form-update";
+import IngredienceFormPurchase from "./ingredience-form-purchase";
 import RouteBar from "../../core/route-bar";
 
 //@@viewOff:imports
@@ -45,6 +46,7 @@ const IngredienceView = createVisualComponent({
     const { children } = props;
     let [openCreate, setOpenCreate] = useState(false);
     let [openUpdate, setOpenUpdate] = useState(false);
+    let [openPurchase, setOpenPurchase] = useState(false);
     let [data1, setData1] = useState();
     const modalRef = useRef();
     const COLUMN_LIST = [
@@ -61,6 +63,11 @@ const IngredienceView = createVisualComponent({
           icon: "mdi-plus",
           tooltip: "Pridanie ingrediencie",
           onClick: () => addNewIngredience(),
+        },
+        {
+          icon: "mdi-cart",
+          tooltip: "Nový nákup",
+          onClick: () => newPurchase(),
         },
       ];
       return actionList;
@@ -94,6 +101,10 @@ const IngredienceView = createVisualComponent({
     function closeModal() {
       setOpenCreate(false);
       setOpenUpdate(false);
+      setOpenPurchase(false);
+    }
+    function  newPurchase(){
+      setOpenPurchase(true)
     }
     //@@viewOff:private
 
@@ -125,6 +136,9 @@ const IngredienceView = createVisualComponent({
         </Uu5Elements.Modal>
         <Uu5Elements.Modal header={"Upravenie ingrediencie"} open={openUpdate}>
           <IngredienceFormUpdate data={data1} onUpdate={props.onUpdate} onClose={closeModal} />
+        </Uu5Elements.Modal>
+        <Uu5Elements.Modal header={"Nákup nových ingrediencíich"} open={openPurchase}>
+          <IngredienceFormPurchase data={props.data} onUpdateMany={props.onUpdateMany} onClose={closeModal} />
         </Uu5Elements.Modal>
       </div>
     ) : null;

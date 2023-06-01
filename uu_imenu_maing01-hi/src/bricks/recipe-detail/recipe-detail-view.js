@@ -179,6 +179,7 @@ const RecipeDetailView = createVisualComponent({
     }
 
     function onUpdate() {
+      console.log(ingredience)
       props.onUpdate(ingredience);
 
       window.location.reload(false);

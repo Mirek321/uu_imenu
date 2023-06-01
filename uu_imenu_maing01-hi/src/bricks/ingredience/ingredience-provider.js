@@ -37,6 +37,7 @@ const IngredienceProvider = createComponent({
         createIngrediencie: Calls.ingredienceCreate,
         updateIngredience: Calls.ingredienceUpdate,
         deleteIngredience: Calls.ingredienceDelete,
+        updateManyIngredience: Calls.ingredienceUpdateMany,
       },
     });
     // const callResult = useDataObject({
@@ -66,6 +67,7 @@ const IngredienceProvider = createComponent({
             onDelete={handlerMap.deleteIngredience}
             onCreate={handlerMap.createIngrediencie}
             onUpdate={handlerMap.updateIngredience}
+            onUpdateMany={handlerMap.updateManyIngredience}
           />
         );
     }
