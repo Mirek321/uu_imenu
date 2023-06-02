@@ -38,27 +38,28 @@ const RecipesDetailView = createVisualComponent({
     const { children } = props;
     let gridContent1 = [];
     let process = [];
-    const [route, setRoute] = useRoute();
-    props.data.ingredience.itemList.forEach((element) =>
-      gridContent1.push(
-        <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
-          <strong>{element.name}</strong>
+    if (props.data && props.data.ingredience && props.data.ingredience.itemList) {
+      props.data.ingredience.itemList.forEach((element) =>
+        gridContent1.push(
+          <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({padding: 16})}>
+            <strong>{element.name}</strong>
 
-          <div style={{ textAlign: "right", paddingBottom: "10px" }}>
-            {element.amount_recipe} {element.unit}
-          </div>
-        </Uu5Elements.Box>
-      )
-    );
-    props.data.process.forEach((element, index) =>
-      process.push(
-        <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
-          <Uu5Elements.InfoItem iconText={index + 1} />
+            <div style={{textAlign: "right", paddingBottom: "10px"}}>
+              {Math.trunc(element.amount_recipe * props.data.portion)} {element.unit}
+            </div>
+          </Uu5Elements.Box>
+        )
+      );
+      props.data.process.forEach((element, index) =>
+        process.push(
+          <Uu5Elements.Box className={Config.Css.css({padding: 16})}>
+            <Uu5Elements.InfoItem iconText={index + 1}/>
 
-          <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
-        </Uu5Elements.Box>
-      )
-    );
+            <p className={Config.Css.css({marginLeft: "5%"})}> {element}</p>
+          </Uu5Elements.Box>
+        )
+      );
+    }
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -86,10 +87,11 @@ const RecipesDetailView = createVisualComponent({
               <p style={{ fontSize: "medium" }}>{props.data.description}</p>
 
               <UU5.Imaging.Image width="500px" src={props.data.link_photo} />
+              <h3>Porcie:</h3>{props.data.portion}
               <h2>Ingrediencie:</h2>
               <Uu5Elements.Grid>{gridContent1}</Uu5Elements.Grid>
             </Uu5Elements.Grid.Item>
-            {/*<Uu5Elements.Button onClick={onUpdate}>Potvrdiť</Uu5Elements.Button>*/}
+
             <Uu5Elements.Grid.Item className={Config.Css.css({ width: "70%", marginLeft: "10%" })}>
               <h2>Postup:</h2>
               <Uu5Elements.Grid display="inline"> {process}</Uu5Elements.Grid>

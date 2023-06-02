@@ -38,21 +38,20 @@ const GenerateRecipeView = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
+    const { children } = props;
     let gridContent = [];
     let soup = [];
     let main_meal = [];
 
     const [route, setRoute] = useRoute();
-    const [showBanner, setShowBanner] = useState(false);
-    const [gridConte, setGridConte] = useState([]);
+
     const [soup_filter, setSoupFilter] = useState("");
     const [days, setDays] = useState([]);
     const [category, setCategory] = useState([]);
     const [main_meal_filter, setMain_meal_filter] = useState("");
-    let [open, setOpen] = useState(false);
-    const test = useRef();
 
-    let g = [];
+    const test = useRef();
+    console.log(props);
 
     function DivideTypeRecipe(recipes) {
       soup = [];
@@ -109,28 +108,31 @@ const GenerateRecipeView = createVisualComponent({
     }
     let den = "";
 
-    function closeModal() {
-      setOpen(false);
-    }
-    function openModal() {
-      setOpen(true);
-    }
+
     //@@viewOn:private
 
-    const { children } = props;
+
 
     function onGenerate() {
+      console.log(days);
       let filter = {
         count_meals: [
           { name: "polievka", count: soup_filter },
           { name: "hlavné jedlo", count: main_meal_filter },
         ],
-        days: days,
-        category: [category],
+        days: ["Pondelok","Utorok","Streda","Štvrtok","Piatok"],
+
       };
+      if(category !== undefined){
+        filter.category = [category];
+      }
+      if(days.length > 0){
+        filter.days = days;
+      }
       console.log(filter);
+
       props.onGenerate(filter);
-      console.log(props.data);
+      console.log(props);
     }
     if (props.data) {
       window.localStorage.setItem("MY_IMENU_APP", JSON.stringify(props.data));
@@ -179,6 +181,7 @@ const GenerateRecipeView = createVisualComponent({
                           name={"soup"}
                           type={"number"}
                           onChange={(value) => setSoupFilter(value.data.value)}
+                          required
                         />
 
                         <Uu5Forms.FormNumber
@@ -188,6 +191,7 @@ const GenerateRecipeView = createVisualComponent({
                           name={"main_meal"}
                           type={"number"}
                           onChange={(value) => setMain_meal_filter(value.data.value)}
+                          required
                         />
                         <Uu5Forms.FormSwitchSelect
                           name="Obsah mäsa"
@@ -195,8 +199,10 @@ const GenerateRecipeView = createVisualComponent({
                           itemList={[
                             { children: "Mäsité", value: "mäsité" },
                             { children: "Bezmäsité", value: "bezmäsité" },
+
                           ]}
                           onChange={(value) => setCategory(value.data.value)}
+
                         />
                       </Uu5Elements.Grid.Item>
                       <Uu5Elements.Grid.Item justifySelf="start" className={Config.Css.css({ paddingLeft: 15 })}>
@@ -232,10 +238,7 @@ const GenerateRecipeView = createVisualComponent({
             <Uu5Elements.Grid templateColumns="repeat(5, 1fr)">{gridContent} </Uu5Elements.Grid>
           </div>
 
-          {/*<Uu5Elements.Modal header={"Filtrovanie generovania"} open={open}>*/}
-          {/*  <GenerateRecipeForm onSave={props.onGenerate} onClose={closeModal}></GenerateRecipeForm>*/}
-          {/*</Uu5Elements.Modal>*/}
-          {g}
+
         </div>
       </div>
     ) : null;

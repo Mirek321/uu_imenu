@@ -42,26 +42,24 @@ const RecipesView = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { data } = props;
-    let [open, setOpen] = useState(false);
-    const modalRef = useRef();
+
     const [route, setRoute] = useRoute();
     let [openCreate, setOpenCreate] = useState(false);
     let [openUpdate, setOpenUpdate] = useState(false);
     let [data1, setData1] = useState();
-    function closeModal() {
-      setOpenCreate(false);
-      setOpenUpdate(false);
-    }
 
-    let ingredience = {};
-    useEffect(() => {}, []);
-    console.log(props.ingredienceData);
     const COLUMN_LIST = [
       { value: "name", header: "Názov receptu" },
       { value: "type_recipe", header: "Typ jedla" },
       { value: "link_photo", header: "Obrazok", type: "image" },
       { header: "Akcie", type: "actionList" },
     ];
+
+    function closeModal() {
+      setOpenCreate(false);
+      setOpenUpdate(false);
+    }
+
     function updateRecipe(data) {
       console.log(data);
       setData1(data);
@@ -80,7 +78,14 @@ const RecipesView = createVisualComponent({
         <Uu5Elements.Grid.Item className={Config.Css.css({ padding: 8 })}>
           <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
             <UU5.Imaging.Image src={data.data.link_photo} />
-            <p style={{ textAlign: "center", margin: 0, padding: 10 }}>{data.data.type_recipe}</p>
+            <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+              <Uu5Elements.Grid.Item justifySelf="right">
+            <p style={{ margin: 0, padding: 10 }}>{data.data.type_recipe}</p>
+              </Uu5Elements.Grid.Item>
+              <Uu5Elements.Grid.Item justifySelf="left">
+                <p style={{ margin: 0, padding: 10 }}>{data.data.category[0]}</p>
+              </Uu5Elements.Grid.Item>
+            </Uu5Elements.Grid>
             <h3
               style={{ textAlign: "center", margin: 0, paddingBottom: 20 }}
               onClick={() => setRoute("recipesdetail", { id: data.data.id })}

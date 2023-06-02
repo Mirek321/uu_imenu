@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, useDataObject } from "uu5g05";
+import { createComponent, useDataObject,useDataList } from "uu5g05";
 import UU5 from "uu5g04";
 import Config from "../config/config.js";
 import Calls from "../../calls";
@@ -30,19 +30,8 @@ const GenerateRecipeProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
-    function recipeList() {
-      console.log("List");
-      return Calls.recipeList();
-    }
+
     function recipeGenerate(filter) {
-      // const filter = {
-      //   count_meals: [
-      //     { name: "polievka", count: 0 },
-      //     { name: "hlavné jedlo", count: 1 },
-      //   ],
-      //   days: ["Pondelok", "Utorok", "Štvrtok", "Piatok"],
-      //   category: ["mäsité"],
-      // };
       return Calls.recipeGenerate(filter);
     }
 
@@ -54,6 +43,7 @@ const GenerateRecipeProvider = createComponent({
     //@@viewOn:hooks
 
     const callResult = useDataObject({ handlerMap: { generate: recipeGenerate } });
+
     //@@viewOff:hooks
 
     //@@viewOn:render
@@ -63,8 +53,8 @@ const GenerateRecipeProvider = createComponent({
       case "pendingNoData":
       case "pending":
         return "Loading";
-      case "ready":
       case "readyNoData":
+      case "ready":
         return <GenerateRecipeView data={data} onGenerate={handlerMap.generate} />;
     }
 

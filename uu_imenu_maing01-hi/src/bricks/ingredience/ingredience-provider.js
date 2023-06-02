@@ -1,6 +1,6 @@
 //@@viewOn:imports
 import { createComponent, useDataList } from "uu5g05";
-import Config from "./config/config.js";
+import Config from "../config/config.js";
 import RecipesView from "../recipes/recipes-view";
 import Calls from "../../calls";
 import IngredienceView from "./ingredience-view";
@@ -37,16 +37,10 @@ const IngredienceProvider = createComponent({
         createIngrediencie: Calls.ingredienceCreate,
         updateIngredience: Calls.ingredienceUpdate,
         deleteIngredience: Calls.ingredienceDelete,
+        updateManyIngredience: Calls.ingredienceUpdateMany,
       },
     });
-    // const callResult = useDataObject({
-    //   handlerMap: {
-    //     load: ingredienceList,
-    //     delete: ingredienceDelete,
-    //     create: ingredienceCreate,
-    //     update: ingredienceUpdate,
-    //   },
-    // });
+
     //@@viewOff:hooks
 
     //@@viewOn:interface
@@ -66,6 +60,7 @@ const IngredienceProvider = createComponent({
             onDelete={handlerMap.deleteIngredience}
             onCreate={handlerMap.createIngrediencie}
             onUpdate={handlerMap.updateIngredience}
+            onUpdateMany={handlerMap.updateManyIngredience}
           />
         );
     }

@@ -29,35 +29,10 @@ const RecipesProvider = createComponent({
     //@@viewOn:private
     const { children } = props;
 
-    function recipeList() {
-      return Calls.recipeList();
-    }
-    function ingredienceList() {
-      return Calls.ingredienceList();
-    }
-    function recipeCreate(data) {
-      console.log(data);
-      return Calls.recipeCreate(data);
-    }
-    function recipeDelete(data) {
-      return Calls.recipeDelete({ id: data.id });
-    }
-    function recipeUpdate(data) {
-      console.log(data);
-      return Calls.recipeUpdate(data);
-    }
+
     //@@viewOff:private
 
-    // //@@viewOn:hooks
-    // const callResult = useDataList({
-    //   handlerMap: {
-    //     load: recipeList,
-    //     create: recipeCreate,
-    //     delete: recipeDelete,
-    //     update: recipeUpdate,
-    //     ingredienceList: ingredienceList,
-    //   },
-    // });
+
     const callResultIngredience = useDataObject({
       handlerMap: {
         load: Calls.ingredienceList,

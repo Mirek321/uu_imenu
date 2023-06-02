@@ -37,30 +37,20 @@ const RecipeDetailView = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
+    const { children } = props;
     let gridContent1 = [];
-    const [route, setRoute] = useRoute();
     const [gridContent, setGridContent] = useState([gridContent1]);
     let process = [];
     let ingrediences = [];
-    const [message, setMessage] = useState("");
     const [ingredience, setIngredience] = useState([]);
 
-    const [updated, setUpdated] = useState(message);
 
-    const { children } = props;
-    const modalRef = useRef();
-    const handleChange = (event) => {
-      setMessage(event.target.value);
-    };
-    const handleClick = () => {
-      // 👇 "message" stores input field value
-      setUpdated(message);
-    };
+
     function comprassion(portion) {
       if (portion > 0) {
         let recipe;
         recipe = props.data;
-        // eslint-disable-next-line uu5/hooks-rules
+
         setGridContent([]);
         ingrediences = [];
 
@@ -100,12 +90,7 @@ const RecipeDetailView = createVisualComponent({
                 {"  "}
               </Uu5Elements.Box>,
             ]);
-            // gridContent.push(
-            //   <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
-            //     {ingrediences[i].name}
-            //     <Uu5Elements.Icon icon="fa-check" margin={{ left: 4 }} />
-            //   </Uu5Elements.Box>
-            //);
+
           }
           if (ingrediences[i].difference == 0) {
             ingrediences[i].suit = true;
@@ -127,12 +112,7 @@ const RecipeDetailView = createVisualComponent({
                 </div>
               </Uu5Elements.Box>,
             ]);
-            // gridContent.push(
-            //   <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
-            //     {ingrediences[i].name}
-            //     <Uu5Elements.Icon icon="fa-check" margin={{ left: 4 }} />
-            //   </Uu5Elements.Box>
-            // );
+
           }
           if (ingrediences[i].difference < 0) {
             ingrediences[i].suit = false;
@@ -155,34 +135,25 @@ const RecipeDetailView = createVisualComponent({
                 </div>
               </Uu5Elements.Box>,
             ]);
-            // gridContent.push(
-            //   <Uu5Elements.Box width="30%" height="80%" className={Config.Css.css({ padding: 16 })}>
-            //     {ingrediences[i].name}
-            //     <Uu5Elements.Icon icon="uubmlstates27;" margin={{ left: 4 }} />
-            //   </Uu5Elements.Box>
-            // );
+
           } else {
             ingrediences[i].suit = "error";
           }
         }
-        // const check = ingrediences.every(({ suit }) => suit);
-        // if (check) {
-        // } else {
-        //   // pass;
-        // }
+
         setIngredience(ingrediences);
 
         return gridContent;
 
-        // return ingrediences;
       }
     }
 
     function onUpdate() {
-      props.onUpdate(ingredience);
+      console.log(ingredience)
 
+      props.onUpdate(ingredience);
       window.location.reload(false);
-      // setRoute("home");
+
     }
     //@@viewOff:private
 
@@ -191,26 +162,34 @@ const RecipeDetailView = createVisualComponent({
 
     //@@viewOn:render
 
-    props.data.ingredience.itemList.forEach((element) =>
-      gridContent1.push(
-        <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
-          <strong>{element.name}</strong>
+    if (props.data && props.data.ingredience && props.data.ingredience.itemList) {
+      console.log(props.data.ingredience);
 
-          <div style={{ textAlign: "right", paddingBottom: "10px" }}>
-            {element.amount_recipe} {element.unit}
-          </div>
-        </Uu5Elements.Box>
-      )
-    );
-    props.data.process.forEach((element, index) =>
-      process.push(
-        <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
-          <Uu5Elements.InfoItem iconText={index + 1} />
+        props.data.ingredience.itemList.forEach((element) =>
+          gridContent1.push(
+            <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({padding: 16})}>
+              <strong>{element.name}</strong>
 
-          <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
-        </Uu5Elements.Box>
-      )
-    );
+              <div style={{textAlign: "right", paddingBottom: "10px"}}>
+                {element.amount_recipe} {element.unit}
+              </div>
+            </Uu5Elements.Box>
+          )
+        );
+
+
+    }
+    if (props.data && props.data.ingredience && props.data.ingredience.itemList) {
+      props.data.process.forEach((element, index) =>
+        process.push(
+          <Uu5Elements.Box className={Config.Css.css({padding: 16})}>
+            <Uu5Elements.InfoItem iconText={index + 1}/>
+
+            <p className={Config.Css.css({marginLeft: "5%"})}> {element}</p>
+          </Uu5Elements.Box>
+        )
+      );
+    }
 
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, RecipeDetailView);
@@ -251,8 +230,6 @@ const RecipeDetailView = createVisualComponent({
                 </Uu5Forms.Form.View>
               </Uu5Forms.Form.Provider>
             </Uu5Elements.Grid.Item>
-
-            {/*<Uu5Elements.Button onClick={onUpdate}>Potvrdiť</Uu5Elements.Button>*/}
             <Uu5Elements.Grid.Item className={Config.Css.css({ width: "70%", marginLeft: "10%" })}>
               <h2>Postup:</h2>
               <div></div>
