@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState  } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useEffect  } from "uu5g05";
 
 import Uu5Forms from "uu5g05-forms";
 import Uu5Tiles from "uu5tilesg02";
@@ -49,6 +49,7 @@ const IngredienceFormPurchase = createVisualComponent({
       setIngredience([...ingredience, " "]);
       setIngAmount([...ingAmount, 0]);
     };
+
     const handleInputChangeIng = (event, index) => {
       const newArray = [...ingredience];
       newArray[index] = event.data.value;
@@ -69,25 +70,20 @@ const IngredienceFormPurchase = createVisualComponent({
       setIngAmount(newArray);
     };
     //@@viewOn:interface
-    console.log(ingAmount[0]);
-    let itemList = [];
-    let ingredienceList = []
-    console.log(itemList);
-    if (itemList.length === 0) {
+
+    let ingredienceList = [];
+
+    if (ingredienceList.length === 0) {
       ingredienceList.push({ value: "", children: "" });
       props.data.map((value,index) =>  ingredienceList.push({ value: props.data[index].data.id, children: props.data[index].data.name }))
 
     }
     //@@viewOff:interface
     function  onSubmit(){
+
       let newIng = [];
       console.log(props.data);
-      for (let i =0; i < ingredience.length; i++){
-        const id = ingredience[i];
-        const obj = props.data.find(item => item.data.id === id);
-        console.log(obj.data.amount+ingAmount[i]);
-        newIng.push(obj.data.amount+ingAmount[i])
-      }
+      ingredience.map((value,i) => (  newIng.push(props.data.find(item => item.data.id === ingredience[i]).data.amount+ingAmount[i])));
       let ingredience_f = [];
       ingredience.map((value,index) => ( ingredience_f.push({ id: ingredience[index], difference: newIng[index] })))
       console.log(ingredience_f);

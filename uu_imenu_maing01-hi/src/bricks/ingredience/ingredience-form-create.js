@@ -41,23 +41,23 @@ const IngredienceFormCreate = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
-    const [ing_name, setIngName] = useState("");
-    const [ing_amount, setIngAmount] = useState("");
-    const [ing_unit, setIngUnit] = useState("");
-    const [ing_allergen, setAlergen] = useState("");
+    const [ingName, setIngName] = useState("");
+    const [ingAmount, setIngAmount] = useState("");
+    const [ingUnit, setIngUnit] = useState("");
+    const [ingAllergen, setAlergen] = useState("");
 
     function onSubmit() {
       let data = {
-        ing_name,
-        ing_amount,
-        ing_unit,
-        ing_allergen,
+        ingName,
+        ingAmount,
+        ingUnit,
+        ingAllergen,
       };
       const filter = {
-        name: data.ing_name,
-        amount: data.ing_amount,
-        unit: data.ing_unit,
-        allergen: data.ing_allergen,
+        name: data.ingName,
+        amount: data.ingAmount,
+        unit: data.ingUnit,
+        allergen: data.ingAllergen,
         category: "",
       };
       props.onSave(filter);
@@ -79,8 +79,8 @@ const IngredienceFormCreate = createVisualComponent({
               <Uu5Forms.FormText
                 className={Config.Css.css({ width: "100%" })}
                 label="Názov ingrediencie:"
-                value={ing_name}
-                name={"ing_name"}
+                value={ingName}
+                name={"ingName"}
                 type={"text"}
                 onChange={(value) => setIngName(value.data.value)}
                 required
@@ -89,8 +89,8 @@ const IngredienceFormCreate = createVisualComponent({
               <Uu5Forms.FormNumber
                 className={Config.Css.css({ width: "100%" })}
                 label="Množstvo ingrediencií:"
-                value={ing_amount}
-                name={"ing_amount"}
+                value={ingAmount}
+                name={"ingAmount"}
                 type={"number"}
                 onChange={(value) => setIngAmount(value.data.value)}
                 required
@@ -98,8 +98,8 @@ const IngredienceFormCreate = createVisualComponent({
               <Uu5Forms.FormText
                 className={Config.Css.css({ width: "100%" })}
                 label="Jednotka:"
-                value={ing_unit}
-                name={"ing_unit"}
+                value={ingUnit}
+                name={"ingUnit"}
                 type={"text"}
                 onChange={(value) => setIngUnit(value.data.value)}
                 required

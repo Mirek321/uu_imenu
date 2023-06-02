@@ -45,8 +45,8 @@ const RecipesForm = createVisualComponent({
     const [portion, setPortion] = useState();
     const [ingAmount, setIngAmount] = useState([0]);
 
-    console.log(props.data.itemList);
-    const [process_textArea, setProcessTextArea] = useState([]);
+    console.log(content_meal);
+
     const handleAddValueIng = () => {
       setIngredience([...ingredience, " "]);
       setIngAmount([...ingAmount, 0]);
@@ -83,24 +83,16 @@ const RecipesForm = createVisualComponent({
       setRecipeProcess(newArray);
     };
 
-    const changeHandler = (e) => {
-      setAllValues({ ...allValues, [e.target.name]: e.target.value });
-    };
-
-    let itemList = [];
     let ingredienceList = []
-    console.log(itemList);
-    if (itemList.length === 0) {
+
+    if (ingredienceList.length === 0) {
       ingredienceList.push({ value: "", children: "" });
-      for (let i = 0; i < props.data.itemList.length + 0; i++) {
-        ingredienceList.push({ value: props.data.itemList[i].id, children: props.data.itemList[i].name });
-      }
+      props.data.itemList.map((value, index) => ingredienceList.push({ value: props.data.itemList[index].id, children: props.data.itemList[index].name }))
+
     }
     function onSubmit() {
       let ingredience_f = [];
-      for (let i = 0; i < ingredience.length; i++) {
-        ingredience_f.push({ id: ingredience[i], amount: ingAmount[i] });
-      }
+      ingredience.map((value,index) => ( ingredience_f.push({ id: ingredience[index], amount: ingAmount[index] })));
       let data = {
         name,
         category: [content_meal],
@@ -157,7 +149,7 @@ const RecipesForm = createVisualComponent({
                 <br />
                 <Uu5Elements.Grid templateColumns="repeat(2 1fr)">
                   <Uu5Elements.Grid.Item justifySelf={"center"}>
-                    <Uu5Forms.FormSwitchSelect
+                    <Uu5Forms.SwitchSelect
                       label={"Typ jedla"}
                       value={type_recipe}
                       itemList={[
@@ -169,7 +161,7 @@ const RecipesForm = createVisualComponent({
                     />
                   </Uu5Elements.Grid.Item>
                   <Uu5Elements.Grid.Item justifySelf={"center"}>
-                    <Uu5Forms.FormSwitchSelect
+                    <Uu5Forms.SwitchSelect
                       label={"Obsah mäsa"}
                       value={content_meal}
                       itemList={[
@@ -192,40 +184,7 @@ const RecipesForm = createVisualComponent({
                 />
               </Uu5Elements.Grid.Item>
               <Uu5Elements.Grid.Item>
-                {/*<h4>Ingrediencie</h4>*/}
-                {/*{ingredience.map((value, index) => (*/}
-                {/*  <div key={index}>*/}
-                {/*    <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">*/}
-                {/*      <Uu5Elements.Grid.Item justifySelf={"start"}>*/}
-                {/*        <Uu5Forms.TextSelect*/}
-                {/*          label={"Ingrediencia " + (index + 1).toString() + ": "}*/}
-                {/*          itemList={itemList}*/}
-                {/*          value={value}*/}
-                {/*          onChange={(event) => handleInputChangeIng(event, index)}*/}
-                {/*          className={Config.Css.css({ width: "210%" })}*/}
 
-                {/*
-                {/*        />*/}
-
-                {/*        <Uu5Forms.Number*/}
-                {/*          label={"Množstvo ingrediencie " + (index + 1).toString() + ": "}*/}
-                {/*          value={ingAmount[index]}*/}
-                {/*          name={"ingAmount"}*/}
-                {/*          type={"number"}*/}
-                {/*          onChange={(event) => handleInputChangeAmount(event, index)}*/}
-                {/*          className={Config.Css.css({ width: "210%" })}*/}
-                {/*        />*/}
-                {/*      </Uu5Elements.Grid.Item>*/}
-                {/*      <Uu5Elements.Grid.Item justifySelf="end" className={Config.Css.css({ paddingTop: "25%" })}>*/}
-                {/*        <Uu5Elements.Button*/}
-                {/*          icon="mdi-delete"*/}
-                {/*          tooltip={"Odstraniť ingredienciu"}*/}
-                {/*          onClick={() => handleDeleteIng(index)}*/}
-                {/*        />*/}
-                {/*      </Uu5Elements.Grid.Item>*/}
-                {/*    </Uu5Elements.Grid>*/}
-                {/*  </div>*/}
-                {/*))}*/}
                 <h4>Ingrediencie</h4>
                 <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
 
@@ -233,7 +192,7 @@ const RecipesForm = createVisualComponent({
                   <Uu5Elements.Grid.Item justifySelf={"start"}  >
                     {ingredience.map((value, index) => (
                       <div>
-                        <Uu5Forms.FormTextSelect
+                        <Uu5Forms.TextSelect
                           label={"Ingrediencia " + (index + 1).toString() + ": "}
                           itemList={ingredienceList}
                           value={value}
@@ -254,7 +213,7 @@ const RecipesForm = createVisualComponent({
                   <Uu5Elements.Grid.Item justifySelf={"center"}>
                     {ingAmount.map((value,index) => (
                       <div>
-                        <Uu5Forms.FormNumber
+                        <Uu5Forms.Number
                           label={"Množstvo ingrediencie " + (index + 1).toString() + ": "}
                           value={value}
                           name={"ingAmount"}

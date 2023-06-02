@@ -47,17 +47,12 @@ const RecipeUpdateForm = createVisualComponent({
     const [portion, setPortion] = useState(props.data.data.portion);
     const [ingredience, setIngredience] = useState([]);
     const [ingAmount, setIngAmount] = useState([]);
-  const test = [];
 
 
-
-    let itemList = [];
     let ingredienceList = []
-    if (itemList.length === 0) {
-      props.onLoadIngredience.itemList.map((value,index) =>  ingredienceList.push({ value: props.onLoadIngredience.itemList[index].id, children: props.onLoadIngredience.itemList[index].name }))
+    if (ingredienceList.length === 0) {
+      props.onLoadIngredience.itemList.map((value,index) =>  ingredienceList.push({ value: props.onLoadIngredience.itemList[index].id, children: props.onLoadIngredience.itemList[index].name }));
     }
-
-
 
     useEffect(() => {
       if (props.data && props.data.data.ingredience) {
@@ -72,8 +67,6 @@ const RecipeUpdateForm = createVisualComponent({
         setIngAmount(amountArray);
       }
     }, [props.data]);
-
-
 
     const handleAddValueIng = () => {
       setIngredience([...ingredience, " "]);

@@ -48,7 +48,8 @@ const IngredienceView = createVisualComponent({
     let [openUpdate, setOpenUpdate] = useState(false);
     let [openPurchase, setOpenPurchase] = useState(false);
     let [data1, setData1] = useState();
-    const modalRef = useRef();
+
+
     const COLUMN_LIST = [
       { value: "name", label: "Názov ingrediencie:" },
       { value: "amount", label: "Množstvo na sklade" },

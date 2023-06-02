@@ -38,21 +38,20 @@ const GenerateRecipeView = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
+    const { children } = props;
     let gridContent = [];
     let soup = [];
     let main_meal = [];
 
     const [route, setRoute] = useRoute();
-    const [showBanner, setShowBanner] = useState(false);
-    const [gridConte, setGridConte] = useState([]);
+
     const [soup_filter, setSoupFilter] = useState("");
     const [days, setDays] = useState([]);
     const [category, setCategory] = useState([]);
     const [main_meal_filter, setMain_meal_filter] = useState("");
-    let [open, setOpen] = useState(false);
-    const test = useRef();
 
-    let g = [];
+    const test = useRef();
+    console.log(props);
 
     function DivideTypeRecipe(recipes) {
       soup = [];
@@ -109,15 +108,10 @@ const GenerateRecipeView = createVisualComponent({
     }
     let den = "";
 
-    function closeModal() {
-      setOpen(false);
-    }
-    function openModal() {
-      setOpen(true);
-    }
+
     //@@viewOn:private
 
-    const { children } = props;
+
 
     function onGenerate() {
       console.log(days);
@@ -136,8 +130,9 @@ const GenerateRecipeView = createVisualComponent({
         filter.days = days;
       }
       console.log(filter);
+
       props.onGenerate(filter);
-      console.log(props.data);
+      console.log(props);
     }
     if (props.data) {
       window.localStorage.setItem("MY_IMENU_APP", JSON.stringify(props.data));
@@ -204,7 +199,7 @@ const GenerateRecipeView = createVisualComponent({
                           itemList={[
                             { children: "Mäsité", value: "mäsité" },
                             { children: "Bezmäsité", value: "bezmäsité" },
-                            // { children: "Mäsité / Bezmäsité", value: "" },
+
                           ]}
                           onChange={(value) => setCategory(value.data.value)}
 
@@ -243,10 +238,7 @@ const GenerateRecipeView = createVisualComponent({
             <Uu5Elements.Grid templateColumns="repeat(5, 1fr)">{gridContent} </Uu5Elements.Grid>
           </div>
 
-          {/*<Uu5Elements.Modal header={"Filtrovanie generovania"} open={open}>*/}
-          {/*  <GenerateRecipeForm onSave={props.onGenerate} onClose={closeModal}></GenerateRecipeForm>*/}
-          {/*</Uu5Elements.Modal>*/}
-          {g}
+
         </div>
       </div>
     ) : null;

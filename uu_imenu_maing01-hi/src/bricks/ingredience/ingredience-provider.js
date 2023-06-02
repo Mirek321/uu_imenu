@@ -40,14 +40,7 @@ const IngredienceProvider = createComponent({
         updateManyIngredience: Calls.ingredienceUpdateMany,
       },
     });
-    // const callResult = useDataObject({
-    //   handlerMap: {
-    //     load: ingredienceList,
-    //     delete: ingredienceDelete,
-    //     create: ingredienceCreate,
-    //     update: ingredienceUpdate,
-    //   },
-    // });
+
     //@@viewOff:hooks
 
     //@@viewOn:interface
