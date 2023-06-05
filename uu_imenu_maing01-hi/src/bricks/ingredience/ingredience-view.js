@@ -12,6 +12,7 @@ import IngredienceFormCreate from "./ingredience-form-create";
 import IngredienceFormUpdate from "./ingredience-form-update";
 import IngredienceFormPurchase from "./ingredience-form-purchase";
 import RouteBar from "../../core/route-bar";
+import IngredienceFormDelete from "./ingredience-form-delete";
 
 //@@viewOff:imports
 
@@ -47,6 +48,7 @@ const IngredienceView = createVisualComponent({
     let [openCreate, setOpenCreate] = useState(false);
     let [openUpdate, setOpenUpdate] = useState(false);
     let [openPurchase, setOpenPurchase] = useState(false);
+    let [openDelete, setOpenDelete] = useState(false);
     let [data1, setData1] = useState();
 
 
@@ -90,7 +92,14 @@ const IngredienceView = createVisualComponent({
       return itemList;
     }
     function removeIngredience(data) {
-      props.onDelete({ id: data.data.id });
+      let result = confirm("Naozaj chcete odstrániť "+data.data.name+" ?");
+      if (result) {
+        props.onDelete({ id: data.data.id });
+      }
+
+      // setOpenDelete(true);
+      // setData1(data);
+      // props.onDelete({ id: data.data.id });
     }
     function addNewIngredience() {
       setOpenCreate(true);
@@ -140,6 +149,9 @@ const IngredienceView = createVisualComponent({
         </Uu5Elements.Modal>
         <Uu5Elements.Modal header={"Nákup nových ingrediencíich"} open={openPurchase}>
           <IngredienceFormPurchase data={props.data} onUpdateMany={props.onUpdateMany} onClose={closeModal} />
+        </Uu5Elements.Modal>
+        <Uu5Elements.Modal header={"Odstranenie ingrediencie"} open={openDelete}>
+          <IngredienceFormDelete data={data1} onDelete={props.onDelete} onClose={closeModal} />
         </Uu5Elements.Modal>
       </div>
     ) : null;

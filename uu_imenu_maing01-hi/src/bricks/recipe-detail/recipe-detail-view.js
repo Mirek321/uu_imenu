@@ -47,7 +47,7 @@ const RecipeDetailView = createVisualComponent({
 
 
     function comprassion(portion) {
-      if (portion > 0) {
+      if (portion > 0 && !(portion < 0)) {
         let recipe;
         recipe = props.data;
 
@@ -92,7 +92,7 @@ const RecipeDetailView = createVisualComponent({
             ]);
 
           }
-          if (ingrediences[i].difference == 0) {
+          if (ingrediences[i].difference === 0) {
             ingrediences[i].suit = true;
             setGridContent((gridContet) => [
               ...gridContet,
@@ -135,10 +135,8 @@ const RecipeDetailView = createVisualComponent({
                 </div>
               </Uu5Elements.Box>,
             ]);
+}
 
-          } else {
-            ingrediences[i].suit = "error";
-          }
         }
 
         setIngredience(ingrediences);
@@ -149,10 +147,18 @@ const RecipeDetailView = createVisualComponent({
     }
 
     function onUpdate() {
-      console.log(ingredience)
 
-      props.onUpdate(ingredience);
-      window.location.reload(false);
+
+      if(ingredience.every(element => element.suit === true)){
+        props.onUpdate(ingredience);
+        window.location.reload(false);
+      }
+      else{
+
+        alert("Pre aktualizovanie skladu musia byť všetky ingrediencie dostupné");
+
+      }
+
 
     }
     //@@viewOff:private

@@ -66,7 +66,10 @@ const RecipesView = createVisualComponent({
       setOpenUpdate(true);
     }
     function removeRecipe(data) {
-      props.onDelete({ id: data.data.id });
+      let result = confirm("Naozaj chcete odstrániť "+data.data.name+" ?");
+      if (result) {
+        props.onDelete({ id: data.data.id });
+      }
     }
     function addNewRecipe() {
       setOpenCreate(true);
