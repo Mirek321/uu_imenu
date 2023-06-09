@@ -46,6 +46,7 @@ const RecipesView = createVisualComponent({
     const [route, setRoute] = useRoute();
     let [openCreate, setOpenCreate] = useState(false);
     let [openUpdate, setOpenUpdate] = useState(false);
+    let [openDelete, setOpenDelete] = useState(false);
     let [data1, setData1] = useState();
 
     const COLUMN_LIST = [
@@ -66,11 +67,17 @@ const RecipesView = createVisualComponent({
       setOpenUpdate(true);
     }
     function removeRecipe(data) {
-      let result = confirm("Naozaj chcete odstrániť "+data.data.name+" ?");
-      if (result) {
-        props.onDelete({ id: data.data.id });
-      }
+      // let result = confirm("Naozaj chcete odstrániť "+data.data.name+" ?");
+      // if (result) {
+      //   props.onDelete({ id: data.data.id });
+      // }
+      setOpenDelete(true);
+      setData1(data);
     }
+    function deleteRecipe(data){
+      props.onDelete({ id: data.data.id });
+    }
+
     function addNewRecipe() {
       setOpenCreate(true);
     }
@@ -155,6 +162,31 @@ const RecipesView = createVisualComponent({
               onClose={closeModal}
             />
           </Uu5Elements.Modal>
+          <Uu5Elements.Dialog
+            open={openDelete}
+            onClose={() => setOpenDelete(false)}
+            header={
+              "Naozaj chcete odstrániť tento ?"
+            }
+            info={
+              "Data suborou sa nedaju obnovit"
+            }
+            icon={<Uu5Elements.Svg code="uugdssvg-svg-delete" />}
+
+            actionDirection="horizontal"
+            actionList={[
+              {
+                children: "Zrusit",
+                significance: "distinct",
+              },
+              {
+                children: "Vymazat",
+                onClick: () => deleteRecipe(data1),
+                colorScheme: "red",
+                significance: "highlighted",
+              },
+            ]}
+          />
         </div>
       </div>
     ) : null;

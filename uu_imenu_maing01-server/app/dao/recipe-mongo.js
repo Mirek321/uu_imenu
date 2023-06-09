@@ -1,4 +1,5 @@
 "use strict";
+const {ObjectID} = require("mongodb");
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
 //aaaa
 class RecipeMongo extends UuObjectDao {
@@ -30,7 +31,10 @@ class RecipeMongo extends UuObjectDao {
       if (uuObject.type_recipe !== undefined && uuObject.type_recipe !== "") {
         filter.type_recipe = uuObject.type_recipe;
       }
-      return await super.aggregate([{ $match: filter }, { $sample: { size: pocet } }]);
+      return await super.aggregate([{ $match:  {"ingredience.id": { $in:
+       [ObjectID("647497835669bf09b48c9c12")]
+
+      }} }, { $sample: { size: pocet } }]);
     } else {
       return await super.aggregate([{ $sample: { size: pocet } }]);
     }

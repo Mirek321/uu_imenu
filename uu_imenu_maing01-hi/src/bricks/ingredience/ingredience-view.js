@@ -92,14 +92,17 @@ const IngredienceView = createVisualComponent({
       return itemList;
     }
     function removeIngredience(data) {
-      let result = confirm("Naozaj chcete odstrániť "+data.data.name+" ?");
-      if (result) {
-        props.onDelete({ id: data.data.id });
-      }
+      // let result = confirm("Naozaj chcete odstrániť "+data.data.name+" ?");
+      // if (result) {
+      //   props.onDelete({ id: data.data.id });
+      // }
 
-      // setOpenDelete(true);
-      // setData1(data);
+      setOpenDelete(true);
+       setData1(data);
       // props.onDelete({ id: data.data.id });
+    }
+    function deleteIngredience(data){
+      props.onDelete({ id: data.data.id });
     }
     function addNewIngredience() {
       setOpenCreate(true);
@@ -130,7 +133,9 @@ const IngredienceView = createVisualComponent({
         <RouteBar />
 
         <Uu5Tiles.ControllerProvider serieList={COLUMN_LIST} data={props.data}>
-          <Uu5Elements.Block actionList={[{ component: <Uu5TilesControls.SearchButton /> }]}>
+
+          <Uu5Elements.Block actionList={[{ component: [<Uu5TilesControls.SearchButton />] }]}>
+
             <Plus4u5Elements.IdentificationBlock
               header={"Ingrediencie na sklade"}
               actionList={getActionList()}
@@ -150,9 +155,35 @@ const IngredienceView = createVisualComponent({
         <Uu5Elements.Modal header={"Nákup nových ingrediencíich"} open={openPurchase}>
           <IngredienceFormPurchase data={props.data} onUpdateMany={props.onUpdateMany} onClose={closeModal} />
         </Uu5Elements.Modal>
-        <Uu5Elements.Modal header={"Odstranenie ingrediencie"} open={openDelete}>
-          <IngredienceFormDelete data={data1} onDelete={props.onDelete} onClose={closeModal} />
-        </Uu5Elements.Modal>
+        {/*<Uu5Elements.Modal header={"Odstranenie ingrediencie"} open={openDelete}>*/}
+        {/*  <IngredienceFormDelete data={data1} onDelete={props.onDelete} onClose={closeModal} />*/}
+        {/*</Uu5Elements.Modal>*/}
+        <Uu5Elements.Dialog
+          open={openDelete}
+          onClose={() => setOpenDelete(false)}
+          header={
+            "Naozaj chcete odstrániť túto ingredienciu ?"
+          }
+          info={
+            "Data suborou sa nedaju obnovit"
+          }
+          icon={<Uu5Elements.Svg code="uugdssvg-svg-delete" />}
+
+          actionDirection="horizontal"
+          actionList={[
+            {
+              children: "Zrusit",
+              onClick: () => console.log("Cancel"),
+              significance: "distinct",
+            },
+            {
+              children: "Vymazat",
+              onClick: () => deleteIngredience(data1),
+              colorScheme: "red",
+              significance: "highlighted",
+            },
+          ]}
+        />
       </div>
     ) : null;
     //@@viewOff:render
