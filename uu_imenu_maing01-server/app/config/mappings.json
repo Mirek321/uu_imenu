@@ -90,6 +90,11 @@
         "realization": "api/controllers/IngredienceController.updateMany",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "cashReceipt/find": {
+        "realization": "api/controllers/CashReceiptController.find",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

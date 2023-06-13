@@ -15,6 +15,9 @@
         },
         "generate": {
           "realization": "dao/GenerateMongo"
+        },
+        "cashReceipt": {
+          "realization": "dao/CashReceiptMongo"
         }
       }
     }

@@ -76,6 +76,10 @@
       "ingredience/updateMany": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "cashReceipt/find": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }

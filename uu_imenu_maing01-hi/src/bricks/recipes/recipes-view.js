@@ -78,6 +78,7 @@ const RecipesView = createVisualComponent({
       props.onDelete({ id: data.data.id });
     }
 
+
     function addNewRecipe() {
       setOpenCreate(true);
     }
