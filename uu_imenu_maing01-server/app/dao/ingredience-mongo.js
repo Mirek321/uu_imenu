@@ -20,8 +20,8 @@ class IngredienceMongo extends UuObjectDao {
   async list(awid) {
     return await super.find({ awid });
   }
-  async get(awid, id) {
-    return await super.find({ awid, id });
+  async get(awid, cashReceiptName) {
+    return await super.find({ awid, cashReceiptName});
   }
   async load(awid, ingredienceIds) {
     let query = { awid };

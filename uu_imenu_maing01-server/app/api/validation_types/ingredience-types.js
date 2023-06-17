@@ -8,7 +8,8 @@ const ingredienceCreateDtoInType = shape({
 });
 
 const ingredienceGetDtoInType = shape({
-  id: id().isRequired(),
+  id: id(),
+  name: string(255),
 });
 const ingredienceDeleteDtoInType = shape({
   id: id().isRequired(),

@@ -1,6 +1,6 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, useState, useEffect  } from "uu5g05";
-
+import { QrReader } from 'react-qr-reader';
 import Uu5Forms from "uu5g05-forms";
 import Uu5Tiles from "uu5tilesg02";
 import Uu5TilesElements from "uu5tilesg02-elements";
@@ -43,6 +43,7 @@ const IngredienceFormPurchase = createVisualComponent({
     const { children } = props;
     const [ingAmount, setIngAmount] = useState([0]);
     const [ingredience, setIngredience] = useState([""]);
+    const [cashReceiptId, setCashReceiptId] = useState('');
 
     //@@viewOff:private
     const handleAddValueIng = () => {
@@ -100,6 +101,21 @@ const IngredienceFormPurchase = createVisualComponent({
       <div {...attrs}>
         <Uu5Forms.Form.Provider onSubmit={onSubmit}>
           <Uu5Forms.Form.View>
+            <Uu5Elements.Grid justifyItems={"center"}>
+            <QrReader
+              onResult={(result, error) => {
+                if (!!result) {
+                  setCashReceiptId(result?.text);
+                }
+
+                if (!!error) {
+                  console.log(error);
+                }
+              }}
+              className={Config.Css.css({ width: "50%" })}
+            />
+            <p>{cashReceiptId}</p>
+            </Uu5Elements.Grid>
             <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
 
 
