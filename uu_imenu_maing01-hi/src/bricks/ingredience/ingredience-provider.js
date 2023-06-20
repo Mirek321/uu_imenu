@@ -38,6 +38,7 @@ const IngredienceProvider = createComponent({
         updateIngredience: Calls.ingredienceUpdate,
         deleteIngredience: Calls.ingredienceDelete,
         updateManyIngredience: Calls.ingredienceUpdateMany,
+        findCashReceipt: Calls.cashReceiptFind,
       },
     });
 
@@ -61,6 +62,7 @@ const IngredienceProvider = createComponent({
             onCreate={handlerMap.createIngrediencie}
             onUpdate={handlerMap.updateIngredience}
             onUpdateMany={handlerMap.updateManyIngredience}
+            onFind={handlerMap.findCashReceipt}
           />
         );
     }

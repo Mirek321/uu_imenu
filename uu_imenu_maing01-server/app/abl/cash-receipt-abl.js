@@ -34,7 +34,7 @@ class CashReceiptAbl {
     cashReceipt = cashReceipt.data.receipt.items;
     for(let i = 0; i < cashReceipt.length; i++) {
 
-      let ingredience = await Ingredience.get(awid, {name: cashReceipt[i].name});
+      let ingredience = await Ingredience.get(awid, {cashReceiptName: cashReceipt[i].name});
 
       if (ingredience.itemList[0]) {
 

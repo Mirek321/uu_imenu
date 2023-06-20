@@ -167,10 +167,10 @@ const RecipesView = createVisualComponent({
             open={openDelete}
             onClose={() => setOpenDelete(false)}
             header={
-              "Naozaj chcete odstrániť tento ?"
+              "Naozaj chcete odstrániť tento recept?"
             }
             info={
-              "Data suborou sa nedaju obnovit"
+              "Dáta receptu sa nedajú obnoviť"
             }
             icon={<Uu5Elements.Svg code="uugdssvg-svg-delete" />}
 

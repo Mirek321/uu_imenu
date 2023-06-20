@@ -10,6 +10,7 @@ import UU5 from "uu5g04";
 import Uu5TilesControls from "uu5tilesg02-controls";
 import Uu5Imaging from "uu5imagingg01";
 import Config from "../config/config.js";
+
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -43,9 +44,43 @@ const IngredienceFormPurchase = createVisualComponent({
     const { children } = props;
     const [ingAmount, setIngAmount] = useState([0]);
     const [ingredience, setIngredience] = useState([""]);
-    const [cashReceiptId, setCashReceiptId] = useState('');
+    const [cashReceiptId, setCashReceiptId] = useState();
+
+
 
     //@@viewOff:private
+
+
+    useEffect(() => {
+      //Runs on the first render
+      //And any time any dependency value changes
+      console.log(JSON.parse((window.localStorage.getItem("MY_CASH_RECEIPT"))));
+      if(JSON.parse((window.localStorage.getItem("MY_CASH_RECEIPT")))){
+        console.log("haha");
+
+        const idArray = JSON.parse(window.localStorage.getItem("MY_CASH_RECEIPT")).map((obj) => obj.id);
+        setIngredience(idArray);
+        // setIngredience([JSON.parse(window.localStorage.getItem("MY_CASH_RECEIPT"))[0].id]);
+        const amountArray = JSON.parse(window.localStorage.getItem("MY_CASH_RECEIPT")).map((obj) => obj.amount);
+        setIngAmount(amountArray);
+      }
+
+
+    }, []);
+    const handleClearMemory = () => {
+
+    window.localStorage.removeItem(window.localStorage.key(5));
+    window.location.reload(false);
+
+    };
+
+    const handleFindReceipt = () => {
+      let resultCashReceipt;
+     let cashReceiptIngredience = props.onFind({"receiptId":cashReceiptId});
+     cashReceiptIngredience.then((result) => {
+       result[0] = resultCashReceipt; // Output: "Promise resolved!"
+     })
+    };
     const handleAddValueIng = () => {
       setIngredience([...ingredience, " "]);
       setIngAmount([...ingAmount, 0]);
@@ -101,21 +136,16 @@ const IngredienceFormPurchase = createVisualComponent({
       <div {...attrs}>
         <Uu5Forms.Form.Provider onSubmit={onSubmit}>
           <Uu5Forms.Form.View>
-            <Uu5Elements.Grid justifyItems={"center"}>
-            <QrReader
-              onResult={(result, error) => {
-                if (!!result) {
-                  setCashReceiptId(result?.text);
-                }
-
-                if (!!error) {
-                  console.log(error);
-                }
-              }}
-              className={Config.Css.css({ width: "50%" })}
-            />
-            <p>{cashReceiptId}</p>
+            <Uu5Elements.Grid  justifyItems={"center"}>
+            <Uu5Elements.Button
+              icon={"mdi-plus"}
+              tooltip={"Nový nákup"}
+              onClick={() => handleClearMemory()}
+            >
+              Nový nákup
+            </Uu5Elements.Button>
             </Uu5Elements.Grid>
+            <br/>
             <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
 
 

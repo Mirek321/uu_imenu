@@ -105,7 +105,7 @@ class IngredienceAbl {
     uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Get.InvalidDtoIn);
 
     // load joke from database by id from dtoIn
-    let ingredience = await this.dao.get(awid, dtoIn.name);
+    let ingredience = await this.dao.get(awid, dtoIn);
 
     // if joke does not exist (was not found in database)
     if (!ingredience) {

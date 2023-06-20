@@ -31,10 +31,9 @@ class RecipeMongo extends UuObjectDao {
       if (uuObject.type_recipe !== undefined && uuObject.type_recipe !== "") {
         filter.type_recipe = uuObject.type_recipe;
       }
-      return await super.aggregate([{ $match:  {"ingredience.id": { $in:
-       [ObjectID("647497835669bf09b48c9c12")]
+      return await super.aggregate([{ $match: filter },{ $sample: { size: pocet } }]);
 
-      }} }, { $sample: { size: pocet } }]);
+
     } else {
       return await super.aggregate([{ $sample: { size: pocet } }]);
     }

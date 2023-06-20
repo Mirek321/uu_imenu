@@ -9,7 +9,8 @@ const ingredienceCreateDtoInType = shape({
 
 const ingredienceGetDtoInType = shape({
   id: id(),
-  name: string(255),
+  cashReceiptName: string(400),
+
 });
 const ingredienceDeleteDtoInType = shape({
   id: id().isRequired(),

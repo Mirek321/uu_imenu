@@ -20,7 +20,10 @@ const Calls = {
   //   const commandUri = Calls.getCommandUri("loadDemoContent");
   //   return Calls.call("get", commandUri, dtoIn);
   // },
-
+  cashReceiptFind(dtoInData) {
+    const commandUri = Calls.getCommandUri("cashReceipt/find");
+    return Calls.call("post", commandUri, dtoInData);
+  },
   recipeUpdate(dtoInData) {
     const commandUri = Calls.getCommandUri("recipe/update");
     return Calls.call("post", commandUri, dtoInData);

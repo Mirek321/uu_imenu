@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, useRef, useRoute } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useRef, useRoute,useEffect } from "uu5g05";
 import Uu5Tiles from "uu5tilesg02";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import Uu5Elements from "uu5g05-elements";
@@ -13,6 +13,10 @@ import IngredienceFormUpdate from "./ingredience-form-update";
 import IngredienceFormPurchase from "./ingredience-form-purchase";
 import RouteBar from "../../core/route-bar";
 import IngredienceFormDelete from "./ingredience-form-delete";
+import {QrReader} from "react-qr-reader";
+import Uu5Forms from "uu5g05-forms"
+import IngredienceFormScanCashReceipt from "./ingredience-form-scan-cash-receipt";
+
 
 //@@viewOff:imports
 
@@ -50,6 +54,20 @@ const IngredienceView = createVisualComponent({
     let [openPurchase, setOpenPurchase] = useState(false);
     let [openDelete, setOpenDelete] = useState(false);
     let [data1, setData1] = useState();
+    let [cashReceiptId, setCashReceiptId] = useState();
+    let [cashReceipt,setCashReceipt] = useState("");
+    const [ingAmount, setIngAmount] = useState([0]);
+    const [ingredience, setIngredience] = useState([""]);
+    let [openScanCashReceipt,setOpenScanCashReceipt] = useState(false);
+    const countRef = useRef();
+
+    let ingredienceList = [];
+
+    if (ingredienceList.length === 0) {
+      ingredienceList.push({ value: "", children: "" });
+      props.data.map((value,index) =>  ingredienceList.push({ value: props.data[index].data.id, children: props.data[index].data.name }))
+
+    }
 
 
     const COLUMN_LIST = [
@@ -59,6 +77,11 @@ const IngredienceView = createVisualComponent({
       { value: "allergen", label: "Alergén" },
       { header: "Akcie", type: "actionList" },
     ];
+    let resultCashReceipt;
+
+
+
+
 
     function getActionList() {
       let actionList = [
@@ -72,6 +95,11 @@ const IngredienceView = createVisualComponent({
           tooltip: "Nový nákup",
           onClick: () => newPurchase(),
         },
+        {
+          icon: "mdi-qrcode-scan",
+          tooltip: "Naskenovanie pokladnicneho dokladu",
+          onClick: () => scanCashReceipt(),
+        }
       ];
       return actionList;
     }
@@ -91,6 +119,9 @@ const IngredienceView = createVisualComponent({
       ];
       return itemList;
     }
+    function  scanCashReceipt(){
+      setOpenScanCashReceipt(true);
+    }
     function removeIngredience(data) {
       // let result = confirm("Naozaj chcete odstrániť "+data.data.name+" ?");
       // if (result) {
@@ -101,6 +132,11 @@ const IngredienceView = createVisualComponent({
        setData1(data);
       // props.onDelete({ id: data.data.id });
     }
+    const handleInputChangeIng = (event, index) => {
+      const newArray = [...ingredience];
+      newArray[index] = event.data.value;
+      setIngredience(newArray);
+    };
     function deleteIngredience(data){
       props.onDelete({ id: data.data.id });
     }
@@ -134,7 +170,7 @@ const IngredienceView = createVisualComponent({
 
         <Uu5Tiles.ControllerProvider serieList={COLUMN_LIST} data={props.data}>
 
-          <Uu5Elements.Block actionList={[{ component: [<Uu5TilesControls.SearchButton />] }]}>
+          <Uu5Elements.Block actionList={[{ component: [<Uu5TilesControls.SearchButton displayType={"menu-item"}/>] }]}>
 
             <Plus4u5Elements.IdentificationBlock
               header={"Ingrediencie na sklade"}
@@ -153,11 +189,11 @@ const IngredienceView = createVisualComponent({
           <IngredienceFormUpdate data={data1} onUpdate={props.onUpdate} onClose={closeModal} />
         </Uu5Elements.Modal>
         <Uu5Elements.Modal header={"Nákup nových ingrediencíich"} open={openPurchase}>
-          <IngredienceFormPurchase data={props.data} onUpdateMany={props.onUpdateMany} onClose={closeModal} />
+          <IngredienceFormPurchase data={props.data} onUpdateMany={props.onUpdateMany} onFind={props.onFind} onClose={closeModal} />
         </Uu5Elements.Modal>
-        {/*<Uu5Elements.Modal header={"Odstranenie ingrediencie"} open={openDelete}>*/}
-        {/*  <IngredienceFormDelete data={data1} onDelete={props.onDelete} onClose={closeModal} />*/}
-        {/*</Uu5Elements.Modal>*/}
+        <Uu5Elements.Modal header={"Naskenovanie blokoveho dokladu"} open={openScanCashReceipt}  >
+      <IngredienceFormScanCashReceipt onFind={props.onFind} onClose={closeModal}/>
+        </Uu5Elements.Modal>
         <Uu5Elements.Dialog
           open={openDelete}
           onClose={() => setOpenDelete(false)}

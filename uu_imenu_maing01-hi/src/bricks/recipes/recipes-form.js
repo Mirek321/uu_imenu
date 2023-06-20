@@ -74,7 +74,7 @@ const RecipesForm = createVisualComponent({
     };
     const handleInputChange = (event, index) => {
       const newArray = [...recipe_process];
-      newArray[index] = event.target.value;
+      newArray[index] = event.data.value;
       setRecipeProcess(newArray);
     };
     const handleDelete = (index) => {
@@ -244,10 +244,10 @@ const RecipesForm = createVisualComponent({
                 {recipe_process.map((value, index) => (
                   <div key={index}>
                     <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
-                      <Uu5Forms.FormTextArea
+                      <Uu5Forms.TextArea
                         label={"Krok " + (index + 1).toString() + ": "}
                         value={value}
-                        name={"process"}
+
                         type={"text"}
                         onChange={(event) => handleInputChange(event, index)}
                         className={Config.Css.css({ width: "185%" })}
