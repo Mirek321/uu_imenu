@@ -37,10 +37,9 @@ class CashReceiptAbl {
       let ingredience = await Ingredience.get(awid, {cashReceiptName: cashReceipt[i].name});
 
       if (ingredience.itemList[0]) {
-
+        let cashIngredience = ingredience.itemList[0].cashReceipt.find(item => item.name === cashReceipt[i].name);
         ingredience.itemList[0].quantity = cashReceipt[i].quantity;
-        console.log(ingredience.itemList[0].name);
-        cashReceiptIngredience.push({name: ingredience.itemList[0].name,id: ingredience.itemList[0].id, amount: ingredience.itemList[0].cashReceiptAmount * cashReceipt[i].quantity})
+        cashReceiptIngredience.push({name: ingredience.itemList[0].name,id: ingredience.itemList[0].id, amount: cashIngredience.amount * cashReceipt[i].quantity})
 
       }
     }

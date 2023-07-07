@@ -44,6 +44,7 @@ const RecipesProvider = createComponent({
         create: Calls.recipeCreate,
         delete: Calls.recipeDelete,
         update: Calls.recipeUpdate,
+        find: Calls.recipeFind,
       },
     });
     //@@viewOff:hooks
@@ -65,6 +66,7 @@ const RecipesProvider = createComponent({
         return (
           <RecipesView
             data={data}
+            onFind={handlerMap.find}
             getIngredience={callResultIngredience.data}
             onCreate={handlerMap.create}
             onDelete={handlerMap.delete}
@@ -72,7 +74,7 @@ const RecipesProvider = createComponent({
           />
         );
     }
-    console.log(callResult);
+
     return children ?? null;
     //@@viewOff:render
   },

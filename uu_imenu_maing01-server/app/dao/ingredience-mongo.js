@@ -23,11 +23,15 @@ class IngredienceMongo extends UuObjectDao {
   async get(awid, dtoin) {
     if(dtoin.cashReceiptName){
       let cashReceiptName = dtoin.cashReceiptName;
-      return await super.find({ awid, cashReceiptName});
+      return await super.find({ awid, "cashReceipt.name": cashReceiptName});
     }
     if(dtoin.id){
       let id = dtoin.id;
       return await super.find({ awid, id});
+    }
+    if(dtoin.name){
+      let name = dtoin.name;
+      return await super.find({awid,name});
     }
 
   }

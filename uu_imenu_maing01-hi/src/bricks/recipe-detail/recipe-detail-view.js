@@ -35,7 +35,7 @@ const RecipeDetailView = createVisualComponent({
   defaultProps: {},
   //@@viewOff:defaultProps
 
-  render(props) {
+  render: function (props) {
     //@@viewOn:private
     const { children } = props;
     let gridContent1 = [];
@@ -43,8 +43,8 @@ const RecipeDetailView = createVisualComponent({
     let process = [];
     let ingrediences = [];
     const [ingredience, setIngredience] = useState([]);
-
-
+    const [route, setRoute] = useRoute();
+    console.log(route);
 
     function comprassion(portion) {
       if (portion > 0 && !(portion < 0)) {
@@ -53,18 +53,52 @@ const RecipeDetailView = createVisualComponent({
 
         setGridContent([]);
         ingrediences = [];
-
+        let jednotka;
+        let preklad = true;
         for (let i = 0; i < recipe.ingredience.itemList.length; i++) {
+          if (
+            (recipe.ingredience.itemList[i].unitPl && recipe.ingredience.itemList[i].unitKl) ||
+            (recipe.ingredience.itemList[i].unitPl !== 0 && recipe.ingredience.itemList[i].unitKl !== 0)
+          ) {
+            if (recipe.ingredience.itemList[i].recipe_unit === "KL") {
+              jednotka = recipe.ingredience.itemList[i].unitKl;
+            }
+            if (recipe.ingredience.itemList[i].recipe_unit === "PL") {
+              jednotka = recipe.ingredience.itemList[i].unitPl;
+            }
+            if (
+              recipe.ingredience.itemList[i].recipe_unit !== "KL" &&
+              recipe.ingredience.itemList[i].recipe_unit !== "PL"
+            ) {
+              jednotka = 1;
+              preklad = false;
+            }
+            if (recipe.ingredience.itemList[i].recipe_unit === recipe.ingredience.itemList[i].unit) {
+              jednotka = 1;
+            }
+          }
+          if (
+            (!recipe.ingredience.itemList[i].unitPl && !recipe.ingredience.itemList[i].unitKl) ||
+            (recipe.ingredience.itemList[i].unitPl === 0 && recipe.ingredience.itemList[i].unitKl === 0)
+          ) {
+            jednotka = 1;
+            preklad = false;
+          }
+
           ingrediences.push({
             name: recipe.ingredience.itemList[i].name,
             id: JSON.parse(JSON.stringify(recipe.ingredience.itemList[i].id)),
-            amount_need: parseFloat((recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)),
+            amount_need: parseFloat((jednotka * recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)),
             amount_recipe: recipe.ingredience.itemList[i].amount_recipe,
             amount_stock: recipe.ingredience.itemList[i].amount,
             unit: recipe.ingredience.itemList[i].unit,
+            recipe_unit: (function () {
+              if (preklad) return recipe.ingredience.itemList[i].unit;
+              if (!preklad) return recipe.ingredience.itemList[i].recipe_unit;
+            })(),
             difference: parseFloat(
               recipe.ingredience.itemList[i].amount -
-                parseFloat((recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)).toFixed(2)
+                parseFloat((jednotka * recipe.ingredience.itemList[i].amount_recipe * portion).toFixed(2)).toFixed(2)
             ),
           });
 
@@ -79,6 +113,8 @@ const RecipeDetailView = createVisualComponent({
 
                 <div style={{ textAlign: "right", paddingBottom: "10px" }}>
                   {ingrediences[i].amount_need}
+                  {"  "}
+                  {ingrediences[i].recipe_unit}
                   {" z "}
                   {ingrediences[i].amount_stock}
                   {"  "}
@@ -90,7 +126,6 @@ const RecipeDetailView = createVisualComponent({
                 {"  "}
               </Uu5Elements.Box>,
             ]);
-
           }
           if (ingrediences[i].difference === 0) {
             ingrediences[i].suit = true;
@@ -103,6 +138,8 @@ const RecipeDetailView = createVisualComponent({
 
                 <div style={{ textAlign: "right" }}>
                   {ingrediences[i].amount_need}
+                  {"  "}
+                  {ingrediences[i].recipe_unit}
                   {" z "}
                   {ingrediences[i].amount_stock}
                   {"  "}
@@ -112,7 +149,6 @@ const RecipeDetailView = createVisualComponent({
                 </div>
               </Uu5Elements.Box>,
             ]);
-
           }
           if (ingrediences[i].difference < 0) {
             ingrediences[i].suit = false;
@@ -126,6 +162,8 @@ const RecipeDetailView = createVisualComponent({
 
                 <div style={{ textAlign: "right" }}>
                   {ingrediences[i].amount_need}
+                  {"  "}
+                  {ingrediences[i].recipe_unit}
                   {" z "}
                   {ingrediences[i].amount_stock}
                   {"  "}
@@ -135,32 +173,24 @@ const RecipeDetailView = createVisualComponent({
                 </div>
               </Uu5Elements.Box>,
             ]);
-}
-
+          }
         }
 
         setIngredience(ingrediences);
 
         return gridContent;
-
       }
     }
 
     function onUpdate() {
-
-
-      if(ingredience.every(element => element.suit === true)){
+      if (ingredience.every((element) => element.suit === true)) {
         props.onUpdate(ingredience);
         window.location.reload(false);
-      }
-      else{
-
+      } else {
         alert("Pre aktualizovanie skladu musia byť všetky ingrediencie dostupné");
-
       }
-
-
     }
+
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -169,29 +199,25 @@ const RecipeDetailView = createVisualComponent({
     //@@viewOn:render
 
     if (props.data && props.data.ingredience && props.data.ingredience.itemList) {
-      console.log(props.data.ingredience);
+      props.data.ingredience.itemList.forEach((element) =>
+        gridContent1.push(
+          <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({ padding: 16 })}>
+            <strong>{element.name}</strong>
 
-        props.data.ingredience.itemList.forEach((element) =>
-          gridContent1.push(
-            <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({padding: 16})}>
-              <strong>{element.name}</strong>
-
-              <div style={{textAlign: "right", paddingBottom: "10px"}}>
-                {element.amount_recipe} {element.unit}
-              </div>
-            </Uu5Elements.Box>
-          )
-        );
-
-
+            <div style={{ textAlign: "right", paddingBottom: "10px" }}>
+              {element.amount_recipe} {element.recipe_unit}
+            </div>
+          </Uu5Elements.Box>
+        )
+      );
     }
     if (props.data && props.data.ingredience && props.data.ingredience.itemList) {
       props.data.process.forEach((element, index) =>
         process.push(
-          <Uu5Elements.Box className={Config.Css.css({padding: 16})}>
-            <Uu5Elements.InfoItem iconText={index + 1}/>
+          <Uu5Elements.Box className={Config.Css.css({ padding: 16 })}>
+            <Uu5Elements.InfoItem iconText={index + 1} />
 
-            <p className={Config.Css.css({marginLeft: "5%"})}> {element}</p>
+            <p className={Config.Css.css({ marginLeft: "5%" })}> {element}</p>
           </Uu5Elements.Box>
         )
       );

@@ -44,15 +44,22 @@ const RecipesForm = createVisualComponent({
     const [ingredience, setIngredience] = useState([""]);
     const [portion, setPortion] = useState();
     const [ingAmount, setIngAmount] = useState([0]);
+    const [ingUnit, setIngUnit] = useState([""]);
 
     console.log(content_meal);
 
     const handleAddValueIng = () => {
       setIngredience([...ingredience, " "]);
       setIngAmount([...ingAmount, 0]);
+      setIngUnit([...ingUnit," "]);
     };
     const handleAddValue = () => {
       setRecipeProcess([...recipe_process, ""]);
+    };
+    const handleInputChangeIngUnit = (event, index) => {
+      const newArray = [...ingUnit];
+      newArray[index] = event.data.value;
+      setIngUnit(newArray);
     };
     const handleInputChangeIng = (event, index) => {
       const newArray = [...ingredience];
@@ -66,6 +73,9 @@ const RecipesForm = createVisualComponent({
       newArray = [...ingAmount];
       newArray.splice(index, 1);
       setIngAmount(newArray);
+      newArray = [...ingUnit];
+      newArray.splice(index, 1);
+      setIngUnit(newArray);
     };
     const handleInputChangeAmount = (event, index) => {
       const newArray = [...ingAmount];
@@ -86,13 +96,13 @@ const RecipesForm = createVisualComponent({
     let ingredienceList = []
 
     if (ingredienceList.length === 0) {
-      ingredienceList.push({ value: "", children: "" });
+      // ingredienceList.push({ value: "", children: "" });
       props.data.itemList.map((value, index) => ingredienceList.push({ value: props.data.itemList[index].id, children: props.data.itemList[index].name }))
 
     }
     function onSubmit() {
       let ingredience_f = [];
-      ingredience.map((value,index) => ( ingredience_f.push({ id: ingredience[index], amount: ingAmount[index] })));
+      ingredience.map((value,index) => ( ingredience_f.push({ id: ingredience[index], amount: ingAmount[index], unit: ingUnit[index] })));
       let data = {
         name,
         category: [content_meal],
@@ -122,6 +132,10 @@ const RecipesForm = createVisualComponent({
             <Uu5Elements.Grid templateColumns="repeat(3, 1fr)">
               <Uu5Elements.Grid.Item>
                 <UU5.Imaging.Image className={Config.Css.css({ width: "70%", marginLeft: "10%" })} src={link} />
+                <UU5.Imaging.Input
+                  controlled={false}
+                  label="This is label"
+                />
                 <Uu5Forms.FormText
                   label={"Nazov receptu"}
                   value={name}
@@ -186,7 +200,7 @@ const RecipesForm = createVisualComponent({
               <Uu5Elements.Grid.Item>
 
                 <h4>Ingrediencie</h4>
-                <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
+                <Uu5Elements.Grid templateColumns="repeat(3, 1fr)">
 
 
                   <Uu5Elements.Grid.Item justifySelf={"start"}  >
@@ -209,7 +223,30 @@ const RecipesForm = createVisualComponent({
                       </div>
                     ))}
                   </Uu5Elements.Grid.Item>
+                    <Uu5Elements.Grid.Item>
+                      {ingUnit.map((value, index) => (
+                        <div>
+                          <Uu5Forms.TextSelect
+                            label={"Jednotka " + (index + 1).toString() + ": "}
+                            itemList={  [
 
+                              { children: "PL", value: "pl" },
+                              { children: "kl", value: "kl" },
+                              { children: "l", value: "l" },
+                            { children: "ml", value: "ml" },
+                            { children: "g", value: "g" },
+                            { children: "kg", value: "kg" },
+                            { children: "ks", value: "ks" }]}
+                            value={value}
+                            onChange={(event) => handleInputChangeIngUnit(event, index)}
+                            className={Config.Css.css({ paddingBottom: "48px" })}
+                            required
+                          />
+
+
+                        </div>
+                      ))}
+                    </Uu5Elements.Grid.Item>
                   <Uu5Elements.Grid.Item justifySelf={"center"}>
                     {ingAmount.map((value,index) => (
                       <div>

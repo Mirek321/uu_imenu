@@ -41,8 +41,12 @@ const GenerateRecipeProvider = createComponent({
     //@@viewOff:interface
 
     //@@viewOn:hooks
-
-    const callResult = useDataObject({ handlerMap: { generate: recipeGenerate } });
+    const callResultIngredience = useDataObject({
+      handlerMap: {
+        load: Calls.ingredienceList,
+      },
+    });
+    const callResult = useDataObject({ handlerMap: {generate: recipeGenerate } });
 
     //@@viewOff:hooks
 
@@ -55,7 +59,7 @@ const GenerateRecipeProvider = createComponent({
         return "Loading";
       case "readyNoData":
       case "ready":
-        return <GenerateRecipeView data={data} onGenerate={handlerMap.generate} />;
+        return <GenerateRecipeView data={data} onGenerate={handlerMap.generate}  getIngredience={callResultIngredience.data}/>;
     }
 
     return children ?? null;

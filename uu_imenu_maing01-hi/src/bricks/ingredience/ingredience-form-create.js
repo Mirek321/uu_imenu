@@ -45,6 +45,8 @@ const IngredienceFormCreate = createVisualComponent({
     const [ingAmount, setIngAmount] = useState("");
     const [ingUnit, setIngUnit] = useState("");
     const [ingAllergen, setAlergen] = useState("");
+    const [unitPl, setUnitPl] = useState(" ");
+    const [unitKl, setUnitKl] = useState(" ");
 
     function onSubmit() {
       let data = {
@@ -57,8 +59,11 @@ const IngredienceFormCreate = createVisualComponent({
         name: data.ingName,
         amount: data.ingAmount,
         unit: data.ingUnit,
-        allergen: data.ingAllergen,
+        allergen: "",
         category: "",
+        unitKl: unitKl,
+        unitPl: unitPl
+
       };
       props.onSave(filter);
     }
@@ -95,9 +100,16 @@ const IngredienceFormCreate = createVisualComponent({
                 onChange={(value) => setIngAmount(value.data.value)}
                 required
               />
-              <Uu5Forms.FormText
+              <Uu5Forms.FormSwitchSelect
                 className={Config.Css.css({ width: "100%" })}
                 label="Jednotka:"
+                itemList={[
+                  { children: "l", value: "l" },
+                  { children: "ml", value: "ml" },
+                  { children: "g", value: "g" },
+                  { children: "kg", value: "kg" },
+                  { children: "ks", value: "ks" },
+                ]}
                 value={ingUnit}
                 name={"ingUnit"}
                 type={"text"}
@@ -112,6 +124,27 @@ const IngredienceFormCreate = createVisualComponent({
                 ]}
                 onChange={(value) => setAlergen(value.data.value)}
               />
+              <Uu5Forms.FormNumber
+                name={'pl'}
+                className={Config.Css.css({ width: "100%" })}
+                label="PL"
+                value={unitPl}
+                type={"number"}
+                onChange={(value) => setUnitPl(value.data.value)}
+
+              />
+              <Uu5Forms.FormNumber
+                name={'kl'}
+                className={Config.Css.css({ width: "100%" })}
+                label="KL"
+                value={unitKl}
+                type={"number"}
+                onChange={(value) => setUnitKl(value.data.value)}
+
+              />
+
+
+
 
               <Uu5Forms.SubmitButton> Vytvoriť ingredienciu </Uu5Forms.SubmitButton>
               <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>

@@ -6,12 +6,16 @@ const recipeCreateDtoInType = shape({
   ingredience: array(shape({
     id: string(255),
     amount: float(250),
+    unit: string(255)
   })),
   category: array(),
   type_recipe: string(255),
   portion: integer(255),
   link_photo: string(255)
 
+});
+const recipeFindDtoInType = shape({
+  link: string(255),
 });
 const recipeGetDtoInType = shape({
   id: id().isRequired(),
@@ -28,6 +32,7 @@ const recipeUpdateDtoInType = shape({
   ingredience: array(shape({
     id: string(255),
     amount: float(250),
+    unit: string(255)
   })),
   category: array(),
   type_recipe: string(255),
@@ -49,4 +54,5 @@ const recipeGenerateDtoInType = shape({
   })),
   days: array(),
   category: array(),
+  ingredience: array(),
 });

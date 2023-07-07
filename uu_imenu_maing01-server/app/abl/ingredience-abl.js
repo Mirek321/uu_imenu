@@ -50,7 +50,7 @@ class IngredienceAbl {
     uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Update.InvalidDtoIn);
 
     // load joke from database by id from dtoIn
-    let ingredience = await this.dao.get(awid, dtoIn.id);
+    let ingredience = await this.dao.get(awid, { id: dtoIn.id});
 
     // if joke does not exist (was not found in database)
     if (!ingredience) {
@@ -79,7 +79,7 @@ class IngredienceAbl {
     uuAppErrorMap = ValidationHelper.processValidationResult(dtoIn, validationResult, Errors.Delete.InvalidDtoIn);
 
     // load joke from database by id from dtoIn
-    let ingredience = await this.dao.get(awid, dtoIn.id);
+    let ingredience = await this.dao.get(awid, { id: dtoIn.id});
 
     // if joke does not exist (was not found in database)
     if (!ingredience) {
@@ -130,6 +130,15 @@ class IngredienceAbl {
       uuAppErrorMap,
       Errors.Create.InvalidDtoIn
     );
+    if(dtoIn.unit == "l" || dtoIn.unit == "kg"){
+      dtoIn.amount = dtoIn.amount * 1000;
+      if(dtoIn.unit == "l"){
+        dtoIn.unit = "ml";
+      }
+      if(dtoIn.unit =="kg"){
+        dtoIn.unit = "g";
+      }
+    }
     let ingredience;
     try {
       ingredience = await this.dao.create(awid, dtoIn);

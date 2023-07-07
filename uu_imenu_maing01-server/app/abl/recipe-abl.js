@@ -6,12 +6,127 @@ const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const Errors = require("../api/errors/recipe-error.js");
 const Ingredience = require("../abl/ingredience-abl.js");
 const WARNINGS = {};
+const puppeteer = require("puppeteer");
 //aa
 class RecipeAbl {
   constructor() {
     this.validator = Validator.load();
     this.dao = DaoFactory.getDao("recipe");
     this.ing = DaoFactory.getDao("ingredience");
+  }
+  async scrapeProduct(url, category) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+    let ingredience = [];
+    let recipe = {};
+    let process = [];
+    const [el] = await page.$x('//*[@id="content-body"]/article/a/picture/img');
+    const src = await el.getProperty("src");
+    const srcTxt = await src.jsonValue();
+
+    const [el3] = await page.$x('//*[@id="content-body"]/article/h1');
+    const name = await el3.getProperty("textContent");
+    const rawName = await name.jsonValue();
+
+    const [el4] = await page.$x('//*[@id="content-body"]/article/div[2]/p');
+    const description = await el4.getProperty("textContent");
+    const rawDescription = await description.jsonValue();
+
+    const [el5] = await page.$x('//*[@id="content-body"]/article/div[1]/a[2]/span');
+    const type = await el5.getProperty("textContent");
+    const rawType = await type.jsonValue();
+
+    const [el6] = await page.$x('//*[@id="content-body"]/article/div[3]/div[2]/div[3]/div[2]');
+    const portion = await el6.getProperty("textContent");
+    const rawPortion = await portion.jsonValue();
+
+    let ide = true;
+    let i = 1;
+    while (ide) {
+      const [el1] = await page.$x('//*[@id="content-body"]/article/div[6]/ul/li[' + i + "]/div[2]");
+      const [el2] = await page.$x('//*[@id="content-body"]/article/div[6]/ul/li[' + i + "]/div[1]");
+
+      try {
+        const txt = await el1.getProperty("textContent");
+        const txt1 = await el2.getProperty("textContent");
+
+        const rawTxt = await txt.jsonValue();
+        const rawTxt1 = await txt1.jsonValue();
+
+        let mergedStr = rawTxt1.replaceAll(" ", "");
+        let final = mergedStr.replaceAll("\n", " ");
+
+        let mnozstvo = final.split(" ");
+        let nazov = rawTxt.split(", ");
+        if (nazov.length > 1 || mnozstvo[1] === "podľachuti") {
+          nazov.map((value) => ingredience.push({ name: value, amount: 1, unit: "g" }));
+        }
+        if (nazov.length == 1) {
+          ingredience.push({ name: rawTxt, amount: mnozstvo[1], unit: mnozstvo[2] });
+        }
+      } catch {
+        ide = false;
+      }
+      i += 1;
+    }
+    i = 1;
+    ide = true;
+    while (ide) {
+      try {
+        const [el3] = await page.$x('//*[@id="content-body"]/article/div[8]/div/ul/li[' + i + "]/div[2]/p");
+
+        const txtProcess = await el3.getProperty("textContent");
+        const rawProcces = await txtProcess.jsonValue();
+        process.push(rawProcces);
+      } catch {
+        ide = false;
+      }
+      i += 1;
+    }
+
+    recipe.name = rawName;
+    recipe.description = rawDescription;
+    if (rawType == "Polievky") {
+      recipe.type_recipe = "polievka";
+    } else {
+      recipe.type_recipe = "hlavné jedlo";
+    }
+    recipe.portion = parseInt(rawPortion);
+    recipe.process = process;
+    recipe.ingredience = ingredience;
+    recipe.link_photo = srcTxt;
+    recipe.category = category;
+    browser.close();
+    return recipe;
+  }
+  async find(awid, dtoIn) {
+    let recipe = await this.scrapeProduct(dtoIn.link, dtoIn.category);
+    if (!recipe) {
+      throw new Errors.Find.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
+    }
+    for (let i = 0; i < recipe.ingredience.length; i++) {
+      let ingredience = await this.ing.get(awid, {
+        name: recipe.ingredience[i].name.charAt(0).toUpperCase() + recipe.ingredience[i].name.slice(1),
+      });
+      if (ingredience.itemList.length !== 0) {
+        recipe.ingredience[i].id = JSON.parse(JSON.stringify(ingredience.itemList[0].id));
+      } else {
+        let createIng = await this.ing.create(awid, {
+          name: recipe.ingredience[i].name.charAt(0).toUpperCase() + recipe.ingredience[i].name.slice(1),
+          amount: 0,
+          unit: recipe.ingredience[i].unit,
+          unitPl: 0,
+          unitKl: 0,
+        });
+        recipe.ingredience[i].id = JSON.parse(JSON.stringify(createIng.id));
+      }
+    }
+    recipe = await this.dao.create(awid, recipe);
+    // return updated joke
+    return {
+      ...recipe,
+    };
   }
 
   async load(awid, dtoIn) {
@@ -28,7 +143,10 @@ class RecipeAbl {
     for (let j = 0; j < recipe.ingredience.itemList.length; j++) {
       for (let i = 0; i < recipe.ingredience.itemList.length; i++) {
         let id = JSON.parse(JSON.stringify(recipe.ingredience.itemList[i].id));
-        if (ing[j].id == id) recipe.ingredience.itemList[i].amount_recipe = ing[j].amount;
+        if (ing[j].id === id) {
+          recipe.ingredience.itemList[i].amount_recipe = ing[j].amount;
+          recipe.ingredience.itemList[i].recipe_unit = ing[j].unit;
+        }
       }
     }
 

@@ -1,6 +1,6 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, useEffect  } from "uu5g05";
-import { QrReader } from 'react-qr-reader';
+import { QrReader } from "react-qr-reader";
+import { createVisualComponent, Utils, Content, useState, useEffect } from "uu5g05";
 import Uu5Forms from "uu5g05-forms";
 import Uu5Tiles from "uu5tilesg02";
 import Uu5TilesElements from "uu5tilesg02-elements";
@@ -46,16 +46,13 @@ const IngredienceFormPurchase = createVisualComponent({
     const [ingredience, setIngredience] = useState([""]);
     const [cashReceiptId, setCashReceiptId] = useState();
 
-
-
     //@@viewOff:private
-
 
     useEffect(() => {
       //Runs on the first render
       //And any time any dependency value changes
-      console.log(JSON.parse((window.localStorage.getItem("MY_CASH_RECEIPT"))));
-      if(JSON.parse((window.localStorage.getItem("MY_CASH_RECEIPT")))){
+      console.log(JSON.parse(window.localStorage.getItem("MY_CASH_RECEIPT")));
+      if (JSON.parse(window.localStorage.getItem("MY_CASH_RECEIPT"))) {
         console.log("haha");
 
         const idArray = JSON.parse(window.localStorage.getItem("MY_CASH_RECEIPT")).map((obj) => obj.id);
@@ -64,22 +61,14 @@ const IngredienceFormPurchase = createVisualComponent({
         const amountArray = JSON.parse(window.localStorage.getItem("MY_CASH_RECEIPT")).map((obj) => obj.amount);
         setIngAmount(amountArray);
       }
-
-
     }, []);
-    const handleClearMemory = () => {
-
-    window.localStorage.removeItem(window.localStorage.key(5));
-    window.location.reload(false);
-
-    };
 
     const handleFindReceipt = () => {
       let resultCashReceipt;
-     let cashReceiptIngredience = props.onFind({"receiptId":cashReceiptId});
-     cashReceiptIngredience.then((result) => {
-       result[0] = resultCashReceipt; // Output: "Promise resolved!"
-     })
+      let cashReceiptIngredience = props.onFind({ receiptId: cashReceiptId });
+      cashReceiptIngredience.then((result) => {
+        result[0] = resultCashReceipt; // Output: "Promise resolved!"
+      });
     };
     const handleAddValueIng = () => {
       setIngredience([...ingredience, " "]);
@@ -111,22 +100,26 @@ const IngredienceFormPurchase = createVisualComponent({
 
     if (ingredienceList.length === 0) {
       ingredienceList.push({ value: "", children: "" });
-      props.data.map((value,index) =>  ingredienceList.push({ value: props.data[index].data.id, children: props.data[index].data.name }))
-
+      props.data.map((value, index) =>
+        ingredienceList.push({ value: props.data[index].data.id, children: props.data[index].data.name })
+      );
     }
     //@@viewOff:interface
-    function  onSubmit(){
-
+    function onSubmit() {
       let newIng = [];
       console.log(props.data);
-      ingredience.map((value,i) => (  newIng.push(props.data.find(item => item.data.id === ingredience[i]).data.amount+ingAmount[i])));
+      ingredience.map((value, i) =>
+        newIng.push(props.data.find((item) => item.data.id === ingredience[i]).data.amount + ingAmount[i])
+      );
       let ingredience_f = [];
-      ingredience.map((value,index) => ( ingredience_f.push({ id: ingredience[index], difference: newIng[index] })))
+      ingredience.map((value, index) => ingredience_f.push({ id: ingredience[index], difference: newIng[index] }));
       console.log(ingredience_f);
 
       props.onUpdateMany(ingredience_f);
-      window.location.reload(false);
 
+      window.localStorage.removeItem("MY_CASH_RECEIPT");
+
+      window.location.reload(false);
     }
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
@@ -136,21 +129,10 @@ const IngredienceFormPurchase = createVisualComponent({
       <div {...attrs}>
         <Uu5Forms.Form.Provider onSubmit={onSubmit}>
           <Uu5Forms.Form.View>
-            <Uu5Elements.Grid  justifyItems={"center"}>
-            <Uu5Elements.Button
-              icon={"mdi-plus"}
-              tooltip={"Nový nákup"}
-              onClick={() => handleClearMemory()}
-            >
-              Nový nákup
-            </Uu5Elements.Button>
-            </Uu5Elements.Grid>
-            <br/>
             <Uu5Elements.Grid templateColumns="repeat(2, 1fr)">
-
-
-              <Uu5Elements.Grid.Item justifySelf={"start"}  >
+              <Uu5Elements.Grid.Item justifySelf={"start"}>
                 {ingredience.map((value, index) => (
+                  // eslint-disable-next-line react/jsx-key
                   <div>
                     <Uu5Forms.TextSelect
                       label={"Ingrediencia " + (index + 1).toString() + ": "}
@@ -165,13 +147,14 @@ const IngredienceFormPurchase = createVisualComponent({
                       icon="mdi-delete"
                       tooltip={"Odstraniť krok"}
                       onClick={() => handleDeleteIng(index)}
-                      className={Config.Css.css({marginLeft: "50%", marginTop: "5%"})} />
+                      className={Config.Css.css({ marginLeft: "50%", marginTop: "5%" })}
+                    />
                   </div>
                 ))}
               </Uu5Elements.Grid.Item>
 
               <Uu5Elements.Grid.Item justifySelf={"center"}>
-                {ingAmount.map((value,index) => (
+                {ingAmount.map((value, index) => (
                   <div>
                     <Uu5Forms.Number
                       label={"Množstvo ingrediencie " + (index + 1).toString() + ": "}
@@ -186,27 +169,26 @@ const IngredienceFormPurchase = createVisualComponent({
                       icon="mdi-delete"
                       tooltip={"Odstraniť krok"}
                       onClick={() => handleDeleteIng(index)}
-                      className={Config.Css.css({marginLeft: "50%", marginTop: "7%"})} />
+                      className={Config.Css.css({ marginLeft: "50%", marginTop: "7%" })}
+                    />
                   </div>
                 ))}
               </Uu5Elements.Grid.Item>
-
             </Uu5Elements.Grid>
 
-          <Uu5Elements.Grid templateColumns="repeat(1, 1fr)">
-
-            <Uu5Elements.Grid.Item justifySelf="center">
-              <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať ingredienciu"} onClick={handleAddValueIng} />
-            </Uu5Elements.Grid.Item>
-          </Uu5Elements.Grid>
-            <br/>
-            <br/>
+            <Uu5Elements.Grid templateColumns="repeat(1, 1fr)">
+              <Uu5Elements.Grid.Item justifySelf="center">
+                <Uu5Elements.Button icon="mdi-plus" tooltip={"Pridať ingredienciu"} onClick={handleAddValueIng} />
+              </Uu5Elements.Grid.Item>
+            </Uu5Elements.Grid>
+            <br />
+            <br />
             <Uu5Elements.Grid justifyItems={"center"} templateColumns="repeat(1, 1fr)">
-            <Uu5Elements.Grid.Item>
-            <Uu5Forms.SubmitButton> Doplniť </Uu5Forms.SubmitButton>
-            <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
-            </Uu5Elements.Grid.Item>
-          </Uu5Elements.Grid>
+              <Uu5Elements.Grid.Item>
+                <Uu5Forms.SubmitButton> Doplniť </Uu5Forms.SubmitButton>
+                <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
+              </Uu5Elements.Grid.Item>
+            </Uu5Elements.Grid>
           </Uu5Forms.Form.View>
         </Uu5Forms.Form.Provider>
       </div>

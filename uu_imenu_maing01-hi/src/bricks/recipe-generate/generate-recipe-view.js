@@ -8,6 +8,7 @@ import Config from "../recipes/config/config.js";
 import RouteBar from "../../core/route-bar";
 import recipesProvider from "../recipes/recipes-provider";
 import GenerateRecipeForm from "./generate-recipe-form";
+import { jsPDF } from "jspdf";
 
 //@@viewOff:imports
 
@@ -49,9 +50,28 @@ const GenerateRecipeView = createVisualComponent({
     const [days, setDays] = useState([]);
     const [category, setCategory] = useState([]);
     const [main_meal_filter, setMain_meal_filter] = useState("");
+    let [ingredience, setIngredience] = useState([]);
 
     const test = useRef();
-    console.log(props);
+
+
+    let ingredienceList = []
+    if (ingredienceList.length === 0) {
+      // console.log(props.getIngredience.itemList);\
+      let itemList = props.getIngredience;
+      if(itemList?.itemList != null){
+
+        itemList.itemList.map((value,index) =>  ingredienceList.push({ value: itemList.itemList[index].id, children: itemList.itemList[index].name }));
+      }
+
+      //
+    }
+    function createPdf() {
+      let data = JSON.parse(window.localStorage.getItem("MY_IMENU_APP"));
+      doc.text(data.monday[0].name, 10, 10);
+      doc.save("a4.pdf");
+    }
+
 
     function DivideTypeRecipe(recipes) {
       soup = [];
@@ -121,6 +141,7 @@ const GenerateRecipeView = createVisualComponent({
           { name: "hlavné jedlo", count: main_meal_filter },
         ],
         days: ["Pondelok","Utorok","Streda","Štvrtok","Piatok"],
+        ingredience: ingredience,
 
       };
       if(category !== undefined){
@@ -129,16 +150,16 @@ const GenerateRecipeView = createVisualComponent({
       if(days.length > 0){
         filter.days = days;
       }
-      console.log(filter);
-
+    console.log(filter);
       props.onGenerate(filter);
-      console.log(props);
+
     }
     if (props.data) {
       window.localStorage.setItem("MY_IMENU_APP", JSON.stringify(props.data));
     }
 
     if (JSON.parse(window.localStorage.getItem("MY_IMENU_APP"))) {
+
       let data = JSON.parse(window.localStorage.getItem("MY_IMENU_APP"));
       for (const [day, recipes] of Object.entries(data)) {
         gridContent.push(
@@ -172,7 +193,12 @@ const GenerateRecipeView = createVisualComponent({
               content={
                 <Uu5Forms.Form.Provider onSubmit={onGenerate}>
                   <Uu5Forms.Form.View>
+                    <Uu5Elements.Grid>
+
+                    </Uu5Elements.Grid>
                     <Uu5Elements.Grid templateColumns="repeat(2, 1fr)" columnGap={"0"}>
+
+
                       <Uu5Elements.Grid.Item justifySelf="end" className={Config.Css.css({ paddingRight: 15 })}>
                         <Uu5Forms.FormNumber
                           className={Config.Css.css({ width: "100%" })}
@@ -208,6 +234,7 @@ const GenerateRecipeView = createVisualComponent({
                       <Uu5Elements.Grid.Item justifySelf="start" className={Config.Css.css({ paddingLeft: 15 })}>
                         <Uu5Forms.FormCheckboxes
                           label="Dni v ktorych sa varí:"
+                          name={"Dni v ktorych sa vari"}
                           className={Config.Css.css({ width: "100%" })}
                           itemList={[
                             { label: "Pondelok", value: "Pondelok" },
@@ -220,8 +247,24 @@ const GenerateRecipeView = createVisualComponent({
                             setDays(e.data.value);
                           }}
                         ></Uu5Forms.FormCheckboxes>
+
                       </Uu5Elements.Grid.Item>
-                      <Uu5Elements.Grid.Item justifySelf="center" colSpan={10}>
+
+                    </Uu5Elements.Grid>
+
+                    <Uu5Elements.Grid justifyItems={"center"}>
+
+                      <Uu5Forms.FormTextSelect
+                        label="Ingrediencie:"
+                        name={"Ingrediencie"}
+                        className={Config.Css.css({ width: "20%" })}
+                        itemList={ingredienceList}
+                        onChange={(value) => {
+                          setIngredience(value.data.value);
+                        }}
+                        multiple
+                      />
+                      <Uu5Elements.Grid.Item >
                         {/*<Uu5Elements.Button onClick={onGenerate}>/Uu5Elements.Button>*/}
                         <Uu5Forms.SubmitButton className={Config.Css.css({ width: "100%" })}>
                           {" "}
@@ -229,6 +272,9 @@ const GenerateRecipeView = createVisualComponent({
                         </Uu5Forms.SubmitButton>
                       </Uu5Elements.Grid.Item>
                     </Uu5Elements.Grid>
+
+
+
                   </Uu5Forms.Form.View>
                 </Uu5Forms.Form.Provider>
               }
@@ -237,7 +283,6 @@ const GenerateRecipeView = createVisualComponent({
           <div ref={test}>
             <Uu5Elements.Grid templateColumns="repeat(5, 1fr)">{gridContent} </Uu5Elements.Grid>
           </div>
-
 
         </div>
       </div>

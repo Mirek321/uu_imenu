@@ -95,6 +95,11 @@
         "realization": "api/controllers/CashReceiptController.find",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "recipe/find": {
+        "realization": "api/controllers/RecipeController.find",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }

@@ -39,13 +39,14 @@ const RecipesDetailView = createVisualComponent({
     let gridContent1 = [];
     let process = [];
     if (props.data && props.data.ingredience && props.data.ingredience.itemList) {
+      console.log( props.data.ingredience.itemList);
       props.data.ingredience.itemList.forEach((element) =>
         gridContent1.push(
           <Uu5Elements.Box size="m" aspectRatio="10x1" className={Config.Css.css({padding: 16})}>
             <strong>{element.name}</strong>
 
             <div style={{textAlign: "right", paddingBottom: "10px"}}>
-              {Math.trunc(element.amount_recipe * props.data.portion)} {element.unit}
+              {Math.trunc(element.amount_recipe * props.data.portion)} {element.recipe_unit}
             </div>
           </Uu5Elements.Box>
         )

@@ -44,6 +44,11 @@ const IngredienceFormUpdate = createVisualComponent({
     const [ingAmount, setIngAmount] = useState(props.data.data.amount);
     const [ingUnit, setIngUnit] = useState(props.data.data.unit);
     const [ingAllergen, setAllergen] = useState(props.data.data.allergen);
+    // const [cashReceiptName, setCashReceiptName] = useState(props.data.data.cashReceiptName);
+    // const [cashReceiptAmount, setCashReceiptAmount] = useState(props.data.data.cashReceiptAmount);
+    const [unitPl, setUnitPl] = useState(props.data.data.unitPl);
+    const [unitKl, setUnitKl] = useState(props.data.data.unitKl);
+    console.log(props.data.data);
 
 
     function onSubmit() {
@@ -55,6 +60,8 @@ const IngredienceFormUpdate = createVisualComponent({
         unit: data.ingUnit,
         allergen: data.ingAllergen,
         category: "",
+        cashReceiptName: cashReceiptName,
+        cashReceiptAmount: cashReceiptAmount
       };
       props.onUpdate(filter);
     }
@@ -122,7 +129,42 @@ const IngredienceFormUpdate = createVisualComponent({
 
                 />
               </Uu5Elements.Grid.Item>
+              {/*<Uu5Forms.Text*/}
+              {/*  className={Config.Css.css({ width: "100%" })}*/}
+              {/*  label="Nazov na pokladnicnom doklade"*/}
+              {/*  value={cashReceiptName}*/}
+              {/*  name={"Meno na blocku"}*/}
+              {/*  type={"text"}*/}
+              {/*  onChange={(value) => setCashReceiptName(value.data.value)}*/}
+              {/*  required*/}
+              {/*/>*/}
+              {/*<Uu5Forms.Number*/}
+              {/*  className={Config.Css.css({ width: "100%" })}*/}
+              {/*  label="Množstvo ingrediencii:"*/}
+              {/*  value={cashReceiptAmount}*/}
 
+              {/*  type={"number"}*/}
+              {/*  onChange={(value) => setCashReceiptAmount(value.data.value)}*/}
+              {/*  required*/}
+              {/*/>*/}
+              <Uu5Forms.Number
+                name={'pl'}
+                className={Config.Css.css({ width: "100%" })}
+                label="PL"
+                value={unitPl}
+                type={"number"}
+                onChange={(value) => setUnitPl(value.data.value)}
+
+              />
+              <Uu5Forms.Number
+                name={'kl'}
+                className={Config.Css.css({ width: "100%" })}
+                label="KL"
+                value={unitKl}
+                type={"number"}
+                onChange={(value) => setUnitKl(value.data.value)}
+
+              />
               <Uu5Forms.SubmitButton> Upraviť ingredienciu </Uu5Forms.SubmitButton>
               <Uu5Forms.CancelButton onClick={props.onClose}>Zatvoriť</Uu5Forms.CancelButton>
             </Uu5Elements.Grid>

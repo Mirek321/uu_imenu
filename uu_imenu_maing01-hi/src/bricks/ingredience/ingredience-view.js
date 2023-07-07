@@ -151,6 +151,11 @@ const IngredienceView = createVisualComponent({
       setOpenCreate(false);
       setOpenUpdate(false);
       setOpenPurchase(false);
+      setOpenScanCashReceipt(false);
+    }
+    function closeModalPurchase(){
+      setOpenPurchase(false);
+      window.localStorage.removeItem('MY_CASH_RECEIPT');
     }
     function  newPurchase(){
       setOpenPurchase(true)
@@ -189,7 +194,7 @@ const IngredienceView = createVisualComponent({
           <IngredienceFormUpdate data={data1} onUpdate={props.onUpdate} onClose={closeModal} />
         </Uu5Elements.Modal>
         <Uu5Elements.Modal header={"Nákup nových ingrediencíich"} open={openPurchase}>
-          <IngredienceFormPurchase data={props.data} onUpdateMany={props.onUpdateMany} onFind={props.onFind} onClose={closeModal} />
+          <IngredienceFormPurchase data={props.data} onUpdateMany={props.onUpdateMany} onFind={props.onFind} onClose={closeModalPurchase} />
         </Uu5Elements.Modal>
         <Uu5Elements.Modal header={"Naskenovanie blokoveho dokladu"} open={openScanCashReceipt}  >
       <IngredienceFormScanCashReceipt onFind={props.onFind} onClose={closeModal}/>

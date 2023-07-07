@@ -80,6 +80,10 @@
       "cashReceipt/find": {
         "sysStateList": ["active"],
         "profileList": ["Public"]
+      },
+      "recipe/find": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }
